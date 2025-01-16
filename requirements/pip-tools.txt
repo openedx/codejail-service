@@ -11,7 +11,7 @@ click==8.1.8
 packaging==24.2
     # via build
 pip-tools==7.4.1
-    # via -r python-template/placeholder_repo_name_0/requirements/pip-tools.in
+    # via -r requirements/pip-tools.in
 pyproject-hooks==1.2.0
     # via
     #   build

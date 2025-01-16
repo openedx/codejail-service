@@ -19,30 +19,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
 
-import os
-
-from auth_backends.urls import oauth2_urlpatterns
-from django.conf import settings
-from django.contrib import admin
 from django.urls import include, re_path
-from rest_framework_swagger.views import get_swagger_view
 
 from codejail_service.apps.api import urls as api_urls
 from codejail_service.apps.core import views as core_views
 
-admin.autodiscover()
-
-urlpatterns = oauth2_urlpatterns + [
-    re_path(r'^admin/', admin.site.urls),
+urlpatterns = [
     re_path(r'^api/', include(api_urls)),
-    re_path(r'^api-docs/', get_swagger_view(title='codejail-service API')),
-    re_path(r'^auto_auth/$', core_views.AutoAuth.as_view(), name='auto_auth'),
-    re_path(r'', include('csrf.urls')),  # Include csrf urls from edx-drf-extensions
     re_path(r'^health/$', core_views.health, name='health'),
 ]
-
-if settings.DEBUG and os.environ.get('ENABLE_DJANGO_TOOLBAR', False):  # pragma: no cover
-    # Disable pylint import error because we don't install django-debug-toolbar
-    # for CI build
-    import debug_toolbar  # pylint: disable=import-error
-    urlpatterns.append(re_path(r'^__debug__/', include(debug_toolbar.urls)))

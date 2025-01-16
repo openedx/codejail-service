@@ -2,17 +2,9 @@
 -c constraints.txt
 
 Django         # Web application framework
-django-cors-headers
-django-extensions
-django-rest-swagger
-django-waffle
-djangorestframework
-edx-auth-backends
+gunicorn       # HTTP server framework
+
 edx-django-utils
-edx-django-release-util
-edx-drf-extensions
 edx-i18n-tools
-edx-rest-api-client
-mysqlclient
 openedx-atlas
 pytz

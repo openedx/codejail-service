@@ -1,26 +1,28 @@
 codejail_service
 ################
 
-.. note::
-
-  This README was auto-generated. Maintainer: please review its contents and
-  update all relevant sections. Instructions to you are marked with
-  "PLACEHOLDER" or "TODO". Update or remove those sections, and remove this
-  note when you are done.
-
-|pypi-badge| |ci-badge| |codecov-badge| |doc-badge| |pyversions-badge|
+|ci-badge| |codecov-badge| |doc-badge| |pyversions-badge|
 |license-badge| |status-badge|
 
 Purpose
 *******
 
-Run codejail (sandboxed Python execution) as a service
+Run codejail (sandboxed Python execution) as a service. This implements the custom Python problems in courses, and is a thin wrapper around the `codejail library <https://github.com/openedx/codejail>`_.
 
-TODO: The ``README.rst`` file should start with a brief description of the repository and its purpose.
-It should be described in the context of other repositories under the ``openedx``
-organization. It should make clear where this fits into the overall Open edX
-codebase and should be oriented towards people who are new to the Open edX
-project.
+Warnings
+********
+
+Developers
+==========
+
+This service is configured with an in-memory database simply to make Django happy. The service itself **effectively does not have a database**, and should not rely on any database-dependent features such as waffle-based toggles.
+
+Operators
+=========
+
+This is intended to be run as a fully internal service with no database or admin frontend, with the LMS and CMS making calls to it unauthenticated. **It should not be callable directly from the internet.**
+
+While the service uses AppArmor as a first (and really, only) line of defense, it should also be deployed in a way that does not allow direct connections to other IDAs or internal services within the Open edX deployment. In the ideal situation, networking would be set up to only allow outbound connections to a predetermined set of IPs or domains.
 
 Getting Started with Development
 ********************************
@@ -32,12 +34,7 @@ Please see the Open edX documentation for `guidance on Python development`_ in t
 Deploying
 *********
 
-TODO: How can a new user go about deploying this component? Is it just a few
-commands? Is there a larger how-to that should be linked here?
-
-PLACEHOLDER: For details on how to deploy this component, see the `deployment how-to`_.
-
-.. _deployment how-to: https://docs.openedx.org/projects/codejail-service/how-tos/how-to-deploy-this-component.html
+TODO (`<https://github.com/openedx/codejail-service/issues/3>`__)
 
 Getting Help
 ************
@@ -45,11 +42,7 @@ Getting Help
 Documentation
 =============
 
-PLACEHOLDER: Start by going through `the documentation`_.  If you need more help see below.
-
-.. _the documentation: https://docs.openedx.org/projects/codejail-service
-
-(TODO: `Set up documentation <https://openedx.atlassian.net/wiki/spaces/DOC/pages/21627535/Publish+Documentation+on+Read+the+Docs>`_)
+TODO (`<https://github.com/openedx/codejail-service/issues/3>`__)
 
 More Help
 =========
@@ -114,10 +107,6 @@ Reporting Security Issues
 
 Please do not report security issues in public. Please email security@openedx.org.
 
-.. |pypi-badge| image:: https://img.shields.io/pypi/v/codejail-service.svg
-    :target: https://pypi.python.org/pypi/codejail-service/
-    :alt: PyPI
-
 .. |ci-badge| image:: https://github.com/openedx/codejail-service/workflows/Python%20CI/badge.svg?branch=main
     :target: https://github.com/openedx/codejail-service/actions
     :alt: CI
@@ -138,8 +127,4 @@ Please do not report security issues in public. Please email security@openedx.or
     :target: https://github.com/openedx/codejail-service/blob/main/LICENSE.txt
     :alt: License
 
-.. TODO: Choose one of the statuses below and remove the other status-badge lines.
 .. |status-badge| image:: https://img.shields.io/badge/Status-Experimental-yellow
-.. .. |status-badge| image:: https://img.shields.io/badge/Status-Maintained-brightgreen
-.. .. |status-badge| image:: https://img.shields.io/badge/Status-Deprecated-orange
-.. .. |status-badge| image:: https://img.shields.io/badge/Status-Unsupported-red
