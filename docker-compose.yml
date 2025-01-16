@@ -1,0 +1,41 @@
+version: "2.1"
+services:
+  db:
+    image: mysql:8.0
+    container_name: codejail_service.db
+    environment:
+      # See how these environment variables being used at https://github.com/mysql/mysql-docker/blob/mysql-server/8.0/docker-entrypoint.sh
+      MYSQL_ROOT_PASSWORD: ""
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    networks:
+      - devstack_default
+    volumes:
+      - codejail_service_mysql:/var/lib/mysql
+
+  memcache:
+    image: memcached:1.4.24
+    container_name: codejail_service.memcache
+
+  app:
+    # Uncomment this line to use the official codejail_service base image
+    image: openedx/codejail_service
+
+    container_name: codejail_service.app
+    volumes:
+      - .:/edx/app/codejail_service/
+    command: bash -c 'while true; do python /edx/app/codejail_service/manage.py runserver 0.0.0.0:18030; sleep 2; done'
+    environment:
+      DJANGO_SETTINGS_MODULE: codejail_service.settings.devstack
+    ports:
+      - "18030:18030" # TODO: change this to your port
+    networks:
+      - devstack_default
+    stdin_open: true
+    tty: true
+
+networks:
+  devstack_default:
+    external: true
+
+volumes:
+  codejail_service_mysql:
