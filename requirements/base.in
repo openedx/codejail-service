@@ -8,3 +8,7 @@ edx-django-utils
 edx-i18n-tools
 openedx-atlas
 pytz
+
+edx-codejail             # Actual codejail library
+djangorestframework      # Request parsing and response formatting
+jsonschema               # Parse and validate JSON

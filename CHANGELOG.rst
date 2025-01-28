@@ -14,12 +14,18 @@ Change Log
 Unreleased
 **********
 
-*
-
-0.1.0 – 2025-01-16
-**********************************************
+0.2.0 - 2025-01-29
+******************
 
 Added
 =====
 
-* First release on PyPI.
+* Implemented v0 API of code-exec endpoint
+
+0.1.0 - 2025-01-28
+******************
+
+Added
+=====
+
+* First version (just has healthcheck)

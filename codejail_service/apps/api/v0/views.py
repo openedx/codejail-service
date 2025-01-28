@@ -7,26 +7,13 @@ import logging
 from copy import deepcopy
 
 from codejail.safe_exec import SafeExecException, safe_exec
-from django.conf import settings
-from edx_toggles.toggles import SettingToggle
 from jsonschema.exceptions import best_match as json_error_best_match
 from jsonschema.validators import Draft202012Validator
-from rest_framework.decorators import api_view, parser_classes, permission_classes
+from rest_framework.decorators import api_view, parser_classes
 from rest_framework.parsers import FormParser, MultiPartParser
-from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 
 log = logging.getLogger(__name__)
-
-# .. toggle_name: CODEJAIL_SERVICE_ENABLED
-# .. toggle_implementation: SettingToggle
-# .. toggle_default: True
-# .. toggle_description: If True, codejail execution calls will be accepted over the network,
-#   allowing this IDA to act as a codejail service for another IDA.
-# .. toggle_use_cases: circuit_breaker
-# .. toggle_creation_date: 2023-12-21
-# .. toggle_tickets: https://github.com/openedx/edx-platform/issues/33538
-CODEJAIL_SERVICE_ENABLED = SettingToggle('CODEJAIL_SERVICE_ENABLED', default=True, module_name=__name__)
 
 # Schema for the JSON passed in the v0 API's 'payload' field.
 payload_schema = {
@@ -58,6 +45,7 @@ payload_schema = {
                 {'type': 'null'},
             ],
         },
+        # We'll parse this but won't respect it.
         'unsafely': {'type': 'boolean'},
     },
     'required': ['code', 'globals_dict'],
@@ -68,33 +56,9 @@ Draft202012Validator.check_schema(payload_schema)
 payload_validator = Draft202012Validator(payload_schema)
 
 
-# A note on the authorization model used here:
-#
-# We really just need one service account to be able to call this, and
-# then also allow is_staff to call it for convenience and debugging
-# purposes.
-#
-# To do this "right", I'd probably have to create an empty abstract
-# model, create a permission on it, create a group, add the permission
-# to the group, and add the service account to the group. Then I could
-# check the calling user's has_perm. If I wanted to use bridgekeeper
-# (as we're trying to do more of) I might be able to give bridgekeeper
-# a `@blanket_rule` that checks membership in the group, then use
-# bridgekeeper here instead of checking permissions directly, but it's
-# possible this wouldn't work because bridgekeeper might require there
-# to be a model instance to pass in (and there wouldn't be one, since
-# it's just an abstract model.)
-#
-# But... given that the service account will be is_staff, and I'll be
-# opening this up to is_staff alongside the intended service account,
-# and this is already a hacky intermediate solution... we can just use
-# the `IsAdminUser` permission class and be done with it.
-
-
 @api_view(['POST'])
 @parser_classes([FormParser, MultiPartParser])
-@permission_classes([IsAdminUser])
-def code_exec_view_v0(request):
+def code_exec(request):
     """
     Executes code in a codejail sandbox for a remote caller.
 
@@ -114,22 +78,6 @@ def code_exec_view_v0(request):
 
     Other responses are errors, with a JSON body containing further details.
     """
-    if not CODEJAIL_SERVICE_ENABLED.is_enabled():
-        return Response({'error': "Codejail service not enabled"}, status=500)
-
-    # There's a risk of getting into a loop if e.g. the CMS asks the
-    # LMS to run codejail executions on its behalf, and the LMS is
-    # *also* inadvertently configured to call the LMS (itself).
-    # There's no good reason to have a chain of >2 services passing
-    # codejail requests along, so only allow execution here if we
-    # aren't going to pass it along to someone else.
-    if getattr(settings, 'ENABLE_CODEJAIL_REST_SERVICE', False):
-        log.error(
-            "Refusing to run codejail request from over the network "
-            "when we're going to pass it to another IDA anyway"
-        )
-        return Response({'error': "Codejail service is misconfigured. (Refusing to act as relay.)"}, status=500)
-
     params_json = request.data['payload']
     params = json.loads(params_json)
 
@@ -148,7 +96,7 @@ def code_exec_view_v0(request):
     extra_files = [(filename, file.read()) for filename, file in request.FILES.items()]
 
     # Far too dangerous to allow unsafe executions to come in over the
-    # network, no matter who we think the caller is. The caller is the
+    # network, even if we were to authenticate them. The caller is the
     # one who has the context on safety.
     if unsafely:
         return Response({'error': "Refusing codejail execution with unsafely=true"}, status=400)
@@ -164,8 +112,8 @@ def code_exec_view_v0(request):
             slug=slug,
         )
     except SafeExecException as e:
-        log.debug("CodejailService execution failed for {slug=} with: {e}")
+        log.debug("Codejail execution failed for {slug=} with: {e}")
         return Response({'emsg': str(e)})
 
-    log.debug("CodejailService execution succeeded for {slug=}, with globals={output_globals_dict!r}")
+    log.debug("Codejail execution succeeded for {slug=}, with globals={output_globals_dict!r}")
     return Response({'globals_dict': output_globals_dict})

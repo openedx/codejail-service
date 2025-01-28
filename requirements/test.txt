@@ -12,6 +12,11 @@ astroid==3.3.8
     # via
     #   pylint
     #   pylint-celery
+attrs==25.1.0
+    # via
+    #   -r requirements/base.txt
+    #   jsonschema
+    #   referencing
 cachetools==5.5.1
     # via tox
 cffi==1.17.1
@@ -50,6 +55,7 @@ distlib==0.3.9
     #   -r requirements/base.txt
     #   django-crum
     #   django-waffle
+    #   djangorestframework
     #   edx-django-utils
     #   edx-i18n-tools
 django-crum==0.7.9
@@ -60,11 +66,15 @@ django-waffle==4.2.0
     # via
     #   -r requirements/base.txt
     #   edx-django-utils
+djangorestframework==3.15.2
+    # via -r requirements/base.txt
+edx-codejail==3.5.2
+    # via -r requirements/base.txt
 edx-django-utils==7.1.0
     # via -r requirements/base.txt
 edx-i18n-tools==1.6.3
     # via -r requirements/base.txt
-edx-lint==5.5.0
+edx-lint==5.6.0
     # via -r requirements/test.in
 filelock==3.17.0
     # via
@@ -74,10 +84,16 @@ gunicorn==23.0.0
     # via -r requirements/base.txt
 iniconfig==2.0.0
     # via pytest
-isort==5.13.2
+isort==6.0.0
     # via pylint
 jinja2==3.1.5
     # via code-annotations
+jsonschema==4.23.0
+    # via -r requirements/base.txt
+jsonschema-specifications==2024.10.1
+    # via
+    #   -r requirements/base.txt
+    #   jsonschema
 lxml[html-clean]==5.3.0
     # via
     #   -r requirements/base.txt
@@ -133,7 +149,7 @@ pycparser==2.22
     # via
     #   -r requirements/base.txt
     #   cffi
-pylint==3.3.3
+pylint==3.3.4
     # via
     #   edx-lint
     #   pylint-celery
@@ -170,8 +186,21 @@ pyyaml==6.0.2
     #   -r requirements/base.txt
     #   code-annotations
     #   edx-i18n-tools
+referencing==0.36.2
+    # via
+    #   -r requirements/base.txt
+    #   jsonschema
+    #   jsonschema-specifications
+rpds-py==0.22.3
+    # via
+    #   -r requirements/base.txt
+    #   jsonschema
+    #   referencing
 six==1.17.0
-    # via edx-lint
+    # via
+    #   -r requirements/base.txt
+    #   edx-codejail
+    #   edx-lint
 sqlparse==0.5.3
     # via
     #   -r requirements/base.txt
@@ -187,5 +216,9 @@ tomlkit==0.13.2
     # via pylint
 tox==4.24.1
     # via -r requirements/test.in
+typing-extensions==4.12.2
+    # via
+    #   -r requirements/base.txt
+    #   referencing
 virtualenv==20.29.1
     # via tox
