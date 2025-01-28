@@ -68,6 +68,8 @@ cryptography==44.0.0
     # via
     #   -r requirements/validation.txt
     #   secretstorage
+ddt==1.7.2
+    # via -r requirements/validation.txt
 diff-cover==9.2.1
     # via -r requirements/dev.in
 dill==0.3.9

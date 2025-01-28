@@ -9,3 +9,4 @@ edx-lint
 pytest-cov
 pytest-django
 tox
+ddt                       # Data-driven tests
