@@ -1,0 +1,29 @@
+# This file records information about this repo. Its use is described in OEP-55:
+# https://open-edx-proposals.readthedocs.io/en/latest/processes/oep-0055-proc-project-maintainers.html
+
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: 'codejail-service'
+  description: "Run codejail (sandboxed Python execution) as a service"
+  annotations:
+    # The openedx.org/release key is described in OEP-10:
+    #   https://open-edx-proposals.readthedocs.io/en/latest/oep-0010-proc-openedx-releases.html
+    # The FAQ might also be helpful: https://openedx.atlassian.net/wiki/spaces/COMM/pages/1331268879/Open+edX+Release+FAQ
+    openedx.org/release: "main"
+spec:
+
+  # (Required) This can be a group(`group:<group_name>` or a user(`user:<github_username>`)
+  owner: ""
+
+  # (Required) Acceptable Type Values: service, website, library
+  type: service
+
+  # (Required) Acceptable Lifecycle Values: experimental, production, deprecated
+  lifecycle: 'experimental'
+
+  # (Optional) The value can be the name of any known component.
+  subcomponentOf: edx-platform
+
+  # (Optional) An array of different components or resources.
+  dependsOn: []
