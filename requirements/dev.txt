@@ -13,6 +13,11 @@ astroid==3.3.8
     #   -r requirements/validation.txt
     #   pylint
     #   pylint-celery
+attrs==25.1.0
+    # via
+    #   -r requirements/validation.txt
+    #   jsonschema
+    #   referencing
 build==1.2.2.post1
     # via
     #   -r requirements/pip-tools.txt
@@ -68,6 +73,8 @@ cryptography==44.0.0
     # via
     #   -r requirements/validation.txt
     #   secretstorage
+ddt==1.7.2
+    # via -r requirements/validation.txt
 diff-cover==9.2.1
     # via -r requirements/dev.in
 dill==0.3.9
@@ -83,6 +90,7 @@ django==4.2.18
     #   -r requirements/validation.txt
     #   django-crum
     #   django-waffle
+    #   djangorestframework
     #   edx-django-utils
     #   edx-i18n-tools
 django-crum==0.7.9
@@ -93,15 +101,19 @@ django-waffle==4.2.0
     # via
     #   -r requirements/validation.txt
     #   edx-django-utils
+djangorestframework==3.15.2
+    # via -r requirements/validation.txt
 docutils==0.21.2
     # via
     #   -r requirements/validation.txt
     #   readme-renderer
+edx-codejail==3.5.2
+    # via -r requirements/validation.txt
 edx-django-utils==7.1.0
     # via -r requirements/validation.txt
 edx-i18n-tools==1.6.3
     # via -r requirements/validation.txt
-edx-lint==5.5.0
+edx-lint==5.6.0
     # via -r requirements/validation.txt
 filelock==3.17.0
     # via
@@ -122,7 +134,7 @@ iniconfig==2.0.0
     # via
     #   -r requirements/validation.txt
     #   pytest
-isort==5.13.2
+isort==6.0.0
     # via
     #   -r requirements/validation.txt
     #   pylint
@@ -148,6 +160,12 @@ jinja2==3.1.5
     #   -r requirements/validation.txt
     #   code-annotations
     #   diff-cover
+jsonschema==4.23.0
+    # via -r requirements/validation.txt
+jsonschema-specifications==2024.10.1
+    # via
+    #   -r requirements/validation.txt
+    #   jsonschema
 keyring==25.6.0
     # via
     #   -r requirements/validation.txt
@@ -246,7 +264,7 @@ pygments==2.19.1
     #   diff-cover
     #   readme-renderer
     #   rich
-pylint==3.3.3
+pylint==3.3.4
     # via
     #   -r requirements/validation.txt
     #   edx-lint
@@ -303,6 +321,11 @@ readme-renderer==44.0
     # via
     #   -r requirements/validation.txt
     #   twine
+referencing==0.36.2
+    # via
+    #   -r requirements/validation.txt
+    #   jsonschema
+    #   jsonschema-specifications
 requests==2.32.3
     # via
     #   -r requirements/validation.txt
@@ -321,6 +344,11 @@ rich==13.9.4
     # via
     #   -r requirements/validation.txt
     #   twine
+rpds-py==0.22.3
+    # via
+    #   -r requirements/validation.txt
+    #   jsonschema
+    #   referencing
 secretstorage==3.3.3
     # via
     #   -r requirements/validation.txt
@@ -328,6 +356,7 @@ secretstorage==3.3.3
 six==1.17.0
     # via
     #   -r requirements/validation.txt
+    #   edx-codejail
     #   edx-lint
 snowballstemmer==2.2.0
     # via
@@ -354,6 +383,10 @@ tox==4.24.1
     # via -r requirements/validation.txt
 twine==6.1.0
     # via -r requirements/validation.txt
+typing-extensions==4.12.2
+    # via
+    #   -r requirements/validation.txt
+    #   referencing
 urllib3==2.2.3
     # via
     #   -r requirements/validation.txt

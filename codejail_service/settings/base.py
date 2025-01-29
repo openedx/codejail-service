@@ -24,6 +24,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'rest_framework',
+
     'codejail_service.apps.core',
     'codejail_service.apps.api',
 )

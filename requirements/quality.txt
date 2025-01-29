@@ -13,6 +13,11 @@ astroid==3.3.8
     #   -r requirements/test.txt
     #   pylint
     #   pylint-celery
+attrs==25.1.0
+    # via
+    #   -r requirements/test.txt
+    #   jsonschema
+    #   referencing
 cachetools==5.5.1
     # via
     #   -r requirements/test.txt
@@ -55,6 +60,8 @@ coverage[toml]==7.6.10
     #   pytest-cov
 cryptography==44.0.0
     # via secretstorage
+ddt==1.7.2
+    # via -r requirements/test.txt
 dill==0.3.9
     # via
     #   -r requirements/test.txt
@@ -69,6 +76,7 @@ django==4.2.18
     #   -r requirements/test.txt
     #   django-crum
     #   django-waffle
+    #   djangorestframework
     #   edx-django-utils
     #   edx-i18n-tools
 django-crum==0.7.9
@@ -79,13 +87,17 @@ django-waffle==4.2.0
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
+djangorestframework==3.15.2
+    # via -r requirements/test.txt
 docutils==0.21.2
     # via readme-renderer
+edx-codejail==3.5.2
+    # via -r requirements/test.txt
 edx-django-utils==7.1.0
     # via -r requirements/test.txt
 edx-i18n-tools==1.6.3
     # via -r requirements/test.txt
-edx-lint==5.5.0
+edx-lint==5.6.0
     # via
     #   -r requirements/quality.in
     #   -r requirements/test.txt
@@ -104,7 +116,7 @@ iniconfig==2.0.0
     # via
     #   -r requirements/test.txt
     #   pytest
-isort==5.13.2
+isort==6.0.0
     # via
     #   -r requirements/quality.in
     #   -r requirements/test.txt
@@ -123,6 +135,12 @@ jinja2==3.1.5
     # via
     #   -r requirements/test.txt
     #   code-annotations
+jsonschema==4.23.0
+    # via -r requirements/test.txt
+jsonschema-specifications==2024.10.1
+    # via
+    #   -r requirements/test.txt
+    #   jsonschema
 keyring==25.6.0
     # via twine
 lxml[html-clean]==5.3.0
@@ -205,7 +223,7 @@ pygments==2.19.1
     # via
     #   readme-renderer
     #   rich
-pylint==3.3.3
+pylint==3.3.4
     # via
     #   -r requirements/test.txt
     #   edx-lint
@@ -255,6 +273,11 @@ pyyaml==6.0.2
     #   edx-i18n-tools
 readme-renderer==44.0
     # via twine
+referencing==0.36.2
+    # via
+    #   -r requirements/test.txt
+    #   jsonschema
+    #   jsonschema-specifications
 requests==2.32.3
     # via
     #   id
@@ -266,11 +289,17 @@ rfc3986==2.0.0
     # via twine
 rich==13.9.4
     # via twine
+rpds-py==0.22.3
+    # via
+    #   -r requirements/test.txt
+    #   jsonschema
+    #   referencing
 secretstorage==3.3.3
     # via keyring
 six==1.17.0
     # via
     #   -r requirements/test.txt
+    #   edx-codejail
     #   edx-lint
 snowballstemmer==2.2.0
     # via pydocstyle
@@ -295,6 +324,10 @@ tox==4.24.1
     # via -r requirements/test.txt
 twine==6.1.0
     # via -r requirements/quality.in
+typing-extensions==4.12.2
+    # via
+    #   -r requirements/test.txt
+    #   referencing
 urllib3==2.2.3
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt

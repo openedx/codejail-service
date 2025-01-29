@@ -19,12 +19,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
 
-from django.urls import include, re_path
+from django.urls import include, path
 
 from codejail_service.apps.api import urls as api_urls
 from codejail_service.apps.core import views as core_views
 
 urlpatterns = [
-    re_path(r'^api/', include(api_urls)),
-    re_path(r'^health/$', core_views.health, name='health'),
+    path(r'api/', include(api_urls)),
+    path(r'health/', core_views.health, name='health'),
 ]
