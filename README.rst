@@ -34,6 +34,16 @@ Please see the Open edX documentation for `guidance on Python development`_ in t
 Deploying
 *********
 
+The service may be started using gunicorn with a command like this::
+
+  export DJANGO_SETTINGS_MODULE=codejail_service.settings.production
+  gunicorn -c codejail_service/docker_gunicorn_configuration.py \
+    --bind '0.0.0.0:8080' --workers=10 --max-requests=1000 --name codejail \
+    codejail_service.wsgi:application
+
+There is a healthcheck endpoint at ``/health/`` which responds to a
+GET with ``200 OK`` if the service is running and healthy.
+
 TODO (`<https://github.com/openedx/codejail-service/issues/3>`__)
 
 Getting Help

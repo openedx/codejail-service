@@ -5,6 +5,7 @@ Django         # Web application framework
 gunicorn       # HTTP server framework
 
 edx-django-utils
+edx-toggles
 edx-i18n-tools
 openedx-atlas
 pytz

@@ -13,6 +13,7 @@ from rest_framework.test import APIClient
 
 @override_settings(
     ROOT_URLCONF='codejail_service.urls',
+    CODEJAIL_ENABLED=True,
 )
 @ddt.ddt
 class TestExecService(TestCase):
@@ -42,6 +43,13 @@ class TestExecService(TestCase):
 
         assert resp.status_code == exp_status
         assert json.loads(resp.content) == exp_body
+
+    @override_settings(CODEJAIL_ENABLED=False)
+    def test_feature_disabled(self):
+        """Code-exec can be disabled."""
+        self._test_codejail_api(
+            exp_status=500, exp_body={'error': "Codejail service not enabled"},
+        )
 
     def test_success(self):
         """Regular successful call."""
