@@ -63,6 +63,7 @@ code-annotations==2.2.0
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
     #   edx-lint
+    #   edx-toggles
 colorama==0.4.6
     # via
     #   -r requirements/quality.txt
@@ -100,16 +101,19 @@ django==4.2.18
     #   djangorestframework
     #   edx-django-utils
     #   edx-i18n-tools
+    #   edx-toggles
 django-crum==0.7.9
     # via
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
     #   edx-django-utils
+    #   edx-toggles
 django-waffle==4.2.0
     # via
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
     #   edx-django-utils
+    #   edx-toggles
 djangorestframework==3.15.2
     # via
     #   -r requirements/quality.txt
@@ -126,11 +130,16 @@ edx-django-utils==7.1.0
     # via
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
+    #   edx-toggles
 edx-i18n-tools==1.6.3
     # via
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
 edx-lint==5.6.0
+    # via
+    #   -r requirements/quality.txt
+    #   -r requirements/test.txt
+edx-toggles==5.2.0
     # via
     #   -r requirements/quality.txt
     #   -r requirements/test.txt

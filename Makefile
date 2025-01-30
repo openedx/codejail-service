@@ -82,11 +82,11 @@ migrate: ## apply database migrations
 html_coverage: ## generate and view HTML coverage report
 	coverage html && open htmlcov/index.html
 
-# Define PIP_COMPILE_OPTS=-v to get more information during make upgrade.
-PIP_COMPILE = pip-compile --upgrade $(PIP_COMPILE_OPTS)
+# Define COMPILE_OPTS=-v to get more information during make upgrade.
+PIP_COMPILE = pip-compile $(COMPILE_OPTS)
 
-upgrade: export CUSTOM_COMPILE_COMMAND=make upgrade
-upgrade: ## update the requirements/*.txt files with the latest packages satisfying requirements/*.in
+compile-requirements: export CUSTOM_COMPILE_COMMAND=make upgrade
+compile-requirements: ## Re-compile *.in requirements to *.txt
 	pip install -qr requirements/pip-tools.txt
 	# Make sure to compile files after any other files they include!
 	$(PIP_COMPILE) --allow-unsafe -o requirements/pip.txt requirements/pip.in
@@ -104,6 +104,9 @@ upgrade: ## update the requirements/*.txt files with the latest packages satisfy
 	grep -e "^django==" requirements/base.txt > requirements/django.txt
 	sed '/^[dD]jango==/d' requirements/test.txt > requirements/test.tmp
 	mv requirements/test.tmp requirements/test.txt
+
+upgrade:  ## update the pip requirements files to use the latest releases satisfying our constraints
+	$(MAKE) compile-requirements COMPILE_OPTS="--upgrade $(COMPILE_OPTS)"
 
 extract_translations: ## extract strings to be translated, outputting .mo files
 	cd codejail_service && i18n_tool extract --no-segment

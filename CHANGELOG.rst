@@ -14,12 +14,18 @@ Change Log
 Unreleased
 **********
 
+0.3.0 - 2025-01-30
+******************
+
+Changed
+=======
+* Require enabling Django setting ``CODEJAIL_ENABLED`` for code-exec endpoint to work, until it has been secured to our satisfaction.
+
 0.2.0 - 2025-01-29
 ******************
 
 Added
 =====
-
 * Implemented v0 API of code-exec endpoint
 
 0.1.0 - 2025-01-28
@@ -27,5 +33,4 @@ Added
 
 Added
 =====
-
 * First version (just has healthcheck)

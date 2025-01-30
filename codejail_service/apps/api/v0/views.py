@@ -7,6 +7,7 @@ import logging
 from copy import deepcopy
 
 from codejail.safe_exec import SafeExecException, safe_exec
+from edx_toggles.toggles import SettingToggle
 from jsonschema.exceptions import best_match as json_error_best_match
 from jsonschema.validators import Draft202012Validator
 from rest_framework.decorators import api_view, parser_classes
@@ -55,6 +56,17 @@ payload_schema = {
 Draft202012Validator.check_schema(payload_schema)
 payload_validator = Draft202012Validator(payload_schema)
 
+# .. toggle_name: CODEJAIL_ENABLED
+# .. toggle_implementation: SettingToggle
+# .. toggle_default: False
+# .. toggle_description: If True, codejail execution calls will be accepted over the network.
+#   This is currently an opt_in while the feature is still undergoing security review. Once
+#   the feature is fully developed and other safeguards are in place (such as config
+#   validation at startup) then this should be changed to a circuit_breaker, defaulting to True.
+# .. toggle_use_cases: opt_in
+# .. toggle_creation_date: 2025-01-30
+CODEJAIL_ENABLED = SettingToggle('CODEJAIL_ENABLED', default=False, module_name=__name__)
+
 
 @api_view(['POST'])
 @parser_classes([FormParser, MultiPartParser])
@@ -78,6 +90,9 @@ def code_exec(request):
 
     Other responses are errors, with a JSON body containing further details.
     """
+    if not CODEJAIL_ENABLED.is_enabled():
+        return Response({'error': "Codejail service not enabled"}, status=500)
+
     params_json = request.data['payload']
     params = json.loads(params_json)
 
