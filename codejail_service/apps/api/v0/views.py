@@ -4,15 +4,16 @@ Codejail service API.
 
 import json
 import logging
-from copy import deepcopy
 
-from codejail.safe_exec import SafeExecException, safe_exec
 from edx_toggles.toggles import SettingToggle
 from jsonschema.exceptions import best_match as json_error_best_match
 from jsonschema.validators import Draft202012Validator
 from rest_framework.decorators import api_view, parser_classes
 from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.response import Response
+
+from codejail_service.codejail import safe_exec
+from codejail_service.startup_check import is_exec_safe
 
 log = logging.getLogger(__name__)
 
@@ -93,6 +94,9 @@ def code_exec(request):
     if not CODEJAIL_ENABLED.is_enabled():
         return Response({'error': "Codejail service not enabled"}, status=500)
 
+    if not is_exec_safe():
+        return Response({'error': "Codejail service is not correctly configured"}, status=500)
+
     params_json = request.data['payload']
     params = json.loads(params_json)
 
@@ -116,17 +120,17 @@ def code_exec(request):
     if unsafely:
         return Response({'error': "Refusing codejail execution with unsafely=true"}, status=400)
 
-    output_globals_dict = deepcopy(input_globals_dict)  # Output dict will be mutated by safe_exec
     try:
-        safe_exec(
+        # This wrapped version of safe_exec doesn't mutate the globals dict
+        output_globals_dict = safe_exec(
             complete_code,
-            output_globals_dict,
+            input_globals_dict,
             python_path=python_path,
             extra_files=extra_files,
             limit_overrides_context=limit_overrides_context,
             slug=slug,
         )
-    except SafeExecException as e:
+    except BaseException as e:
         log.debug("Codejail execution failed for {slug=} with: {e}")
         return Response({'emsg': str(e)})
 
