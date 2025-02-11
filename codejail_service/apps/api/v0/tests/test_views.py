@@ -5,10 +5,13 @@ Test codejail service views.
 import json
 import textwrap
 from os import path
+from unittest.mock import patch
 
 import ddt
 from django.test import TestCase, override_settings
 from rest_framework.test import APIClient
+
+from codejail_service import startup_check
 
 
 @override_settings(
@@ -21,7 +24,15 @@ class TestExecService(TestCase):
 
     def setUp(self):
         super().setUp()
+        # We can't configure apparmor for regular unit tests, so just
+        # pretend startup was OK and the sandbox is working.
+        #
+        # This approach means we can't parallelize the tests, but it's concise.
+        startup_check.STARTUP_SAFETY_CHECK_OK = True
         self.standard_params = {'code': 'retval = 3 + 4', 'globals_dict': {}}
+
+    def tearDown(self):
+        startup_check.STARTUP_SAFETY_CHECK_OK = None
 
     def _test_codejail_api(self, *, params=None, files=None, exp_status, exp_body):
         """
@@ -49,6 +60,13 @@ class TestExecService(TestCase):
         """Code-exec can be disabled."""
         self._test_codejail_api(
             exp_status=500, exp_body={'error': "Codejail service not enabled"},
+        )
+
+    @patch('codejail_service.apps.api.v0.views.is_exec_safe', return_value=None)
+    def test_unhealthy(self, _mock_is_safe_exec):
+        """Code-exec prevented by failing startup checks."""
+        self._test_codejail_api(
+            exp_status=500, exp_body={'error': "Codejail service is not correctly configured"},
         )
 
     def test_success(self):

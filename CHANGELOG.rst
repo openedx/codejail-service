@@ -14,6 +14,13 @@ Change Log
 Unreleased
 **********
 
+0.4.0 - 2025-02-11
+******************
+Changed
+=======
+* Codejail is now properly configured at startup
+* Service will refuse to execute code if basic smoke tests fail at startup. Also, healthcheck endpoint will remain unhealthy.
+
 0.3.0 - 2025-01-30
 ******************
 
