@@ -129,5 +129,9 @@ class TestExecService(TestCase):
         """Report exceptions from jailed code."""
         self._test_codejail_api(
             params={'code': '1/0', 'globals_dict': {}},
-            exp_status=200, exp_body={'emsg': 'ZeroDivisionError: division by zero'},
+            exp_status=200,
+            exp_body={
+                'globals_dict': {},
+                'emsg': 'ZeroDivisionError: division by zero',
+            },
         )

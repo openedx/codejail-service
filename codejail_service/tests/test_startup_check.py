@@ -35,9 +35,9 @@ def responses(math=DEFAULT, disk=DEFAULT, child=DEFAULT):
 
     This is intended to be used in mocking out safe_exec in the exact
     sequence of calls that the startup safety check function
-    makes. Each value in the list should either be a return value of
-    safe_exec or an Exception instance. (Anything that is compatible with
-    the behavior of the side_effect param in unittest.mock.)
+    makes. Each value in the list must be a return value of
+    safe_exec -- that is, a 2-tuple of the returned globals and an error
+    message string. (Error message slot will be `None` on success.)
 
     The default list of responses will satisfy the startup checks and
     should result in a "we're healthy" state. The math/disk/child kwargs
@@ -46,11 +46,11 @@ def responses(math=DEFAULT, disk=DEFAULT, child=DEFAULT):
     responses provoke an "unhealthy" determination.
     """
     if math is DEFAULT:
-        math = {'x': 17}
+        math = ({'x': 17}, None)
     if disk is DEFAULT:
-        disk = Exception("... Permission denied ...")
+        disk = ({}, "... Permission denied ...")
     if child is DEFAULT:
-        child = Exception("... Permission denied ...")
+        child = ({}, "... Permission denied ...")
 
     return [math, disk, child]
 
@@ -66,24 +66,41 @@ class TestInit(TestCase):
         run_startup_safety_check()
         assert startup_check.STARTUP_SAFETY_CHECK_OK is False
 
+    @patch('codejail_service.startup_check.STARTUP_SAFETY_CHECK_OK', None)
+    @patch('codejail_service.startup_check.log.error')
+    @patch('codejail_service.startup_check.safe_exec', side_effect=Exception("oops"))
+    def test_check_throws(self, _mock_safe_exec, mock_log_error):
+        """
+        Exceptions raised by startup checks should be caught and turned into a failure.
+
+        (The checks should catch any exceptions themselves; this is just a backstop.)
+        """
+        run_startup_safety_check()
+        assert startup_check.STARTUP_SAFETY_CHECK_OK is False
+
+        # Confirm log message for at least one of the checks
+        assert mock_log_error.call_args_list[0] == call(
+            '''Startup test 'Basic code execution' failed with: "Uncaught exception from test: Exception('oops')"'''
+        )
+
     @ddt.data(
         # Baseline mocked values: Everything passes.
         (responses(), True),
         # Extraneous globals don't cause a check failure
-        (responses(math={'x': 17, 'unrelated': 'ignored'}), True),
+        (responses(math=({'x': 17, 'unrelated': 'ignored'}, None)), True),
 
         # Wrong exception message
-        (responses(disk=Exception("... Module not found ...")), False),
-        (responses(child=Exception("... Module not found ...")), False),
+        (responses(disk=({}, "... Module not found ...")), False),
+        (responses(child=({}, "... Module not found ...")), False),
         # Lack of an exception
-        (responses(disk={}), False),
-        (responses(child={}), False),
+        (responses(disk=({}, None)), False),
+        (responses(child=({}, None)), False),
         # Wrong value for global
-        (responses(math={'x': 999}), False),
+        (responses(math=({'x': 999}, None)), False),
         # Missing global
-        (responses(math={'y': 17}), False),
+        (responses(math=({'y': 17}, None)), False),
         # Exception when expecting a value
-        (responses(math=Exception("Divide by zero")), False),
+        (responses(math=({}, "Divide by zero")), False),
     )
     @ddt.unpack
     @patch('codejail_service.startup_check.STARTUP_SAFETY_CHECK_OK', None)

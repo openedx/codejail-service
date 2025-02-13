@@ -82,8 +82,10 @@ def _test_basic_function():
     """
     Test for basic code execution (math).
     """
-    globals_out = safe_exec("x = x + 1", {'x': 16})
+    (globals_out, error_message) = safe_exec("x = x + 1", {'x': 16})
 
+    if error_message is not None:
+        return f"Unexpected error: {error_message}"
     if 'x' not in globals_out:
         return "x not in returned globals"
     if globals_out['x'] != 17:
@@ -96,29 +98,29 @@ def _test_escape_disk():
     """
     Test for sandbox escape by reading from files outside of sandbox.
     """
-    try:
-        globals_out = safe_exec("import os; ret = os.listdir('/')", {})
+    (globals_out, error_message) = safe_exec("import os; ret = os.listdir('/')", {})
+
+    if error_message is None:
         return f"Expected error, but code ran successfully. Globals: {globals_out!r}"
-    except BaseException as e:
-        if "Permission denied" in repr(e):
-            return True
-        else:
-            return f"Expected permission error, but got: {e!r}"
+    if "Permission denied" not in error_message:
+        return f"Expected permission error, but got: {error_message}"
+
+    return True
 
 
 def _test_escape_subprocess():
     """
     Test for sandbox escape by creating a child process.
     """
-    try:
-        globals_out = safe_exec(
-            "import subprocess;"
-            "ret = subprocess.check_output('echo $((6 * 7))', shell=True)",
-            {},
-        )
+    (globals_out, error_message) = safe_exec(
+        "import subprocess;"
+        "ret = subprocess.check_output('echo $((6 * 7))', shell=True)",
+        {},
+    )
+
+    if error_message is None:
         return f"Expected error, but code ran successfully. Globals: {globals_out!r}"
-    except BaseException as e:
-        if "Permission denied" in repr(e):
-            return True
-        else:
-            return f"Expected permission error, but got: {e!r}"
+    if "Permission denied" not in error_message:
+        return f"Expected permission error, but got: {error_message}"
+
+    return True
