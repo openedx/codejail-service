@@ -42,7 +42,7 @@ def responses(math=DEFAULT, disk=DEFAULT, child=DEFAULT):
     The default list of responses will satisfy the startup checks and
     should result in a "we're healthy" state. The math/disk/child kwargs
     can be overridden with alternative responses to those individual
-    checks (`_test_basic_function` etc.) in order to test whether those
+    checks (`_check_basic_function` etc.) in order to test whether those
     responses provoke an "unhealthy" determination.
     """
     if math is DEFAULT:
@@ -80,7 +80,7 @@ class TestInit(TestCase):
 
         # Confirm log message for at least one of the checks
         assert mock_log_error.call_args_list[0] == call(
-            '''Startup test 'Basic code execution' failed with: "Uncaught exception from test: Exception('oops')"'''
+            '''Startup check 'Basic code execution' failed with: "Uncaught exception from check: Exception('oops')"'''
         )
 
     @ddt.data(
@@ -133,16 +133,16 @@ class TestInit(TestCase):
         assert startup_check.STARTUP_SAFETY_CHECK_OK is False
 
         assert mock_log_info.call_args_list == [
-            call("Startup test 'Basic code execution' passed"),
+            call("Startup check 'Basic code execution' passed"),
         ]
 
         assert len(mock_log_error.call_args_list) == 2
         assert (
-            "Startup test 'Block sandbox escape by disk access' failed with: "
+            "Startup check 'Block sandbox escape by disk access' failed with: "
             "\"Expected error, but code ran successfully. Globals: {'ret': ['"
         ) in mock_log_error.call_args_list[0][0][0]
         assert (
-            "Startup test 'Block sandbox escape by child process' failed with: "
+            "Startup check 'Block sandbox escape by child process' failed with: "
             r'''"Expected error, but code ran successfully. Globals: {'ret': '42\\n'}"'''
         ) == mock_log_error.call_args_list[1][0][0]
 
