@@ -85,9 +85,9 @@ def code_exec(request):
     This API does not permit `unsafely=true`.
 
     If the response is a 200, the codejail execution completed. The response
-    will be JSON containing either a single key `globals_dict` (containing
-    the global scope values at the end of a run to completion) or `emsg` (the
-    exception the submitted code raised).
+    will be JSON containing the key `globals_dict` (containing
+    the global scope values at the end of a run to completion) and possibly `emsg`
+    (an error message string) if the submitted code raised an exception.
 
     Other responses are errors, with a JSON body containing further details.
     """
@@ -120,19 +120,19 @@ def code_exec(request):
     if unsafely:
         return Response({'error': "Refusing codejail execution with unsafely=true"}, status=400)
 
-    try:
-        # This wrapped version of safe_exec doesn't mutate the globals dict
-        output_globals_dict = safe_exec(
-            complete_code,
-            input_globals_dict,
-            python_path=python_path,
-            extra_files=extra_files,
-            limit_overrides_context=limit_overrides_context,
-            slug=slug,
-        )
-    except BaseException as e:
-        log.debug("Codejail execution failed for {slug=} with: {e}")
-        return Response({'emsg': str(e)})
+    # This wrapped version of safe_exec doesn't mutate the globals dict
+    (globals_out, error_message) = safe_exec(
+        complete_code,
+        input_globals_dict,
+        python_path=python_path,
+        extra_files=extra_files,
+        limit_overrides_context=limit_overrides_context,
+        slug=slug,
+    )
 
-    log.debug("Codejail execution succeeded for {slug=}, with globals={output_globals_dict!r}")
-    return Response({'globals_dict': output_globals_dict})
+    if error_message is None:
+        log.debug("Codejail execution succeeded for {slug=}, with globals={globals_out!r}")
+        return Response({'globals_dict': globals_out})
+    else:
+        log.debug("Codejail execution failed for {slug=} with: {error_message}")
+        return Response({'globals_dict': globals_out, 'emsg': error_message})

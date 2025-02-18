@@ -14,6 +14,12 @@ Change Log
 Unreleased
 **********
 
+0.4.1 - 2025-02-18
+******************
+Fixed
+=====
+* Return ``globals_dict`` even when also returning an ``emsg`` error
+
 0.4.0 - 2025-02-11
 ******************
 Changed
