@@ -26,7 +26,7 @@ cachetools==5.5.1
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
     #   tox
-certifi==2024.12.14
+certifi==2025.1.31
     # via
     #   -r requirements/quality.txt
     #   requests
@@ -69,12 +69,12 @@ colorama==0.4.6
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
     #   tox
-coverage[toml]==7.6.10
+coverage[toml]==7.6.12
     # via
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
     #   pytest-cov
-cryptography==44.0.0
+cryptography==44.0.1
     # via
     #   -r requirements/quality.txt
     #   secretstorage
@@ -92,7 +92,7 @@ distlib==0.3.9
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
     #   virtualenv
-django==4.2.18
+django==4.2.19
     # via
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
@@ -139,7 +139,7 @@ edx-lint==5.6.0
     # via
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
-edx-toggles==5.2.0
+edx-toggles==5.3.0
     # via
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
@@ -206,7 +206,7 @@ keyring==25.6.0
     # via
     #   -r requirements/quality.txt
     #   twine
-lxml[html-clean]==5.3.0
+lxml[html-clean]==5.3.1
     # via
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
@@ -240,7 +240,7 @@ more-itertools==10.6.0
     #   -r requirements/quality.txt
     #   jaraco-classes
     #   jaraco-functools
-newrelic==10.4.0
+newrelic==10.6.0
     # via
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
@@ -267,7 +267,7 @@ path==16.16.0
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
     #   edx-i18n-tools
-pbr==6.1.0
+pbr==6.1.1
     # via
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
@@ -290,7 +290,7 @@ polib==1.2.0
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
     #   edx-i18n-tools
-psutil==6.1.1
+psutil==7.0.0
     # via
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
@@ -353,7 +353,7 @@ pytest-cov==6.0.0
     # via
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
-pytest-django==4.9.0
+pytest-django==4.10.0
     # via
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
@@ -362,7 +362,7 @@ python-slugify==8.0.4
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
     #   code-annotations
-pytz==2024.2
+pytz==2025.1
     # via
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
@@ -457,8 +457,11 @@ urllib3==2.2.3
     #   -r requirements/quality.txt
     #   requests
     #   twine
-virtualenv==20.29.1
+virtualenv==20.29.2
     # via
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
     #   tox
+
+# The following packages are considered to be unsafe in a requirements file:
+# setuptools

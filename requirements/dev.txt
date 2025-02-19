@@ -26,7 +26,7 @@ cachetools==5.5.1
     # via
     #   -r requirements/validation.txt
     #   tox
-certifi==2024.12.14
+certifi==2025.1.31
     # via
     #   -r requirements/validation.txt
     #   requests
@@ -66,17 +66,17 @@ colorama==0.4.6
     # via
     #   -r requirements/validation.txt
     #   tox
-coverage[toml]==7.6.10
+coverage[toml]==7.6.12
     # via
     #   -r requirements/validation.txt
     #   pytest-cov
-cryptography==44.0.0
+cryptography==44.0.1
     # via
     #   -r requirements/validation.txt
     #   secretstorage
 ddt==1.7.2
     # via -r requirements/validation.txt
-diff-cover==9.2.1
+diff-cover==9.2.3
     # via -r requirements/dev.in
 dill==0.3.9
     # via
@@ -86,7 +86,7 @@ distlib==0.3.9
     # via
     #   -r requirements/validation.txt
     #   virtualenv
-django==4.2.18
+django==4.2.19
     # via
     #   -r requirements/validation.txt
     #   django-crum
@@ -121,7 +121,7 @@ edx-i18n-tools==1.6.3
     # via -r requirements/validation.txt
 edx-lint==5.6.0
     # via -r requirements/validation.txt
-edx-toggles==5.2.0
+edx-toggles==5.3.0
     # via -r requirements/validation.txt
 filelock==3.17.0
     # via
@@ -178,7 +178,7 @@ keyring==25.6.0
     # via
     #   -r requirements/validation.txt
     #   twine
-lxml[html-clean]==5.3.0
+lxml[html-clean]==5.3.1
     # via
     #   -r requirements/validation.txt
     #   edx-i18n-tools
@@ -208,7 +208,7 @@ more-itertools==10.6.0
     #   -r requirements/validation.txt
     #   jaraco-classes
     #   jaraco-functools
-newrelic==10.4.0
+newrelic==10.6.0
     # via
     #   -r requirements/validation.txt
     #   edx-django-utils
@@ -232,7 +232,7 @@ path==16.16.0
     # via
     #   -r requirements/validation.txt
     #   edx-i18n-tools
-pbr==6.1.0
+pbr==6.1.1
     # via
     #   -r requirements/validation.txt
     #   stevedore
@@ -254,7 +254,7 @@ polib==1.2.0
     # via
     #   -r requirements/validation.txt
     #   edx-i18n-tools
-psutil==6.1.1
+psutil==7.0.0
     # via
     #   -r requirements/validation.txt
     #   edx-django-utils
@@ -312,13 +312,13 @@ pytest==8.3.4
     #   pytest-django
 pytest-cov==6.0.0
     # via -r requirements/validation.txt
-pytest-django==4.9.0
+pytest-django==4.10.0
     # via -r requirements/validation.txt
 python-slugify==8.0.4
     # via
     #   -r requirements/validation.txt
     #   code-annotations
-pytz==2024.2
+pytz==2025.1
     # via -r requirements/validation.txt
 pyyaml==6.0.2
     # via
@@ -400,7 +400,7 @@ urllib3==2.2.3
     #   -r requirements/validation.txt
     #   requests
     #   twine
-virtualenv==20.29.1
+virtualenv==20.29.2
     # via
     #   -r requirements/validation.txt
     #   tox
