@@ -12,7 +12,7 @@ import ddt
 from api_tests.utils import call_api_code_error, call_api_success
 
 
-def test_cannot_make_http_call():
+def test_deny_make_http_call():
     """
     HTTP call involves both UDP and TCP outwards connections, so
     it will fail even if only one of those is blocked. But it's a good
@@ -26,7 +26,7 @@ def test_cannot_make_http_call():
     assert "urllib.error.URLError: <urlopen error [Errno -3] Temporary failure in name resolution>" in emsg
 
 
-def test_cannot_resolve_dns():
+def test_deny_resolve_dns():
     """
     No DNS lookups. This uses UDP.
     """
@@ -49,7 +49,7 @@ class TestSocketCreate(TestCase):
         ('socket.AF_INET6', 'socket.SOCK_DGRAM'),
         ('socket.AF_NETLINK', 'socket.SOCK_RAW'),
     )
-    def test_cannot_create_socket(self, address_family, socket_type):
+    def test_deny_create_socket(self, address_family, socket_type):
         """
         Can't create a socket (even without calling bind or connect).
         """
@@ -61,17 +61,32 @@ class TestSocketCreate(TestCase):
         assert "PermissionError: [Errno 13] Permission denied" in emsg
 
 
-def test_unix_socket():
+class TestUnixSocket(TestCase):
     """
     Unlike other socket types, Unix sockets are allowed (they're local files).
+
+    This isn't something we specifically support, but it's not problematic as long as
+    socket creation only happens within the sandbox.
     """
-    code = dedent("""
-      import socket
-      s = socket.socket(socket.AF_UNIX, socket.SOCK_RAW)
-      s.bind("tmp/test-socket.0.0")
-      # Just proving we have created some kind of socket
-      out = s.fileno()
-    """)
-    globals_out = call_api_success(code, {})
-    # The actual value isn't strictly predictable
-    assert isinstance(globals_out['out'], int)
+
+    def code_for_create_socket(self, path):
+        return dedent(f"""
+          import socket
+          s = socket.socket(socket.AF_UNIX, socket.SOCK_RAW)
+          s.bind("{path}.0.0")
+          # Just proving we have created some kind of socket
+          out = s.fileno()
+        """)
+
+    def test_allow_in_sandbox(self):
+        """Allowed when in own sandbox's tmp dir."""
+        code = self.code_for_create_socket("./tmp/test-socket")
+        globals_out = call_api_success(code, {})
+        # The actual value isn't strictly predictable
+        assert isinstance(globals_out['out'], int)
+
+    def test_deny_elsewhere(self):
+        """Denied when in OS tmp dir."""
+        code = self.code_for_create_socket("/tmp/test-socket")
+        (_, emsg) = call_api_code_error(code, {})
+        assert "PermissionError: [Errno 13] Permission denied" in emsg

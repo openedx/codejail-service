@@ -12,7 +12,7 @@ import ddt
 from api_tests.utils import call_api_code_error, call_api_success
 
 
-def test_can_list_in_own_sandbox():
+def test_allow_list_in_own_sandbox():
     """
     We can list files in our own sandbox.
     """
@@ -23,7 +23,7 @@ def test_can_list_in_own_sandbox():
     assert "jailed_code" in listing
 
 
-def test_can_write_in_own_sandbox():
+def test_allow_write_in_own_sandbox():
     """
     We can create files in our own sandbox.
     """
@@ -50,7 +50,7 @@ class TestFilesystemDenial(TestCase):
         # Another quasi-harmless area of the filesystem
         "/proc/1/cmdline",
     )
-    def test_cannot_read_os_files(self, file_path):
+    def test_deny_read_os_files(self, file_path):
         """
         We can't read most files out in the broader OS.
         """
@@ -69,7 +69,7 @@ class TestFilesystemDenial(TestCase):
         # Parent directory contains other users' codejails
         "../",
     )
-    def test_cannot_list_os_dirs(self, dir_path):
+    def test_deny_list_os_dirs(self, dir_path):
         """
         We can't list various directories.
         """
@@ -84,7 +84,7 @@ class TestFilesystemDenial(TestCase):
         "/tmp/apitest.txt",
         "../apitest.txt",
     )
-    def test_cannot_write_outside_sandbox(self, file_path):
+    def test_deny_write_outside_sandbox(self, file_path):
         """
         We can't write to various places outside the sandbox.
         """

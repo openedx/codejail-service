@@ -7,7 +7,7 @@ from textwrap import dedent
 from api_tests.utils import call_api_success
 
 
-def test_basic_import():
+def test_support_basic_import():
     """
     We can load *any* part of *any* expected library.
 
@@ -22,7 +22,7 @@ def test_basic_import():
     assert "out" in call_api_success(code, {})
 
 
-def test_numpy():
+def test_support_numpy():
     """
     We can use numpy arrays.
 

@@ -7,7 +7,7 @@ from textwrap import dedent
 from api_tests.utils import call_api_code_error
 
 
-def test_long_running_task():
+def test_deny_long_running_task():
     """
     Don't allow an implausibly long-running task.
     """
@@ -18,13 +18,16 @@ def test_long_running_task():
       time.sleep(30.0)
       elapsed = time.monotonic() - start
     """), {})
-    # Killed by signal
+    # Killed by SIG_KILL == -9 (or $? == 137 in shell)
+    #
+    # This status code is important because it indicates that SIG_KILL was used
+    # by default, with no attempt at SIG_TERM or other "gentle" mechanism first.
     assert emsg == "Couldn't execute jailed code: stdout: b'', stderr: b'' with status code: -9"
 
 
-def test_suppress_signals():
+def test_deny_prevent_kill():
     """
-    Still able to kill a process that is trying to capture and ignore various signals.
+    Allowed to capture and ignore various signals, but it won't prevent kill.
     """
     (_, emsg) = call_api_code_error(dedent("""
       import signal, time
@@ -40,5 +43,5 @@ def test_suppress_signals():
       time.sleep(30.0)
       elapsed = time.monotonic() - start
     """), {})
-    # Killed by signal
+    # Again, this shows SIG_KILL was used.
     assert emsg == "Couldn't execute jailed code: stdout: b'', stderr: b'' with status code: -9"

@@ -7,21 +7,14 @@ from textwrap import dedent
 from api_tests.utils import call_api_success
 
 
-def test_basic_math_output():
+def test_support_globals_input_output():
     """
-    We can execute some code and get the result in an output global.
-    """
-    assert {"out": 25} == call_api_success("out = 5 * 5", {})
-
-
-def test_input():
-    """
-    We can pass inputs to the code.
+    We can use globals to pass inputs to the code and receive output.
     """
     assert {"input": 21, "out": 42} == call_api_success("out = input * 2", {"input": 21})
 
 
-def test_function_test():
+def test_support_define_function():
     """
     We can run multi-line code and define functions.
     """
@@ -34,7 +27,7 @@ def test_function_test():
     assert {"input": 50, "out": 100} == call_api_success(code, {"input": 50})
 
 
-def test_serialization():
+def test_support_selective_serialization():
     """
     Only serializable globals are returned; others are simply omitted.
     """
