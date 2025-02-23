@@ -94,3 +94,27 @@ class TestFilesystemDenial(TestCase):
         """)
         (_, emsg) = call_api_code_error(code, {})
         assert f"PermissionError: [Errno 13] Permission denied: \\'{file_path}\\'" in emsg
+
+
+def test_allow_python_path():
+    """
+    Everything that's added to sys.path by the safe_exec prefix code should be
+    listable or readable (if it exists).
+    """
+    code = dedent("""
+      import os, os.path, sys
+
+      out = ""
+      for p in sys.path:
+          if os.path.isdir(p):
+              result = len(os.listdir(p))
+          elif os.path.isfile(p):
+              with open(p, 'r') as f:
+                  result = f.read(1)
+          else:
+              result = "missing or other type"
+
+          out += f"{p}: {result!r}\\n"
+    """)
+    globals_out = call_api_success(code, {})
+    assert ": " in globals_out['out']
