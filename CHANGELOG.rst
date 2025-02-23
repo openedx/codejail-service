@@ -14,6 +14,10 @@ Change Log
 Unreleased
 **********
 
+Fixed
+=====
+* Log unexpected exceptions instead of returning them as an ``emsg``
+
 0.4.1 - 2025-02-18
 ******************
 Fixed

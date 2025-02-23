@@ -2,7 +2,10 @@
 Wrappers and utilities for codejail library.
 """
 
+import logging
 from copy import deepcopy
+
+log = logging.getLogger(__name__)
 
 
 def safe_exec(code, input_globals, **kwargs):
@@ -29,6 +32,7 @@ def safe_exec(code, input_globals, **kwargs):
     # fixing this.
 
     # pylint: disable=import-outside-toplevel
+    from codejail.safe_exec import SafeExecException
     from codejail.safe_exec import safe_exec as real_safe_exec
 
     # Prevent mutation of input
@@ -36,5 +40,12 @@ def safe_exec(code, input_globals, **kwargs):
     try:
         real_safe_exec(code, output_globals, **kwargs)
         return (output_globals, None)
-    except BaseException as e:
+    except SafeExecException as e:
+        # These exception messages can be safely returned to the user, as they
+        # indicate an error encountered by the jailed subprocess.
         return (output_globals, str(e))
+    except BaseException as e:
+        # Don't give details of unexpected exception, as it may indicate a bug
+        # in the codejail service rather than the jailed code.
+        log.warning(f"Unexpected error type from safe_exec: {e!r}", exc_info=True)
+        return (output_globals, "Couldn't execute jailed code: See logs.")
