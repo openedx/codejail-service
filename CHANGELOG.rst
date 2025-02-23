@@ -19,6 +19,7 @@ Unreleased
 Fixed
 =====
 * Add proper error handling to code-exec endpoint when ``payload`` param is missing or malformed
+* Log unexpected exceptions instead of returning them as an ``emsg``
 
 0.4.1 - 2025-02-18
 ******************
