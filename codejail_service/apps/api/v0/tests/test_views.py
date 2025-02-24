@@ -34,6 +34,22 @@ class TestExecService(TestCase):
     def tearDown(self):
         startup_check.STARTUP_SAFETY_CHECK_OK = None
 
+    def test_missing_payload(self):
+        """Handle missing payload param gracefully."""
+        client = APIClient()
+        resp = client.post('/api/v0/code-exec', {}, format='multipart')
+        assert resp.status_code == 400
+        assert json.loads(resp.content) == {'error': "Missing 'payload' parameter in POST body"}
+
+    def test_malformed_payload(self):
+        """Handle malformed payload param gracefully."""
+        client = APIClient()
+        resp = client.post('/api/v0/code-exec', {'payload': "Not JSON"}, format='multipart')
+        assert resp.status_code == 400
+        assert json.loads(resp.content) == {
+            'error': "Unable to parse payload JSON: Expecting value: line 1 column 1 (char 0)",
+        }
+
     def _test_codejail_api(self, *, params=None, files=None, exp_status, exp_body):
         """
         Call the view and make assertions.

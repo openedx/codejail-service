@@ -14,6 +14,12 @@ Change Log
 Unreleased
 **********
 
+0.4.2 - 2025-03-03
+******************
+Fixed
+=====
+* Add proper error handling to code-exec endpoint when ``payload`` param is missing or malformed
+
 0.4.1 - 2025-02-18
 ******************
 Fixed
