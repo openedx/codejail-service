@@ -18,7 +18,7 @@ attrs==25.1.0
     #   -r requirements/test.txt
     #   jsonschema
     #   referencing
-cachetools==5.5.1
+cachetools==5.5.2
     # via
     #   -r requirements/test.txt
     #   tox
@@ -297,7 +297,7 @@ rfc3986==2.0.0
     # via twine
 rich==13.9.4
     # via twine
-rpds-py==0.22.3
+rpds-py==0.23.1
     # via
     #   -r requirements/test.txt
     #   jsonschema
@@ -315,7 +315,7 @@ sqlparse==0.5.3
     # via
     #   -r requirements/test.txt
     #   django
-stevedore==5.4.0
+stevedore==5.4.1
     # via
     #   -r requirements/test.txt
     #   code-annotations

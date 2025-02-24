@@ -21,7 +21,7 @@ attrs==25.1.0
     #   -r requirements/test.txt
     #   jsonschema
     #   referencing
-cachetools==5.5.1
+cachetools==5.5.2
     # via
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
@@ -400,7 +400,7 @@ rich==13.9.4
     # via
     #   -r requirements/quality.txt
     #   twine
-rpds-py==0.22.3
+rpds-py==0.23.1
     # via
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
@@ -425,7 +425,7 @@ sqlparse==0.5.3
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
     #   django
-stevedore==5.4.0
+stevedore==5.4.1
     # via
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
