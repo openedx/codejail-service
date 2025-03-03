@@ -70,7 +70,7 @@ coverage[toml]==7.6.12
     # via
     #   -r requirements/validation.txt
     #   pytest-cov
-cryptography==44.0.1
+cryptography==44.0.2
     # via
     #   -r requirements/validation.txt
     #   secretstorage
@@ -113,7 +113,7 @@ docutils==0.21.2
     #   readme-renderer
 edx-codejail==3.5.2
     # via -r requirements/validation.txt
-edx-django-utils==7.1.0
+edx-django-utils==7.2.0
     # via
     #   -r requirements/validation.txt
     #   edx-toggles
@@ -142,7 +142,7 @@ iniconfig==2.0.0
     # via
     #   -r requirements/validation.txt
     #   pytest
-isort==6.0.0
+isort==6.0.1
     # via
     #   -r requirements/validation.txt
     #   pylint
@@ -158,7 +158,7 @@ jaraco-functools==4.1.0
     # via
     #   -r requirements/validation.txt
     #   keyring
-jeepney==0.8.0
+jeepney==0.9.0
     # via
     #   -r requirements/validation.txt
     #   keyring
@@ -212,7 +212,7 @@ newrelic==10.6.0
     # via
     #   -r requirements/validation.txt
     #   edx-django-utils
-nh3==0.2.20
+nh3==0.2.21
     # via
     #   -r requirements/validation.txt
     #   readme-renderer
@@ -305,7 +305,7 @@ pyproject-hooks==1.2.0
     #   -r requirements/pip-tools.txt
     #   build
     #   pip-tools
-pytest==8.3.4
+pytest==8.3.5
     # via
     #   -r requirements/validation.txt
     #   pytest-cov
