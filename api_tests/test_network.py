@@ -52,6 +52,10 @@ class TestSocketCreate(TestCase):
     def test_deny_create_socket(self, address_family, socket_type):
         """
         Can't create a socket (even without calling bind or connect).
+
+        If we *could* create sockets, the next step would be checking which
+        destinations we can bind or connect to. In particular, we'd want to
+        check each of public, network-internal, and loopback addresses.
         """
         code = dedent(f"""
           import socket

@@ -23,18 +23,51 @@ def test_allow_list_in_own_sandbox():
     assert "jailed_code" in listing
 
 
+# Standard path we'll use for write tests. The ./tmp/ dir in the sandbox should
+# always exist and should be writable, as long as FSIZE is set reasonably.
+WRITE_PATH = "tmp/api-test.txt"
+
+
 def test_allow_write_in_own_sandbox():
     """
     We can create files in our own sandbox.
     """
-    code = dedent("""
-      with open("tmp/api-test.txt", 'w') as f:
+    code = dedent(f"""
+      with open({WRITE_PATH!r}, 'w') as f:
           f.write("sample")
 
-      with open("tmp/api-test.txt", 'r') as f:
+      with open({WRITE_PATH!r}, 'r') as f:
           out = f.read()
     """)
     assert {"out": "sample"} == call_api_success(code, {})
+
+
+def test_allow_delete_from_own_sandbox():
+    """
+    We can delete files in our own sandbox.
+    """
+    code = dedent(f"""
+      with open({WRITE_PATH!r}, 'w') as f:
+          f.write("sample")
+
+      import os
+      os.remove({WRITE_PATH!r})
+    """)
+    call_api_success(code, {})
+
+
+def test_deny_write_large_file():
+    """
+    We can't write excessive amounts of data to a file.
+    """
+    code = dedent(f"""
+      with open({WRITE_PATH!r}, 'w') as f:
+          f.seek(1024 * 1024 * 1024)  # sparse file, potentially
+          f.write('x')
+    """)
+    (_, emsg) = call_api_code_error(code, {})
+    # 27 = EFBIG: File too large
+    assert "OSError: [Errno 27] File too large" in emsg
 
 
 @ddt.ddt
