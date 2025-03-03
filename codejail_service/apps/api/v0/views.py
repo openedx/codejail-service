@@ -97,12 +97,20 @@ def code_exec(request):
     if not is_exec_safe():
         return Response({'error': "Codejail service is not correctly configured"}, status=500)
 
-    params_json = request.data['payload']
-    params = json.loads(params_json)
+    params_json = request.data.get('payload')
+    if params_json is None:
+        return Response({'error': "Missing 'payload' parameter in POST body"}, status=400)
+
+    try:
+        params = json.loads(params_json)
+    except json.decoder.JSONDecodeError as e:
+        return Response({'error': f"Unable to parse payload JSON: {e}"}, status=400)
 
     if json_error := json_error_best_match(payload_validator.iter_errors(params)):
         return Response({'error': f"Payload JSON did not match schema: {json_error.message}"}, status=400)
 
+    # These first two are required params, but schema check has
+    # already ensured they are present.
     complete_code = params['code']  # includes standard prolog
     input_globals_dict = params['globals_dict']
     python_path = params.get('python_path') or []

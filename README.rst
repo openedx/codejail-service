@@ -24,6 +24,8 @@ This is intended to be run as a fully internal service with no database or admin
 
 While the service uses AppArmor as a first (and really, only) line of defense, it should also be deployed in a way that does not allow direct connections to other IDAs or internal services within the Open edX deployment. In the ideal situation, networking would be set up to only allow outbound connections to a predetermined set of IPs or domains.
 
+After any significant change to security settings, consider running the tests in ``./api_tests/``. These are run manually against a deployed service and can check for various sandbox weaknesses.
+
 Getting Started with Development
 ********************************
 
