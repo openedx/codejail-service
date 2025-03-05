@@ -48,7 +48,7 @@ def test_support_exception_traceback_stderr():
     Globals aren't updated when there's an exception, even via mutation.
     """
     (globals_out, emsg) = call_api_code_error(dedent("""
-      # Try updating some globals (won't work)
+      # Try updating some globals (won't show up in output globals, though)
       primitive = 22
       container.append(123)
 
@@ -65,7 +65,7 @@ def test_support_exception_traceback_stderr():
     """), {"primitive": 7, "container": []})
 
     # The codejail library isn't actually able to provide updated globals when
-    # there's an exception. If we want change that behavior, this test will need
+    # there's an exception. If we want to change that behavior, this test will need
     # to change too.
     #
     # This isn't a behavior we specifically want to *preserve*; this part of the
