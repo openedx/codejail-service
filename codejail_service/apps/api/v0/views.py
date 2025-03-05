@@ -146,7 +146,7 @@ def code_exec(request):
         # Nothing in edxapp actually *uses* the returned globals when there's an
         # emsg, but it does demand that the key is present in the response. The
         # globals also aren't updated when codejail encountered an error. We
-        # could just as well return {} here, but we returned the "updated"
-        # globals for compatibility with eduNEXT's existing implementation, just
-        # in case anything actually does care.
+        # could just as well return {} here, but the service returns the "updated"
+        # globals for backward-compatibility, just in case anything actually does
+        # care.
         return Response({'globals_dict': globals_out, 'emsg': error_message})
