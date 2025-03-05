@@ -25,3 +25,6 @@ def test_deny_environment_leakage():
     assert "DEBIAN_FRONTEND" not in found_env
     # If deployed service is Django-based, this might be present.
     assert "DJANGO_SETTINGS_MODULE" not in found_env
+    # We document this as a variable that deployers can set in their environment
+    # to make this test reliable.
+    assert "CJS_TEST_ENV_LEAKAGE" not in found_env
