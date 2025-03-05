@@ -42,7 +42,7 @@ Some aspects of the sandbox can't be readily tested in an automated fashion, or 
 
 * The sandboxed code should not have access to the environment variables that are set in the webapp's environment; these may contain sensitive information. The ``sudo`` call that codejail makes should have a side effect of creating a new environment mapping.  However, it's not clear exactly what we should look for if we wanted to test this properly.
 
-  * Testing for an exact set of env var names would lead to flaky tests, while checking for a known variable from the webapp's environment would rely too much on deployment implementation details. We can check for a few likely values, but there's nothing certain.
+  * The tests check for a few likely env vars, but it is not certain that they have been set, so the test might provide a false negative.
   * The API tests will check for the presence of ``CJS_TEST_ENV_LEAKAGE``, an optional variable that can be used for testing. Deployers are encouraged to set ``export CJS_TEST_ENV_LEAKAGE=yes`` in their webapp's environment so that this test can reliably detect leakage.
 
 * Process limits are configurable, and these tests aren't aware of what configuration has been performed in the deployment. It's difficult to write tests that will pass for all working deployments.
