@@ -34,3 +34,20 @@ To perform this sabotage testing in a development environment:
    * denial tests that are still passing (which should not happen, and likely indicates a badly written test)
    * allow/support tests that are now failing for some reason (which would be strange, and should be investigated)
    * tests that do not follow the naming scheme
+
+Limitations
+***********
+
+Some aspects of the sandbox can't be readily tested in an automated fashion, or can't be tested thoroughly.
+
+* The sandboxed code should not have access to the environment variables that are set in the webapp's environment; these may contain sensitive information. The ``sudo`` call that codejail makes should have a side effect of creating a new environment mapping.  However, it's not clear exactly what we should look for if we wanted to test this properly.
+
+  * The tests check for a few likely env vars, but it is not certain that they have been set, so the test might provide a false negative.
+  * The API tests will check for the presence of ``CJS_TEST_ENV_LEAKAGE``, an optional variable that can be used for testing. Deployers are encouraged to set ``export CJS_TEST_ENV_LEAKAGE=yes`` in their webapp's environment so that this test can reliably detect leakage.
+
+* Process limits are configurable, and these tests aren't aware of what configuration has been performed in the deployment. It's difficult to write tests that will pass for all working deployments.
+
+  * Tests have been added for excessive runtime, memory allocation, file size, and process forking. The tests use truly excessive inputs (e.g. 1 GB of memory) to ensure that any general-purpose deployment's reasonable limits are passed. Deployments that have occasion to allow more extreme resource use may need to adjust these tests.
+  * CPU time is not tested, as it can't meaningfully be tested independently of wall clock time (at least without knowing in advance the forking limit).
+  * Only single-file size limit is tested, as codejail's process-limit mechanism cannot limit totalled filesystem writes.
+  * Deployers could augment the existing API tests using knowledge of their own configured limits. However, the codejail library has unit tests for process limits, and it may be better to rely on those tests to ensure that the configuration mechanism works properly. (Process limits are configured in-process, and are therefore less fragile and less in need of API tests than the AppArmor-based confinement mechanism.)

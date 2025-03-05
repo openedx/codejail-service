@@ -52,6 +52,15 @@ class TestSocketCreate(TestCase):
     def test_deny_create_socket(self, address_family, socket_type):
         """
         Can't create a socket (even without calling bind or connect).
+
+        If we later decide to allow *creating* sockets (for some reason), or the
+        confinement mechanism allows creating sockets and only steps in to deny
+        at the bind/connect phase, the next step would be to enhance these tests
+        to check which addresses we can bind and which destinations we can connect to.
+
+        In particular, we'd want to check addresses in each of the public,
+        network-internal, and loopback address segments, and both IPv4 and IPv6, for
+        both bind and connect.
         """
         code = dedent(f"""
           import socket
