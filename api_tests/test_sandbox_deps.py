@@ -30,6 +30,11 @@ def test_support_numpy():
     in codejail.
     """
     code = dedent("""
+      # A prelude that's required for running numpy, otherwise it will segfault.
+      # In practice, edxapp adds this to all submitted code.
+      import os
+      os.environ['OPENBLAS_NUM_THREADS'] = '1'
+
       import numpy as np
       a = np.array([1, 2, 3, 4, 5])
       a = a * 2
