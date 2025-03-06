@@ -14,6 +14,12 @@ Change Log
 Unreleased
 **********
 
+0.5.0 - 2025-03-10
+******************
+Changed
+=======
+* The only file that can be uploaded and used in ``python_path`` is now ``python_lib.zip``. This is necessary for security but should be aligned with existing usage by edxapp.
+
 0.4.2 - 2025-03-03
 ******************
 Fixed

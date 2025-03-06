@@ -2,6 +2,7 @@
 Test codejail service views.
 """
 
+import io
 import json
 import textwrap
 from os import path
@@ -113,7 +114,7 @@ class TestExecService(TestCase):
             },
         )
 
-    def test_extra_files(self):
+    def test_course_library(self):
         """Check that we can include a course library."""
         # "Course library" containing `course_library.triangular_number`.
         #
@@ -140,6 +141,24 @@ class TestExecService(TestCase):
                 files={'python_lib.zip': lib_zip},
                 exp_status=200, exp_body={'globals_dict': {'result': 21}},
             )
+
+    def test_reject_unknown_python_path(self):
+        """We need to reject unknown python_path for security reasons."""
+        self._test_codejail_api(
+            params={'code': "out = 1 + 1", 'globals_dict': {}, 'python_path': ['something']},
+            exp_status=400,
+            exp_body={'error': "Only allowed entry in 'python_path' is 'python_lib.zip'"},
+        )
+
+    def test_reject_unknown_extra_files(self):
+        """We need to reject unknown filenames for security reasons."""
+        self._test_codejail_api(
+            params={'code': "out = 1 + 1", 'globals_dict': {}},
+            # Use a BytesIO to make requests treat this value as a file
+            files={'unknown.zip': io.BytesIO(b'TESTING')},
+            exp_status=400,
+            exp_body={'error': "Only allowed name for uploaded file is 'python_lib.zip'"},
+        )
 
     def test_exception(self):
         """Report exceptions from jailed code."""

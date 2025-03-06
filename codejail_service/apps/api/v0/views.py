@@ -122,6 +122,30 @@ def code_exec(request):
     # are resolved as last-wins.
     extra_files = [(filename, file.read()) for filename, file in request.FILES.items()]
 
+    # The following checks protect against vulnerabilities that would be
+    # introduced by exposing `safe_exec` directly. edxapp contains protections
+    # against these features being abused, but those protections are outside of
+    # the codejail-service security boundary and may be subject to change.
+    # Direct calls to the codejail-service API, bypassing edxapp, would
+    # not benefit from this protection.
+
+    # Only allow a known safe value for `python_path` (the only value that edxapp
+    # would ever send, in practice). Unrestricted `python_path` would allow
+    # *arbitrary file reads* in the broader filesystem by sandboxed code
+    # regardless of AppArmor settings. These reads would happen with the
+    # privilege level of the webapp user, not the sandbox user.
+    if python_path and python_path != ['python_lib.zip']:
+        return Response({'error': "Only allowed entry in 'python_path' is 'python_lib.zip'"}, status=400)
+
+    # Only allow a known safe name for uploaded files. (In practice, edxapp
+    # only ever sends a file called python_lib.zip). Due to a lack of checks in
+    # codejail, unrestricted filenames allow *arbitrary file writes* in the
+    # broader filesystem regardless of AppArmor settings. These writes would
+    # happen with the privilege level of the webapp user, not the sandbox user.
+    filenames = {name for (name, _bytes) in extra_files}
+    if filenames and filenames != {'python_lib.zip'}:
+        return Response({'error': "Only allowed name for uploaded file is 'python_lib.zip'"}, status=400)
+
     # Far too dangerous to allow unsafe executions to come in over the
     # network, even if we were to authenticate them. The caller is the
     # one who has the context on safety.
