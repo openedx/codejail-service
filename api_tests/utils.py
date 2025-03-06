@@ -21,9 +21,15 @@ def get_exec_url():
     return f"{base_url}/api/v0/code-exec"
 
 
-def call_api(code, globals_dict):
+def call_api(code, globals_dict, /, *, files=None, python_path=None):
     """
     Call the code-exec API.
+
+    Args:
+      code: Python code being submitted for execution
+      globals_dict: Dict containing additional global scope
+      files: Dict of file names to bytestrings of their contents
+      python_path: List of paths to copy into sandbox and put on Python path
 
     Returns a requests.Response object.
     """
@@ -31,8 +37,9 @@ def call_api(code, globals_dict):
     payload = json.dumps({
         "code": code,
         "globals_dict": globals_dict,
+        "python_path": python_path,
     })
-    return requests.post(url, data={"payload": payload}, timeout=50.0)
+    return requests.post(url, data={"payload": payload}, files=files, timeout=50.0)
 
 
 def get_success_globals(resp):
