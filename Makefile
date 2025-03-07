@@ -39,6 +39,9 @@ ci_requirements: validation_requirements ## sync to requirements needed for CI c
 dev_requirements: clean_tox piptools ## sync to requirements for local development
 	pip-sync -q requirements/dev.txt requirements/private.*
 
+prod_requirements: piptools ## sync virtualenv to requirements needed for production
+	pip-sync -q requirements/base.txt
+
 validation_requirements: piptools ## sync to requirements for testing & code quality checking
 	pip-sync -q requirements/validation.txt
 

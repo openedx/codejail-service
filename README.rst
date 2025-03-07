@@ -20,11 +20,7 @@ This service is configured with an in-memory database simply to make Django happ
 Operators
 =========
 
-This is intended to be run as a fully internal service with no database or admin frontend, with the LMS and CMS making calls to it unauthenticated. **It should not be callable directly from the internet.**
-
-While the service uses AppArmor as a first (and really, only) line of defense, it should also be deployed in a way that does not allow direct connections to other IDAs or internal services within the Open edX deployment. In the ideal situation, networking would be set up to only allow outbound connections to a predetermined set of IPs or domains.
-
-After any significant change to security settings, consider running the tests in ``./api_tests/``. These are run manually against a deployed service and can check for various sandbox weaknesses.
+This is intended to be run as a fully internal service with no database or admin frontend, with the LMS and CMS making calls to it unauthenticated. It should not be callable directly from the internet.
 
 Getting Started with Development
 ********************************
@@ -32,21 +28,6 @@ Getting Started with Development
 Please see the Open edX documentation for `guidance on Python development`_ in this repo.
 
 .. _guidance on Python development: https://docs.openedx.org/en/latest/developers/how-tos/get-ready-for-python-dev.html
-
-Deploying
-*********
-
-The service may be started using gunicorn with a command like this::
-
-  export DJANGO_SETTINGS_MODULE=codejail_service.settings.production
-  gunicorn -c codejail_service/docker_gunicorn_configuration.py \
-    --bind '0.0.0.0:8080' --workers=10 --max-requests=1000 --name codejail \
-    codejail_service.wsgi:application
-
-There is a healthcheck endpoint at ``/health/`` which responds to a
-GET with ``200 OK`` if the service is running and healthy.
-
-TODO (`<https://github.com/openedx/codejail-service/issues/3>`__)
 
 Getting Help
 ************

@@ -6,7 +6,7 @@
 codejail_service
 ================
 
-Run codejail (sandboxed Python execution) as a service
+Run codejail (sandboxed Python execution) as a service.
 
 Contents:
 
@@ -14,22 +14,14 @@ Contents:
    :maxdepth: 2
 
    readme
-   getting_started
-   quickstarts/index
-   concepts/index
-   how-tos/index
    testing
-   internationalization
-   modules
+   deployment
    changelog
    decisions
-   features
-   references/index
 
 
 Indices and tables
 ##################
 
 * :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`
