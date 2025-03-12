@@ -20,6 +20,8 @@ This service is configured with an in-memory database simply to make Django happ
 Operators
 =========
 
+**It is critical to configure this service securely**, as a misconfigured codejail-service will almost certainly allow an attacker to compromise not just this service, but possibly the rest of your infrastructure. See configuration and deployment docs for details.
+
 This is intended to be run as a fully internal service with no database or admin frontend, with the LMS and CMS making calls to it unauthenticated. It should not be callable directly from the internet.
 
 Getting Started with Development
