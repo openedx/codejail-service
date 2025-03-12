@@ -25,7 +25,7 @@ Host
 
 The host or Docker image must be set up with a sandbox user, sandbox virtualenv, and sudoers file according to the documentation of the `codejail library <https://github.com/openedx/codejail>`__. This forms the foundation of the sandboxing, but does not provide much security by itself.
 
-See `2U's Dockerfile <https://github.com/edx/public-dockerfiles/blob/main/dockerfiles/codejail-service.Dockerfile>`__ for an example of how you could set up your host or container. (There is not yet a Tutor plugin.)
+See `2U's Dockerfile <https://github.com/edx/public-dockerfiles/blob/main/dockerfiles/codejail-service.Dockerfile>`__ for an example of how you could set up your host or container. (As of March 2025, there is `not yet a Tutor plugin <https://github.com/openedx/codejail-service/issues/26>`__.)
 
 AppArmor
 ********
