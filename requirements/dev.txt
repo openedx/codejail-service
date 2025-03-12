@@ -8,7 +8,7 @@ asgiref==3.8.1
     # via
     #   -r requirements/validation.txt
     #   django
-astroid==3.3.8
+astroid==3.3.9
     # via
     #   -r requirements/validation.txt
     #   pylint
@@ -76,7 +76,7 @@ cryptography==44.0.2
     #   secretstorage
 ddt==1.7.2
     # via -r requirements/validation.txt
-diff-cover==9.2.3
+diff-cover==9.2.4
     # via -r requirements/dev.in
 dill==0.3.9
     # via
@@ -86,7 +86,7 @@ distlib==0.3.9
     # via
     #   -r requirements/validation.txt
     #   virtualenv
-django==4.2.19
+django==4.2.20
     # via
     #   -r requirements/validation.txt
     #   django-crum
@@ -163,7 +163,7 @@ jeepney==0.9.0
     #   -r requirements/validation.txt
     #   keyring
     #   secretstorage
-jinja2==3.1.5
+jinja2==3.1.6
     # via
     #   -r requirements/validation.txt
     #   code-annotations
@@ -208,7 +208,7 @@ more-itertools==10.6.0
     #   -r requirements/validation.txt
     #   jaraco-classes
     #   jaraco-functools
-newrelic==10.6.0
+newrelic==10.7.0
     # via
     #   -r requirements/validation.txt
     #   edx-django-utils
@@ -272,7 +272,7 @@ pygments==2.19.1
     #   diff-cover
     #   readme-renderer
     #   rich
-pylint==3.3.4
+pylint==3.3.5
     # via
     #   -r requirements/validation.txt
     #   edx-lint
@@ -387,7 +387,7 @@ tomlkit==0.13.2
     # via
     #   -r requirements/validation.txt
     #   pylint
-tox==4.24.1
+tox==4.24.2
     # via -r requirements/validation.txt
 twine==6.1.0
     # via -r requirements/validation.txt
@@ -400,7 +400,7 @@ urllib3==2.2.3
     #   -r requirements/validation.txt
     #   requests
     #   twine
-virtualenv==20.29.2
+virtualenv==20.29.3
     # via
     #   -r requirements/validation.txt
     #   tox
