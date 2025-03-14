@@ -14,6 +14,8 @@ Change Log
 Unreleased
 **********
 
+0.6.0 - 2025-03-17
+******************
 Changed
 =======
 * Startup safety checks now include a check that network access is denied; subprocess check is also updated to attempt executing ``date`` instead of a shell.
