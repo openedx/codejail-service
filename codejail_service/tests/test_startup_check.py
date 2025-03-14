@@ -29,7 +29,7 @@ class TestStateCheck(TestCase):
 DEFAULT = object()
 
 
-def responses(math=DEFAULT, disk=DEFAULT, child=DEFAULT):
+def responses(math=DEFAULT, disk=DEFAULT, child=DEFAULT, network=DEFAULT):
     """
     Return a list of the expected safe_exec responses, with optional overrides.
 
@@ -40,7 +40,7 @@ def responses(math=DEFAULT, disk=DEFAULT, child=DEFAULT):
     message string. (Error message slot will be `None` on success.)
 
     The default list of responses will satisfy the startup checks and
-    should result in a "we're healthy" state. The math/disk/child kwargs
+    should result in a "we're healthy" state. The kwargs
     can be overridden with alternative responses to those individual
     checks (`_check_basic_function` etc.) in order to test whether those
     responses provoke an "unhealthy" determination.
@@ -51,8 +51,10 @@ def responses(math=DEFAULT, disk=DEFAULT, child=DEFAULT):
         disk = ({}, "... PermissionError: [Errno 13] Permission denied ...")
     if child is DEFAULT:
         child = ({}, "... PermissionError: [Errno 13] Permission denied ...")
+    if network is DEFAULT:
+        network = ({}, "... PermissionError: [Errno 13] Permission denied ...")
 
-    return [math, disk, child]
+    return [math, disk, child, network]
 
 
 @ddt.ddt
@@ -92,9 +94,11 @@ class TestInit(TestCase):
         # Wrong exception message
         (responses(disk=({}, "... Module not found ...")), False),
         (responses(child=({}, "... Module not found ...")), False),
+        (responses(network=({}, "... Module not found ...")), False),
         # Lack of an exception
         (responses(disk=({}, None)), False),
         (responses(child=({}, None)), False),
+        (responses(network=({}, None)), False),
         # Wrong value for global
         (responses(math=({'x': 999}, None)), False),
         # Missing global
@@ -118,7 +122,7 @@ class TestInit(TestCase):
         ) as mock_safe_exec:
             run_startup_safety_check()
         assert startup_check.STARTUP_SAFETY_CHECK_OK is expected_status
-        assert mock_safe_exec.call_count == 3
+        assert mock_safe_exec.call_count == 4
 
     @patch('codejail_service.startup_check.STARTUP_SAFETY_CHECK_OK', None)
     def test_logging(self):
@@ -140,15 +144,20 @@ class TestInit(TestCase):
             call("Startup check 'Basic code execution' passed"),
         ]
 
-        assert len(mock_log_error.call_args_list) == 2
-        assert (
+        expected_error_log_snippets = [
             "Startup check 'Block sandbox escape by disk access' failed with: "
-            "\"Expected error, but code ran successfully. Globals: {'ret': ['"
-        ) in mock_log_error.call_args_list[0][0][0]
-        assert (
+            "\"Expected error, but code ran successfully. Globals: {'ret': ['",
+
             "Startup check 'Block sandbox escape by child process' failed with: "
-            r'''"Expected error, but code ran successfully. Globals: {'ret': '42\\n'}"'''
-        ) == mock_log_error.call_args_list[1][0][0]
+            r'''"Expected error, but code ran successfully. Globals: {'ret': '1970\\n'}"''',
+
+            "Startup check 'Block network access' failed with: "
+            "\"Expected error, but code ran successfully. Globals: {'filedesc': ",
+
+        ]
+        assert len(mock_log_error.call_args_list) == len(expected_error_log_snippets)
+        for call_args, snippet in zip(mock_log_error.call_args_list, expected_error_log_snippets):
+            assert snippet in call_args[0][0]
 
     @ddt.data(True, False)
     def test_skip_reinit(self, starting_state):
