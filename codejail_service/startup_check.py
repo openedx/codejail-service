@@ -102,7 +102,7 @@ def _check_escape_disk():
 
     if error_message is None:
         return f"Expected error, but code ran successfully. Globals: {globals_out!r}"
-    if "Permission denied" not in error_message:
+    if "PermissionError: [Errno 13] Permission denied" not in error_message:
         return f"Expected permission error, but got: {error_message}"
 
     return True
@@ -120,7 +120,14 @@ def _check_escape_subprocess():
 
     if error_message is None:
         return f"Expected error, but code ran successfully. Globals: {globals_out!r}"
-    if "Permission denied" not in error_message:
-        return f"Expected permission error, but got: {error_message}"
+    # Exact error depends on the codejail NPROC settings
+    expected_errors = [
+        # Resource-limit-based denial, e.g. NPROC=1 (can't even fork in order to exec)
+        "BlockingIOError: [Errno 11] Resource temporarily unavailable",
+        # AppArmor-based denial (confinement doesn't permit executing other binaries)
+        "PermissionError: [Errno 13] Permission denied",
+    ]
+    if not any(error in error_message for error in expected_errors):
+        return f"Expected permission or resource limit error, but got: {error_message}"
 
     return True

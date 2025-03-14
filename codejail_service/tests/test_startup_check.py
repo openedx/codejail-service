@@ -48,9 +48,9 @@ def responses(math=DEFAULT, disk=DEFAULT, child=DEFAULT):
     if math is DEFAULT:
         math = ({'x': 17}, None)
     if disk is DEFAULT:
-        disk = ({}, "... Permission denied ...")
+        disk = ({}, "... PermissionError: [Errno 13] Permission denied ...")
     if child is DEFAULT:
-        child = ({}, "... Permission denied ...")
+        child = ({}, "... PermissionError: [Errno 13] Permission denied ...")
 
     return [math, disk, child]
 
@@ -101,6 +101,10 @@ class TestInit(TestCase):
         (responses(math=({'y': 17}, None)), False),
         # Exception when expecting a value
         (responses(math=({}, "Divide by zero")), False),
+
+        # Some checkers may look for multiple possible exceptions
+        (responses(child=({}, "... PermissionError: [Errno 13] Permission denied ...")), True),
+        (responses(child=({}, "... BlockingIOError: [Errno 11] Resource temporarily unavailable ...")), True),
     )
     @ddt.unpack
     @patch('codejail_service.startup_check.STARTUP_SAFETY_CHECK_OK', None)
