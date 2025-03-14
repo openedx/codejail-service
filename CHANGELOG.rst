@@ -14,6 +14,10 @@ Change Log
 Unreleased
 **********
 
+Changed
+=======
+* Startup safety checks now include a check that network access is denied; subprocess check is also updated to attempt executing ``date`` instead of a shell.
+
 Fixed
 =====
 * Tolerate ``NPROC: 1`` in startup checks and API tests
