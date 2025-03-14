@@ -48,9 +48,9 @@ def responses(math=DEFAULT, disk=DEFAULT, child=DEFAULT):
     if math is DEFAULT:
         math = ({'x': 17}, None)
     if disk is DEFAULT:
-        disk = ({}, "... Permission denied ...")
+        disk = ({}, "... PermissionError: [Errno 13] Permission denied ...")
     if child is DEFAULT:
-        child = ({}, "... Permission denied ...")
+        child = ({}, "... PermissionError: [Errno 13] Permission denied ...")
 
     return [math, disk, child]
 

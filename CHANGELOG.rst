@@ -14,6 +14,10 @@ Change Log
 Unreleased
 **********
 
+Fixed
+=====
+* Tolerate ``NPROC: 1`` in startup checks and API tests
+
 0.5.0 - 2025-03-10
 ******************
 Changed
