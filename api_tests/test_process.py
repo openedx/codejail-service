@@ -61,4 +61,13 @@ class TestExecProcess(TestCase):
           subprocess.run({bin_path_expr})
         """)
         (_, emsg) = call_api_code_error(code, {})
-        assert "Permission denied" in emsg
+
+        # Exact error depends on the codejail NPROC settings
+        expected_errors = [
+            # Resource-limit-based denial, e.g. NPROC=1 (can't even fork in order to exec)
+            "BlockingIOError: [Errno 11] Resource temporarily unavailable",
+            # AppArmor-based denial (confinement doesn't permit executing other binaries)
+            "PermissionError: [Errno 13] Permission denied",
+        ]
+
+        assert any(e in emsg for e in expected_errors), f"Error message was incorrect: {emsg}"
