@@ -13,7 +13,7 @@ astroid==3.3.9
     #   -r requirements/validation.txt
     #   pylint
     #   pylint-celery
-attrs==25.1.0
+attrs==25.3.0
     # via
     #   -r requirements/validation.txt
     #   jsonschema
@@ -66,7 +66,7 @@ colorama==0.4.6
     # via
     #   -r requirements/validation.txt
     #   tox
-coverage[toml]==7.6.12
+coverage[toml]==7.7.0
     # via
     #   -r requirements/validation.txt
     #   pytest-cov
@@ -123,7 +123,7 @@ edx-lint==5.6.0
     # via -r requirements/validation.txt
 edx-toggles==5.3.0
     # via -r requirements/validation.txt
-filelock==3.17.0
+filelock==3.18.0
     # via
     #   -r requirements/validation.txt
     #   tox
