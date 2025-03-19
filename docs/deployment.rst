@@ -37,7 +37,7 @@ Recommendation
 
 * Select a UID and GID for the webapp user: ``python3 -c 'import random; print(random.randrange(3000, 2 ** 31))'``. Create a user and group for the webapp user using this as its UID and GID.
 * Do the same for the sandbox user, with a new value.
-* Restrict the number of codejail-service instances that are permitted to be scheduled on the same host as each other.
+* In Kubernetes (or other orchestration system), limit the number of codejail-service instances that are permitted to be scheduled on the same host as each other.
 
 Context
 -------
@@ -51,7 +51,7 @@ If the webapp runs with UID 1000, and there is also a user with UID 1000 on the 
 
 On an actual deployment host with no regular users, just system users (with UID < 1000), and no other services running in other containers, this might work. However, the most likely deployment situation is in Kubernetes, where there may be a number of other pods; many of these pods will be using UID 1000. But even on a traditional host it creates a fragile situation, where starting unrelated processes as UID 1000 would cause codejail to mysteriously start breaking.
 
-One solution is to select large, random values for the app and sandbox users. On a modern Linux kernel, UIDs and GIDs can be as high as ``2^32 - 1``, although from testing it may be safer to constrain to ``2^31 - 1``.
+One solution is to select large, random values for the app and sandbox users. On a modern Linux kernel, UIDs and GIDs can be as high as ``2^32 - 1``, although from testing it may be safer to constrain to ``2^31 - 1``. This will help avoid a situation where codejail-service has to share its usage pool with other, unrelated service. This is an incomplete solution, however, as two instances of codejail-service will interfere with each other, as will concurrent requests to the same instance. ``NPROC`` will need to be set high enough to account for this.
 
 AppArmor
 ********
