@@ -35,7 +35,8 @@ The UID under which the webapp runs must be running as few other processes as po
 Recommendation
 --------------
 
-* Select a UID and GID for the webapp user: ``python3 -c 'import random; print(random.randrange(3000, 2 ** 31))'``. Create a user and group for the webapp user using this as its UID and GID.
+* Select a UID and GID for the webapp user: ``python3 -c 'import random; print(random.randrange(3000, 2 ** 31))'``.
+* Create a user and group for the webapp user using this as its UID and GID.
 * Do the same for the sandbox user, with a new value.
 * In Kubernetes (or other orchestration system), limit the number of codejail-service instances that are permitted to be scheduled on the same host as each other.
 
