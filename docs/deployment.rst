@@ -30,7 +30,19 @@ See `2U's Dockerfile <https://github.com/edx/public-dockerfiles/blob/main/docker
 App user UID
 ============
 
-The UID under which the webapp runs must be running as few other processes as possible, otherwise the ``NPROC`` setting will need to be elevated to the point of uselessness. This is due to an interaction of several kernel features:
+The UID under which the webapp runs must be running as few other processes as possible, otherwise the ``NPROC`` setting will need to be elevated to the point of uselessness.
+
+Recommendation
+--------------
+
+* Select a UID and GID for the webapp user: ``python3 -c 'import random; print(random.randrange(3000, 2 ** 31))'``. Create a user and group for the webapp user using this as its UID and GID.
+* Do the same for the sandbox user, with a new value.
+* Restrict the number of codejail-service instances that are permitted to be scheduled on the same host as each other.
+
+Context
+-------
+
+This issue is due to an interaction of several kernel features:
 
 * The ``RLIMIT_NPROC`` mechanism that we use to limit the number of processes the sandbox process can create actually shares its usage pool with *all* of the processes owned by the same UID. If a process has ``NPROC`` set and needs to fork, that value must be higher than the *existing* number of processes (and threads) owned by the same UID.
 * Docker cannot isolate UIDs in containers, just the *mapping* of usernames to UIDs. If the web service runs as ``app`` inside the container but has user ID 1000 (the most likely situation), the kernel doesn't see any distinction between that and a user on the host that also has UID 1000.
@@ -39,11 +51,7 @@ If the webapp runs with UID 1000, and there is also a user with UID 1000 on the 
 
 On an actual deployment host with no regular users, just system users (with UID < 1000), and no other services running in other containers, this might work. However, the most likely deployment situation is in Kubernetes, where there may be a number of other pods; many of these pods will be using UID 1000. But even on a traditional host it creates a fragile situation, where starting unrelated processes as UID 1000 would cause codejail to mysteriously start breaking.
 
-One solution is to select large, random values for the app and sandbox users. On a modern Linux kernel, UIDs and GIDs can be as high as ``2^32 - 1``, although from testing it may be safer to constrain to ``2^31 - 1``. Recommendation:
-
-* Select a UID and GID for the webapp user: ``python3 -c 'import random; print(random.randrange(3000, 2 ** 31))'``. Create a group and user for the webapp user using this as its UID and GID.
-* Do the same for the sandbox user, with a new value.
-* Restrict the number of codejail-service instances that are permitted to be scheduled on the same host as each other.
+One solution is to select large, random values for the app and sandbox users. On a modern Linux kernel, UIDs and GIDs can be as high as ``2^32 - 1``, although from testing it may be safer to constrain to ``2^31 - 1``.
 
 AppArmor
 ********
