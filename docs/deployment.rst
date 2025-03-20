@@ -54,6 +54,8 @@ On an actual deployment host with no regular users, just system users (with UID 
 
 One solution is to select large, random values for the app and sandbox users. On a modern Linux kernel, UIDs and GIDs can be as high as ``2^31 - 1``. This will help avoid a situation where codejail-service has to share its usage pool with other, unrelated service. This is an incomplete solution, however, as two instances of codejail-service will interfere with each other, as will concurrent requests to the same instance. ``NPROC`` will need to be set high enough to account for this.
 
+Tip: ``ps -o thcount`` can be used to check on the existing process and thread count for a user. For example, to get the current usage for UID 1000: ``ps -u 1000 -o thcount | tail -n +2 | awk '{ sum += $1 } END { print sum }'``
+
 AppArmor
 ********
 
