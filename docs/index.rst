@@ -16,6 +16,7 @@ Contents:
    readme
    testing
    deployment
+   debugging
    changelog
    decisions
 
