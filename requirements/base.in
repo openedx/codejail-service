@@ -1,15 +1,10 @@
 # Core requirements for using this application
 -c constraints.txt
 
-Django         # Web application framework
-gunicorn       # HTTP server framework
-
-edx-django-utils
-edx-toggles
-edx-i18n-tools
-openedx-atlas
-pytz
-
+Django                   # Web application framework
+gunicorn                 # HTTP server framework
+edx-django-utils         # Monitoring utilities, among other things
+edx-toggles              # Feature switch tools
 edx-codejail             # Actual codejail library
 djangorestframework      # Request parsing and response formatting
 jsonschema               # Parse and validate JSON

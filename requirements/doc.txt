@@ -28,8 +28,6 @@ babel==2.17.0
     #   sphinx
 beautifulsoup4==4.13.3
     # via pydata-sphinx-theme
-build==1.2.2.post1
-    # via -r requirements/doc.in
 cachetools==5.5.2
     # via
     #   -r requirements/test.txt
@@ -39,7 +37,6 @@ certifi==2025.1.31
 cffi==1.17.1
     # via
     #   -r requirements/test.txt
-    #   cryptography
     #   pynacl
 chardet==5.2.0
     # via
@@ -71,8 +68,6 @@ coverage[toml]==7.7.1
     # via
     #   -r requirements/test.txt
     #   pytest-cov
-cryptography==44.0.2
-    # via secretstorage
 ddt==1.7.2
     # via -r requirements/test.txt
 dill==0.3.9
@@ -91,7 +86,6 @@ django==4.2.20
     #   django-waffle
     #   djangorestframework
     #   edx-django-utils
-    #   edx-i18n-tools
     #   edx-toggles
 django-crum==0.7.9
     # via
@@ -111,7 +105,6 @@ docutils==0.21.2
     # via
     #   doc8
     #   pydata-sphinx-theme
-    #   readme-renderer
     #   restructuredtext-lint
     #   sphinx
 edx-codejail==3.5.2
@@ -120,8 +113,6 @@ edx-django-utils==7.2.0
     # via
     #   -r requirements/test.txt
     #   edx-toggles
-edx-i18n-tools==1.7.0
-    # via -r requirements/test.txt
 edx-lint==5.6.0
     # via -r requirements/test.txt
 edx-toggles==5.3.0
@@ -133,8 +124,6 @@ filelock==3.18.0
     #   virtualenv
 gunicorn==23.0.0
     # via -r requirements/test.txt
-id==1.5.0
-    # via twine
 idna==3.10
     # via requests
 imagesize==1.4.1
@@ -147,16 +136,6 @@ isort==6.0.1
     # via
     #   -r requirements/test.txt
     #   pylint
-jaraco-classes==3.4.0
-    # via keyring
-jaraco-context==6.0.1
-    # via keyring
-jaraco-functools==4.1.0
-    # via keyring
-jeepney==0.9.0
-    # via
-    #   keyring
-    #   secretstorage
 jinja2==3.1.6
     # via
     #   -r requirements/test.txt
@@ -168,19 +147,6 @@ jsonschema-specifications==2024.10.1
     # via
     #   -r requirements/test.txt
     #   jsonschema
-keyring==25.6.0
-    # via twine
-lxml[html-clean]==5.3.1
-    # via
-    #   -r requirements/test.txt
-    #   edx-i18n-tools
-    #   lxml-html-clean
-lxml-html-clean==0.4.1
-    # via
-    #   -r requirements/test.txt
-    #   lxml
-markdown-it-py==3.0.0
-    # via rich
 markupsafe==3.0.2
     # via
     #   -r requirements/test.txt
@@ -189,35 +155,19 @@ mccabe==0.7.0
     # via
     #   -r requirements/test.txt
     #   pylint
-mdurl==0.1.2
-    # via markdown-it-py
-more-itertools==10.6.0
-    # via
-    #   jaraco-classes
-    #   jaraco-functools
 newrelic==10.7.0
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
-nh3==0.2.21
-    # via readme-renderer
-openedx-atlas==0.6.2
-    # via -r requirements/test.txt
 packaging==24.2
     # via
     #   -r requirements/test.txt
-    #   build
     #   gunicorn
     #   pydata-sphinx-theme
     #   pyproject-api
     #   pytest
     #   sphinx
     #   tox
-    #   twine
-path==16.16.0
-    # via
-    #   -r requirements/test.txt
-    #   edx-i18n-tools
 pbr==6.1.1
     # via
     #   -r requirements/test.txt
@@ -233,10 +183,6 @@ pluggy==1.5.0
     #   -r requirements/test.txt
     #   pytest
     #   tox
-polib==1.2.0
-    # via
-    #   -r requirements/test.txt
-    #   edx-i18n-tools
 psutil==7.0.0
     # via
     #   -r requirements/test.txt
@@ -252,8 +198,6 @@ pygments==2.19.1
     #   accessible-pygments
     #   doc8
     #   pydata-sphinx-theme
-    #   readme-renderer
-    #   rich
     #   sphinx
 pylint==3.3.6
     # via
@@ -283,8 +227,6 @@ pyproject-api==1.9.0
     # via
     #   -r requirements/test.txt
     #   tox
-pyproject-hooks==1.2.0
-    # via build
 pytest==8.3.5
     # via
     #   -r requirements/test.txt
@@ -298,34 +240,19 @@ python-slugify==8.0.4
     # via
     #   -r requirements/test.txt
     #   code-annotations
-pytz==2025.1
-    # via -r requirements/test.txt
 pyyaml==6.0.2
     # via
     #   -r requirements/test.txt
     #   code-annotations
-    #   edx-i18n-tools
-readme-renderer==44.0
-    # via twine
 referencing==0.36.2
     # via
     #   -r requirements/test.txt
     #   jsonschema
     #   jsonschema-specifications
 requests==2.32.3
-    # via
-    #   id
-    #   requests-toolbelt
-    #   sphinx
-    #   twine
-requests-toolbelt==1.0.0
-    # via twine
+    # via sphinx
 restructuredtext-lint==1.4.0
     # via doc8
-rfc3986==2.0.0
-    # via twine
-rich==13.9.4
-    # via twine
 roman-numerals-py==3.1.0
     # via sphinx
 rpds-py==0.23.1
@@ -333,8 +260,6 @@ rpds-py==0.23.1
     #   -r requirements/test.txt
     #   jsonschema
     #   referencing
-secretstorage==3.3.3
-    # via keyring
 six==1.17.0
     # via
     #   -r requirements/test.txt
@@ -383,8 +308,6 @@ tomlkit==0.13.2
     #   pylint
 tox==4.24.2
     # via -r requirements/test.txt
-twine==6.1.0
-    # via -r requirements/doc.in
 typing-extensions==4.12.2
     # via
     #   -r requirements/test.txt
@@ -395,7 +318,6 @@ urllib3==2.2.3
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   requests
-    #   twine
 virtualenv==20.29.3
     # via
     #   -r requirements/test.txt

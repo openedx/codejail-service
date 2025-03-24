@@ -59,7 +59,6 @@ distlib==0.3.9
     #   django-waffle
     #   djangorestframework
     #   edx-django-utils
-    #   edx-i18n-tools
     #   edx-toggles
 django-crum==0.7.9
     # via
@@ -79,8 +78,6 @@ edx-django-utils==7.2.0
     # via
     #   -r requirements/base.txt
     #   edx-toggles
-edx-i18n-tools==1.7.0
-    # via -r requirements/base.txt
 edx-lint==5.6.0
     # via -r requirements/test.in
 edx-toggles==5.3.0
@@ -105,15 +102,6 @@ jsonschema-specifications==2024.10.1
     # via
     #   -r requirements/base.txt
     #   jsonschema
-lxml[html-clean]==5.3.1
-    # via
-    #   -r requirements/base.txt
-    #   edx-i18n-tools
-    #   lxml-html-clean
-lxml-html-clean==0.4.1
-    # via
-    #   -r requirements/base.txt
-    #   lxml
 markupsafe==3.0.2
     # via
     #   -r requirements/base.txt
@@ -124,8 +112,6 @@ newrelic==10.7.0
     # via
     #   -r requirements/base.txt
     #   edx-django-utils
-openedx-atlas==0.6.2
-    # via -r requirements/base.txt
 packaging==24.2
     # via
     #   -r requirements/base.txt
@@ -133,10 +119,6 @@ packaging==24.2
     #   pyproject-api
     #   pytest
     #   tox
-path==16.16.0
-    # via
-    #   -r requirements/base.txt
-    #   edx-i18n-tools
 pbr==6.1.1
     # via
     #   -r requirements/base.txt
@@ -150,10 +132,6 @@ pluggy==1.5.0
     # via
     #   pytest
     #   tox
-polib==1.2.0
-    # via
-    #   -r requirements/base.txt
-    #   edx-i18n-tools
 psutil==7.0.0
     # via
     #   -r requirements/base.txt
@@ -194,13 +172,10 @@ python-slugify==8.0.4
     # via
     #   -r requirements/base.txt
     #   code-annotations
-pytz==2025.1
-    # via -r requirements/base.txt
 pyyaml==6.0.2
     # via
     #   -r requirements/base.txt
     #   code-annotations
-    #   edx-i18n-tools
 referencing==0.36.2
     # via
     #   -r requirements/base.txt
