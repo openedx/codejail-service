@@ -1,8 +1,8 @@
 Debugging
 #########
 
-Segfaults
-*********
+Segfaults and "resource temporarily unavailable"
+************************************************
 
 In some cases, you might get the error message ``Couldn't execute jailed code: stdout: b'', stderr: b'' with status code: -11`` from a code execution. Status code ``-11`` is POSIX signal ``SIGSEGV``. If you encounter this, you're most likely running into process resource limits. Experiment with the ``CODE_JAIL.limits`` values until you discover which ``rlimit`` feature is the issue.
 
