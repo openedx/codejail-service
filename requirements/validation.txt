@@ -100,7 +100,6 @@ django==4.2.20
     #   django-waffle
     #   djangorestframework
     #   edx-django-utils
-    #   edx-i18n-tools
     #   edx-toggles
 django-crum==0.7.9
     # via
@@ -131,10 +130,6 @@ edx-django-utils==7.2.0
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
     #   edx-toggles
-edx-i18n-tools==1.7.0
-    # via
-    #   -r requirements/quality.txt
-    #   -r requirements/test.txt
 edx-lint==5.6.0
     # via
     #   -r requirements/quality.txt
@@ -206,17 +201,6 @@ keyring==25.6.0
     # via
     #   -r requirements/quality.txt
     #   twine
-lxml[html-clean]==5.3.1
-    # via
-    #   -r requirements/quality.txt
-    #   -r requirements/test.txt
-    #   edx-i18n-tools
-    #   lxml-html-clean
-lxml-html-clean==0.4.1
-    # via
-    #   -r requirements/quality.txt
-    #   -r requirements/test.txt
-    #   lxml
 markdown-it-py==3.0.0
     # via
     #   -r requirements/quality.txt
@@ -249,10 +233,6 @@ nh3==0.2.21
     # via
     #   -r requirements/quality.txt
     #   readme-renderer
-openedx-atlas==0.6.2
-    # via
-    #   -r requirements/quality.txt
-    #   -r requirements/test.txt
 packaging==24.2
     # via
     #   -r requirements/quality.txt
@@ -262,11 +242,6 @@ packaging==24.2
     #   pytest
     #   tox
     #   twine
-path==16.16.0
-    # via
-    #   -r requirements/quality.txt
-    #   -r requirements/test.txt
-    #   edx-i18n-tools
 pbr==6.1.1
     # via
     #   -r requirements/quality.txt
@@ -285,11 +260,6 @@ pluggy==1.5.0
     #   -r requirements/test.txt
     #   pytest
     #   tox
-polib==1.2.0
-    # via
-    #   -r requirements/quality.txt
-    #   -r requirements/test.txt
-    #   edx-i18n-tools
 psutil==7.0.0
     # via
     #   -r requirements/quality.txt
@@ -362,16 +332,11 @@ python-slugify==8.0.4
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
     #   code-annotations
-pytz==2025.1
-    # via
-    #   -r requirements/quality.txt
-    #   -r requirements/test.txt
 pyyaml==6.0.2
     # via
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
     #   code-annotations
-    #   edx-i18n-tools
 readme-renderer==44.0
     # via
     #   -r requirements/quality.txt

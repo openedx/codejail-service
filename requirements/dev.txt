@@ -93,7 +93,6 @@ django==4.2.20
     #   django-waffle
     #   djangorestframework
     #   edx-django-utils
-    #   edx-i18n-tools
     #   edx-toggles
 django-crum==0.7.9
     # via
@@ -117,8 +116,6 @@ edx-django-utils==7.2.0
     # via
     #   -r requirements/validation.txt
     #   edx-toggles
-edx-i18n-tools==1.7.0
-    # via -r requirements/validation.txt
 edx-lint==5.6.0
     # via -r requirements/validation.txt
 edx-toggles==5.3.0
@@ -178,15 +175,6 @@ keyring==25.6.0
     # via
     #   -r requirements/validation.txt
     #   twine
-lxml[html-clean]==5.3.1
-    # via
-    #   -r requirements/validation.txt
-    #   edx-i18n-tools
-    #   lxml-html-clean
-lxml-html-clean==0.4.1
-    # via
-    #   -r requirements/validation.txt
-    #   lxml
 markdown-it-py==3.0.0
     # via
     #   -r requirements/validation.txt
@@ -216,8 +204,6 @@ nh3==0.2.21
     # via
     #   -r requirements/validation.txt
     #   readme-renderer
-openedx-atlas==0.6.2
-    # via -r requirements/validation.txt
 packaging==24.2
     # via
     #   -r requirements/pip-tools.txt
@@ -228,10 +214,6 @@ packaging==24.2
     #   pytest
     #   tox
     #   twine
-path==16.16.0
-    # via
-    #   -r requirements/validation.txt
-    #   edx-i18n-tools
 pbr==6.1.1
     # via
     #   -r requirements/validation.txt
@@ -250,10 +232,6 @@ pluggy==1.5.0
     #   diff-cover
     #   pytest
     #   tox
-polib==1.2.0
-    # via
-    #   -r requirements/validation.txt
-    #   edx-i18n-tools
 psutil==7.0.0
     # via
     #   -r requirements/validation.txt
@@ -318,13 +296,10 @@ python-slugify==8.0.4
     # via
     #   -r requirements/validation.txt
     #   code-annotations
-pytz==2025.1
-    # via -r requirements/validation.txt
 pyyaml==6.0.2
     # via
     #   -r requirements/validation.txt
     #   code-annotations
-    #   edx-i18n-tools
 readme-renderer==44.0
     # via
     #   -r requirements/validation.txt

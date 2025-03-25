@@ -13,9 +13,6 @@ def root(*path_fragments):
     return join(abspath(PROJECT_ROOT), *path_fragments)
 
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('CODEJAIL_SERVICE_SECRET_KEY', 'insecure-secret-key')
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
@@ -24,6 +21,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
+    # The service doesn't use authentication, but DRF relies on this app
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'rest_framework',
@@ -53,7 +51,7 @@ DATABASES = {
     }
 }
 
-# Internationalization
+# Not a user-facing service, but these are standard internationalization settings.
 # https://docs.djangoproject.com/en/dev/topics/i18n/
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
