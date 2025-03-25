@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := help
 
 .PHONY: help clean docs requirements ci_requirements dev_requirements \
-        prod_requirements validation_requirements doc_requirements \
+        prod_requirements validation_requirements doc_requirements shell \
         test coverage isort_check isort style lint quality validate \
         html_coverage upgrade
 
@@ -41,6 +41,9 @@ validation_requirements: piptools ## sync to requirements for testing & code qua
 
 doc_requirements: piptools
 	pip-sync -q requirements/doc.txt
+
+shell: ## run Django shell
+	python manage.py shell
 
 test: clean ## run tests and generate coverage report
 	pytest
