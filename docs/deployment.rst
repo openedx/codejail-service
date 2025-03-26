@@ -63,6 +63,8 @@ Again following the codejail library's instructions, create an AppArmor profile 
 
 This profile will need to be customized according to your service's app user, sandbox setup, and other details. It will also look different if you are using Docker or running the service directly on the host. For reference, here is `2U's AppArmor profile <https://github.com/edx/public-dockerfiles/blob/main/apparmor/openedx_codejail_service.profile>`__; note that the inner profile is the one that actually applies the sandboxing.
 
+codejail-service also expects that outbound networking from the webapp itself will be blocked. This can be implemented in AppArmor or in container configuration (e.g. Kubernetes ``NetworkPolicy``).
+
 Django settings
 ***************
 

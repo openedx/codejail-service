@@ -14,6 +14,15 @@ Change Log
 Unreleased
 **********
 
+1.0.0 - 2025-03-26
+******************
+
+This is now version 1.x to reflect the maturity of the codebase.
+
+Added
+=====
+* Add safety check that attempts an outbound network connection from the webapp (not from inside the sandbox).
+
 0.6.0 - 2025-03-17
 ******************
 Changed
