@@ -3,7 +3,9 @@ State and accessors for a safety check that is run at startup.
 """
 
 import logging
+import urllib.request
 from textwrap import dedent
+from urllib.error import URLError
 
 from codejail_service.codejail import safe_exec
 
@@ -71,6 +73,10 @@ def run_startup_safety_check():
         {
             "name": "Block network access",
             "fn": _check_network_access,
+        },
+        {
+            "name": "Block egress from webapp",
+            "fn": _check_webapp_egress,
         },
     ]
 
@@ -178,3 +184,41 @@ def _check_network_access():
         return f"Expected permission error, but got: {error_message}"
 
     return True
+
+
+def _check_webapp_egress():
+    """
+    Check for denial of outbound connections from webapp as well.
+
+    This is a second layer of protection in case the webapp itself is
+    compromised via sandbox escape or exploit of a vulnerability in sandbox
+    setup.
+    """
+    try:
+        r = urllib.request.urlopen('https://www.example.net/', timeout=3.0)
+        return f"Expected URLError, but received response (status code {r.status})"
+    except URLError:
+        # URLError *probably* means that confinement was effective. It could be
+        # a false negative due to a temporary network glitch, but it's probably
+        # not worth teasing apart all of the different possible exceptions (and
+        # complicating the logic and tests) just to identify this situation. The
+        # exact exceptions we encounter may also not be particularly stable.
+        #
+        # But for reference, these are the exceptions we would expect to see:
+        #
+        # * URLError(gaierror(-3, 'Temporary failure in name resolution')) is a
+        #   name resolution (DNS lookup) failure. We can't tell if this is due
+        #   to a permission error or a network blip. (Interestingly, calling
+        #   `socket.gethostbyname` directly instead raises gaierror(-2, 'Name or
+        #   service not known').)
+        # * URLError(PermissionError(13, 'Permission denied')) is the error we
+        #   see when the TCP connection can't be built. (This occurs if the host
+        #   is specified by IP instead of domain name.)
+        #
+        # Exceptions we would want to treat as a failure:
+        #
+        # * URLError(OSError(101, 'Network is unreachable')) is what we see when
+        #   a connection attempt was made, but the timeout was reached.
+        return True
+    except BaseException as e:
+        return f"Expected URLError, but got: {e!r}"

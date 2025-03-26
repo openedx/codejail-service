@@ -2,7 +2,8 @@
 Tests for startup safety and function check.
 """
 
-from unittest.mock import call, patch
+from unittest.mock import Mock, call, patch
+from urllib.error import URLError
 
 import ddt
 from django.test import TestCase
@@ -112,17 +113,53 @@ class TestInit(TestCase):
     )
     @ddt.unpack
     @patch('codejail_service.startup_check.STARTUP_SAFETY_CHECK_OK', None)
-    def test_success_and_failure_modes(self, safe_exec_responses, expected_status):
+    def test_safe_exec_success_and_failure_modes(self, safe_exec_responses, expected_status):
         """
         Test various unexpected safe_exec responses, via mocking.
         """
-        with patch(
-                'codejail_service.startup_check.safe_exec',
-                side_effect=safe_exec_responses,
-        ) as mock_safe_exec:
+        with (
+                patch(
+                    'codejail_service.startup_check.safe_exec',
+                    side_effect=safe_exec_responses,
+                ) as mock_safe_exec,
+                # Mock out this check with an expected error so it will
+                # pass. (It doesn't use safe_exec so we're not going to exercise
+                # it in this test.)
+                patch(
+                    'codejail_service.startup_check.urllib.request.urlopen',
+                    side_effect=URLError(PermissionError(13, 'Permission denied')),
+                ) as mock_urlopen,
+        ):
             run_startup_safety_check()
+
         assert startup_check.STARTUP_SAFETY_CHECK_OK is expected_status
         assert mock_safe_exec.call_count == 4
+        mock_urlopen.assert_called_once()
+
+    @ddt.data(
+        # Example of an error that should be treated as a passing check
+        ({'side_effect': URLError(PermissionError(13, 'Permission denied'))}, True),
+
+        # Some unexpected error type
+        ({'side_effect': Exception('Something else')}, False),
+        # A successful HTTP call is a check failure
+        ({'return_value': Mock(status=200)}, False),
+    )
+    @ddt.unpack
+    @patch('codejail_service.startup_check.STARTUP_SAFETY_CHECK_OK', None)
+    def test_egress_success_and_failure(self, mock_args, expected_status):
+        """
+        Test egress check pass/fail responses, via mocking.
+        """
+        with (
+                patch('codejail_service.startup_check.urllib.request.urlopen', **mock_args) as mock_urlopen,
+                # Mock out safe_exec with passing responses so they don't interfere with this test.
+                patch('codejail_service.startup_check.safe_exec', side_effect=responses()),
+        ):
+            run_startup_safety_check()
+
+        assert startup_check.STARTUP_SAFETY_CHECK_OK is expected_status
+        mock_urlopen.assert_called_once()
 
     @patch('codejail_service.startup_check.STARTUP_SAFETY_CHECK_OK', None)
     def test_logging(self):
@@ -135,6 +172,12 @@ class TestInit(TestCase):
         with (
                 patch('codejail_service.startup_check.log.info') as mock_log_info,
                 patch('codejail_service.startup_check.log.error') as mock_log_error,
+                # Mock this out with a "bad" response so we don't have to be
+                # online/have good internet to run tests.
+                patch(
+                    'codejail_service.startup_check.urllib.request.urlopen',
+                    return_value=Mock(status=200)
+                ) as mock_urlopen,
         ):
             run_startup_safety_check()
 
@@ -143,6 +186,7 @@ class TestInit(TestCase):
         assert mock_log_info.call_args_list == [
             call("Startup check 'Basic code execution' passed"),
         ]
+        mock_urlopen.assert_called_once()
 
         expected_error_log_snippets = [
             "Startup check 'Block sandbox escape by disk access' failed with: "
@@ -154,6 +198,8 @@ class TestInit(TestCase):
             "Startup check 'Block network access' failed with: "
             "\"Expected error, but code ran successfully. Globals: {'filedesc': ",
 
+            "Startup check 'Block egress from webapp' failed with: "
+            "'Expected URLError, but received response (status code 200)'",
         ]
         assert len(mock_log_error.call_args_list) == len(expected_error_log_snippets)
         for call_args, snippet in zip(mock_log_error.call_args_list, expected_error_log_snippets):
