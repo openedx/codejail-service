@@ -14,7 +14,7 @@ Change Log
 Unreleased
 **********
 
-1.0.0 - 2025-03-27
+1.0.0 - 2025-03-26
 ******************
 
 This is now version 1.x to reflect the maturity of the codebase.
