@@ -12,22 +12,90 @@ from api_tests.utils import call_api_code_error
 
 def test_deny_fork_excessively():
     """
-    Can't fork own process excessively.
+    Test that we can't create an excessive number of processes.
+
+    This executes a pruned forkbomb. A goal is set, and the process recursively
+    forks, creating a binary tree of processes. This runs until the desired
+    number of processes has been reached. Because the processes don't coordinate
+    with each other after forking, this is instead accomplished by halving a
+    counter.
+
+    Before each fork, the code calculates the subgoals for the parent and the
+    child, and then takes on the appropriate goal for itself once it discovers
+    which side of the fork it has ended up on. Once the goal value reaches 1,
+    the code is finished, and moves on to the next phase.
+
+    If forking raises an exception, it is printed to stderr, which is shared by
+    all processes. The test will look at stderr in order to discover if any
+    relevant exceptions were printed.
+
+    After the forking phase, the code waits for a few seconds so that all other
+    branches can complete their forking. (This is a shoddy version of a sync
+    barrier.) Without this, it might be possible for the original process to
+    exit before the full number of processes is created.
+
+    Only one of the processes is marked as the original. This one raises an
+    exception, which causes an emsg to be returned; this is the only way we can
+    return the stderr that the various processes have been logging to.
+
+    All of the other processes, knowing they were forks, perform an early
+    exit. Otherwise, they would continue to the rest of the safe_exec wrapper
+    code that tries to write globals information to the (shared) stdout. This
+    would create garbled JSON and result in a JsonDecodeError instead of the
+    SafeExecException (carrying emsg) that we need.
+
+    There is probably a more elegant approach that involves shared memory
+    between the processes, but this seems to work well enough.
     """
     (_, emsg) = call_api_code_error(dedent("""
-      import os, sys
+      import os, sys, time, traceback
 
-      # codejail defaults NPROC to 15; pick something much higher
-      for _ in range(100):
-          pid = os.fork()
+      # The desired total number of processes in the tree.
+      goal = 1000
 
-          # If we're the child, die right away, otherwise the code suffix
-          # added by safe_exec to bundle up globals into a JSON response
-          # on stdout will run on *both* processes. Since they share a stdout,
-          # this would create garbled JSON and a JsonDecodeError rather than
-          # the more useful SafeExecException.
-          if pid == 0:
-              sys.exit(0)
+      def log(msg):
+          # Flush immediately because otherwise we'll 1) lose buffered lines,
+          # and 2) end up with the buffer shared between forks and printed
+          # multiple times.
+          print(msg, file=sys.stderr, flush=True)
+
+      log(f"Starting @{time.time():.1f}")
+
+      id = ""  # fork history used for debugging -- 0 = parent, 1 = child
+      original = True
+
+      # If goal is 1, the current process fulfills the goal.
+      while goal > 1:
+          # Split goal into roughly equal integer halves.
+          #Each will be >= 1 if goal > 1.
+          goal_parent = goal // 2
+          goal_child = goal - goal_parent
+
+          try:
+              is_child = os.fork() == 0
+              if is_child:
+                  original = False
+                  goal = goal_child
+                  id = f"{id}1"
+              else:
+                  goal = goal_parent
+                  id = f"{id}0"
+          except BaseException as e:
+              # Fork failed -- log this to stderr for discovery
+              log(traceback.format_exc())
+              break
+
+      # Wait until all branches of tree have finished forking phase.
+      # For reference, 1000 processes takes about half a second.
+      log(f"Waiting @{time.time():.1f} ID={id}")
+      time.sleep(2)
+
+      if original:
+          # We only get to look at stderr if the main process raises.
+          raise Exception("Force return of stderr")
+      else:
+          # If we're a child, exit early to keep stdout clean.
+          os._exit(0)
     """), {})
     # 11 = EAGAIN: Resource temporarily unavailable (process limit, in this case)
     assert "BlockingIOError: [Errno 11] Resource temporarily unavailable" in emsg
