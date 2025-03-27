@@ -15,19 +15,34 @@ def test_deny_fork_excessively():
     Can't fork own process excessively.
     """
     (_, emsg) = call_api_code_error(dedent("""
-      import os, sys
+      import os, sys, time
 
-      # codejail defaults NPROC to 15; pick something much higher
-      for _ in range(100):
-          pid = os.fork()
+      level = 1
+      isfork = False
+      while level <= 9:  # 2^n processes -- above level=12 not recommended!
+          try:
+              if os.fork() == 0 or isfork:
+                  isfork = True
+              level += 1
+          except BaseException as e:
+              print(repr(e), file=sys.stderr)
+              break
 
-          # If we're the child, die right away, otherwise the code suffix
+      if isfork:
+          # Wait a bit so that there are a lot of concurrent forks
+          time.sleep(2)
+          # If we're the child, exit early. Otherwise the code suffix
           # added by safe_exec to bundle up globals into a JSON response
           # on stdout will run on *both* processes. Since they share a stdout,
           # this would create garbled JSON and a JsonDecodeError rather than
           # the more useful SafeExecException.
+          sys.exit(0)
+      else:
+          # One last fork attempt on the main process so that we can check on
+          # whether we've exceeded the limit.
+          pid = os.fork()
           if pid == 0:
-              sys.exit(0)
+              sys.exit(0)  # clean up fork
     """), {})
     # 11 = EAGAIN: Resource temporarily unavailable (process limit, in this case)
     assert "BlockingIOError: [Errno 11] Resource temporarily unavailable" in emsg
