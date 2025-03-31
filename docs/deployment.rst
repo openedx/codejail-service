@@ -10,6 +10,9 @@ Ensure your intended deployment environment meets the following prerequisites:
 
 * Ubuntu, Debian, or another Linux distribution that supports AppArmor
 * AppArmor 3 or newer (e.g. in Ubuntu 22.04 or newer)
+
+  * Using 2U's AppArmor profile requires AppArmor 4+ (Ubuntu 24.04+)
+
 * The ability to load an AppArmor profile into the host and (if using Docker) apply the profile to a Docker container
 
 Network
