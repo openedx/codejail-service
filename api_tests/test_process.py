@@ -67,7 +67,7 @@ def test_deny_fork_excessively():
       # If goal is 1, the current process fulfills the goal.
       while goal > 1:
           # Split goal into roughly equal integer halves.
-          #Each will be >= 1 if goal > 1.
+          # Each will be >= 1 if goal > 1.
           goal_parent = goal // 2
           goal_child = goal - goal_parent
 
