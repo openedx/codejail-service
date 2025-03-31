@@ -55,7 +55,7 @@ colorama==0.4.6
     # via
     #   -r requirements/test.txt
     #   tox
-coverage[toml]==7.7.1
+coverage[toml]==7.8.0
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -90,7 +90,7 @@ django-waffle==4.2.0
     #   -r requirements/test.txt
     #   edx-django-utils
     #   edx-toggles
-djangorestframework==3.15.2
+djangorestframework==3.16.0
     # via -r requirements/test.txt
 docutils==0.21.2
     # via readme-renderer
@@ -164,7 +164,7 @@ more-itertools==10.6.0
     # via
     #   jaraco-classes
     #   jaraco-functools
-newrelic==10.7.0
+newrelic==10.8.0
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
@@ -197,7 +197,7 @@ psutil==7.0.0
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
-pycodestyle==2.12.1
+pycodestyle==2.13.0
     # via -r requirements/quality.in
 pycparser==2.22
     # via
@@ -270,9 +270,9 @@ requests-toolbelt==1.0.0
     # via twine
 rfc3986==2.0.0
     # via twine
-rich==13.9.4
+rich==14.0.0
     # via twine
-rpds-py==0.23.1
+rpds-py==0.24.0
     # via
     #   -r requirements/test.txt
     #   jsonschema
@@ -303,11 +303,11 @@ tomlkit==0.13.2
     # via
     #   -r requirements/test.txt
     #   pylint
-tox==4.24.2
+tox==4.25.0
     # via -r requirements/test.txt
 twine==6.1.0
     # via -r requirements/quality.in
-typing-extensions==4.12.2
+typing-extensions==4.13.0
     # via
     #   -r requirements/test.txt
     #   referencing
