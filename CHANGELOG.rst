@@ -8,8 +8,15 @@ Changelog
    Sphinx documentation and the PyPI description).
 
 
-2025-03-26
+2025-04-04
 **********
+Added
+=====
+* Added span attributes to telemetry:
+
+  * ``codejail.exec.status`` with outcome of code execution
+  * ``codejail.exec.{limit_override,python_path_len,files_count}`` with additional details of code execution requests
+  * ``codejail.startup_check.<CHECK_ID>`` and ``codejail.startup_check.status`` for individual and aggregate information on startup safety checks
 
 This is now version 1.x to reflect the maturity of the codebase.
 

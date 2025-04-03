@@ -7,7 +7,7 @@ codejail_service
 Purpose
 *******
 
-Run codejail (sandboxed Python execution) as a service. This implements the custom Python problems in courses, and is a thin wrapper around the `codejail library <https://github.com/openedx/codejail>`_.
+Run codejail (sandboxed Python execution) as a service. This implements the custom Python problems in courses, and is a thin wrapper around the `codejail library <https://github.com/openedx/codejail>`_. Running this as a separate service allows additional forms of isolation that would not be possible when running codejail directly on the LMS or CMS host.
 
 Warnings
 ********

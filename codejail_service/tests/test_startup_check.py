@@ -146,8 +146,9 @@ class TestInit(TestCase):
         ({'return_value': Mock(status=200)}, False),
     )
     @ddt.unpack
+    @patch('codejail_service.startup_check.set_custom_attribute')
     @patch('codejail_service.startup_check.STARTUP_SAFETY_CHECK_OK', None)
-    def test_egress_success_and_failure(self, mock_args, expected_status):
+    def test_egress_success_and_failure(self, mock_args, expected_status, mock_set_custom_attribute):
         """
         Test egress check pass/fail responses, via mocking.
         """
@@ -160,6 +161,20 @@ class TestInit(TestCase):
 
         assert startup_check.STARTUP_SAFETY_CHECK_OK is expected_status
         mock_urlopen.assert_called_once()
+
+        # Piggy-backing on this test to look at our monitoring calls as well
+        expected_status_attr_value = 'pass' if expected_status else 'fail'
+        assert mock_set_custom_attribute.call_args_list == [
+            # The other checks
+            call('codejail.startup_check.functionality', 'pass'),
+            call('codejail.startup_check.disk', 'pass'),
+            call('codejail.startup_check.exec', 'pass'),
+            call('codejail.startup_check.network', 'pass'),
+            # This check
+            call('codejail.startup_check.webapp_egress', expected_status_attr_value),
+            # Aggregate value
+            call('codejail.startup_check.status', expected_status_attr_value),
+        ]
 
     @patch('codejail_service.startup_check.STARTUP_SAFETY_CHECK_OK', None)
     def test_logging(self):
@@ -192,7 +207,7 @@ class TestInit(TestCase):
             "Startup check 'Block sandbox escape by disk access' failed with: "
             "\"Expected error, but code ran successfully. Globals: {'ret': ['",
 
-            "Startup check 'Block sandbox escape by child process' failed with: "
+            "Startup check 'Block sandbox escape by process execution' failed with: "
             r'''"Expected error, but code ran successfully. Globals: {'ret': '1970\\n'}"''',
 
             "Startup check 'Block network access' failed with: "
