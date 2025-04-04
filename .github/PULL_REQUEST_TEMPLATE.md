@@ -1,7 +1,6 @@
 
 **Merge checklist:**
 Check off if complete *or* not applicable:
-- [ ] Version bumped
 - [ ] Changelog record added
 - [ ] Documentation updated (not only docstrings)
 - [ ] Unit tests added/updated
