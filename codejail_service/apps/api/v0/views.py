@@ -5,6 +5,7 @@ Codejail service API.
 import json
 import logging
 
+from edx_django_utils.monitoring import set_custom_attribute
 from edx_toggles.toggles import SettingToggle
 from jsonschema.exceptions import best_match as json_error_best_match
 from jsonschema.validators import Draft202012Validator
@@ -92,21 +93,34 @@ def code_exec(request):
     Other responses are errors, with a JSON body containing further details.
     """
     if not CODEJAIL_ENABLED.is_enabled():
+        # .. custom_attribute_name: codejail.exec.status
+        # .. custom_attribute_description: Type of response from code execution request.
+        #   Value is dot-delimited string where the first segment is one of "disabled" (the
+        #   API is refusing all requests), "invalid" (this particular request was refused),
+        #   or "executed" (the request was executed). Further segments give additional
+        #   information. Of particular note are the values "executed.success" and
+        #   "executed.error", which distinguish between executions that completed normally
+        #   and those that raised an error or were killed.
+        set_custom_attribute('codejail.exec.status', 'disabled.feature_switch')
         return Response({'error': "Codejail service not enabled"}, status=500)
 
     if not is_exec_safe():
+        set_custom_attribute('codejail.exec.status', 'disabled.safety_checks_failed')
         return Response({'error': "Codejail service is not correctly configured"}, status=500)
 
     params_json = request.data.get('payload')
     if params_json is None:
+        set_custom_attribute('codejail.exec.status', 'invalid.payload.missing')
         return Response({'error': "Missing 'payload' parameter in POST body"}, status=400)
 
     try:
         params = json.loads(params_json)
     except json.decoder.JSONDecodeError as e:
+        set_custom_attribute('codejail.exec.status', 'invalid.payload.bad_json')
         return Response({'error': f"Unable to parse payload JSON: {e}"}, status=400)
 
     if json_error := json_error_best_match(payload_validator.iter_errors(params)):
+        set_custom_attribute('codejail.exec.status', 'invalid.payload.schema_mismatch')
         return Response({'error': f"Payload JSON did not match schema: {json_error.message}"}, status=400)
 
     # These first two are required params, but schema check has
@@ -117,6 +131,23 @@ def code_exec(request):
     limit_overrides_context = params.get('limit_overrides_context')
     slug = params.get('slug')
     unsafely = params.get('unsafely')
+
+    # Help detect unusual traffic or filter out activity from certain sources
+    if limit_overrides_context:
+        # .. custom_attribute_name: codejail.exec.limit_override
+        # .. custom_attribute_description: If present, contains the value of the ``limit_overrides_context``
+        #   parameter in a codejail execution request. This indicates a request to use a different
+        #   set of resource limits that have been pre-configured on the server, possibly
+        #   considerably higher ones.
+        set_custom_attribute('codejail.exec.limit_override', limit_overrides_context)
+    # .. custom_attribute_name: codejail.exec.python_path_len
+    # .. custom_attribute_description: The number of entries in the ``python_path`` parameter
+    #   to a codejail execution request. Normally there should be zero or one entries.
+    set_custom_attribute('codejail.exec.python_path_len', len(python_path))
+    # .. custom_attribute_name: codejail.exec.files_count
+    # .. custom_attribute_description: The number of files the request included in a
+    #   codejail execution request. Normally there should be zero or one entries.
+    set_custom_attribute('codejail.exec.files_count', len(request.FILES))
 
     # Convert to a list of (string, bytestring) pairs. Any duplicated file names
     # are resolved as last-wins.
@@ -135,6 +166,7 @@ def code_exec(request):
     # regardless of AppArmor settings. These reads would happen with the
     # privilege level of the webapp user, not the sandbox user.
     if python_path and python_path != ['python_lib.zip']:
+        set_custom_attribute('codejail.exec.status', 'invalid.python_path')
         return Response({'error': "Only allowed entry in 'python_path' is 'python_lib.zip'"}, status=400)
 
     # Only allow a known safe name for uploaded files. (In practice, edxapp
@@ -144,12 +176,14 @@ def code_exec(request):
     # happen with the privilege level of the webapp user, not the sandbox user.
     filenames = {name for (name, _bytes) in extra_files}
     if filenames and filenames != {'python_lib.zip'}:
+        set_custom_attribute('codejail.exec.status', 'invalid.files')
         return Response({'error': "Only allowed name for uploaded file is 'python_lib.zip'"}, status=400)
 
     # Far too dangerous to allow unsafe executions to come in over the
     # network, even if we were to authenticate them. The caller is the
     # one who has the context on safety.
     if unsafely:
+        set_custom_attribute('codejail.exec.status', 'invalid.unsafely')
         return Response({'error': "Refusing codejail execution with unsafely=true"}, status=400)
 
     # This wrapped version of safe_exec doesn't mutate the globals dict
@@ -164,6 +198,7 @@ def code_exec(request):
 
     if error_message is None:
         log.debug("Codejail execution succeeded for {slug=}, with globals={globals_out!r}")
+        set_custom_attribute('codejail.exec.status', 'executed.success')
         return Response({'globals_dict': globals_out})
     else:
         log.debug("Codejail execution failed for {slug=} with: {error_message}")
@@ -173,4 +208,5 @@ def code_exec(request):
         # could just as well return {} here, but the service returns the "updated"
         # globals for backward-compatibility, just in case anything actually does
         # care.
+        set_custom_attribute('codejail.exec.status', 'executed.error')
         return Response({'globals_dict': globals_out, 'emsg': error_message})

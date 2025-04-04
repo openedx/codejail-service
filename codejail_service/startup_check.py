@@ -7,6 +7,8 @@ import urllib.request
 from textwrap import dedent
 from urllib.error import URLError
 
+from edx_django_utils.monitoring import set_custom_attribute
+
 from codejail_service.codejail import safe_exec
 
 log = logging.getLogger(__name__)
@@ -60,22 +62,27 @@ def run_startup_safety_check():
     checks = [
         {
             "name": "Basic code execution",
+            "id": "functionality",
             "fn": _check_basic_function,
         },
         {
             "name": "Block sandbox escape by disk access",
+            "id": "disk",
             "fn": _check_escape_disk,
         },
         {
-            "name": "Block sandbox escape by child process",
-            "fn": _check_escape_subprocess,
+            "name": "Block sandbox escape by process execution",
+            "id": "exec",
+            "fn": _check_escape_exec,
         },
         {
             "name": "Block network access",
+            "id": "network",
             "fn": _check_network_access,
         },
         {
             "name": "Block egress from webapp",
+            "id": "webapp_egress",
             "fn": _check_webapp_egress,
         },
     ]
@@ -87,13 +94,23 @@ def run_startup_safety_check():
         except BaseException as e:
             result = f"Uncaught exception from check: {e!r}"
 
-        if result is True:
+        check_passed = result is True
+        # .. custom_attribute_name: codejail.startup_check.<CHECK_NAME>
+        # .. custom_attribute_description: Result of the check with ID ``<CHECK_NAME>``,
+        #   the string "pass" or "fail".
+        set_custom_attribute(f"codejail.startup_check.{check['id']}", 'pass' if check_passed else 'fail')
+
+        if check_passed:
             log.info(f"Startup check {check['name']!r} passed")
         else:
             any_failed = True
             log.error(f"Startup check {check['name']!r} failed with: {result!r}")
 
     STARTUP_SAFETY_CHECK_OK = not any_failed
+    # .. custom_attribute_name: codejail.startup_check.status
+    # .. custom_attribute_description: Overall result of the startup checks,
+    #   the string "pass" or "fail".
+    set_custom_attribute('codejail.startup_check.status', 'pass' if STARTUP_SAFETY_CHECK_OK else 'fail')
 
 
 def _check_basic_function():
@@ -126,7 +143,7 @@ def _check_escape_disk():
     return True
 
 
-def _check_escape_subprocess():
+def _check_escape_exec():
     """
     Check for sandbox escape by creating a child process.
     """

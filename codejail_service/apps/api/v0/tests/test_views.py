@@ -6,7 +6,7 @@ import io
 import json
 import textwrap
 from os import path
-from unittest.mock import patch
+from unittest.mock import call, patch
 
 import ddt
 from django.test import TestCase, override_settings
@@ -86,11 +86,17 @@ class TestExecService(TestCase):
             exp_status=500, exp_body={'error': "Codejail service is not correctly configured"},
         )
 
-    def test_success(self):
+    @patch('codejail_service.apps.api.v0.views.set_custom_attribute')
+    def test_success(self, mock_set_custom_attribute):
         """Regular successful call."""
         self._test_codejail_api(
             exp_status=200, exp_body={'globals_dict': {'retval': 7}},
         )
+        assert mock_set_custom_attribute.call_args_list == [
+            call('codejail.exec.python_path_len', 0),
+            call('codejail.exec.files_count', 0),
+            call('codejail.exec.status', 'executed.success'),
+        ]
 
     def test_unsafely(self):
         """unsafely=true is rejected"""
@@ -142,15 +148,21 @@ class TestExecService(TestCase):
                 exp_status=200, exp_body={'globals_dict': {'result': 21}},
             )
 
-    def test_reject_unknown_python_path(self):
+    @patch('codejail_service.apps.api.v0.views.set_custom_attribute')
+    def test_reject_unknown_python_path(self, mock_set_custom_attribute):
         """We need to reject unknown python_path for security reasons."""
         self._test_codejail_api(
             params={'code': "out = 1 + 1", 'globals_dict': {}, 'python_path': ['something']},
             exp_status=400,
             exp_body={'error': "Only allowed entry in 'python_path' is 'python_lib.zip'"},
         )
+        mock_set_custom_attribute.assert_has_calls([
+            call('codejail.exec.python_path_len', 1),
+            call('codejail.exec.status', 'invalid.python_path'),
+        ], any_order=True)
 
-    def test_reject_unknown_extra_files(self):
+    @patch('codejail_service.apps.api.v0.views.set_custom_attribute')
+    def test_reject_unknown_extra_files(self, mock_set_custom_attribute):
         """We need to reject unknown filenames for security reasons."""
         self._test_codejail_api(
             params={'code': "out = 1 + 1", 'globals_dict': {}},
@@ -159,8 +171,13 @@ class TestExecService(TestCase):
             exp_status=400,
             exp_body={'error': "Only allowed name for uploaded file is 'python_lib.zip'"},
         )
+        mock_set_custom_attribute.assert_has_calls([
+            call('codejail.exec.files_count', 1),
+            call('codejail.exec.status', 'invalid.files'),
+        ], any_order=True)
 
-    def test_exception(self):
+    @patch('codejail_service.apps.api.v0.views.set_custom_attribute')
+    def test_exception(self, mock_set_custom_attribute):
         """Report exceptions from jailed code."""
         self._test_codejail_api(
             params={'code': '1/0', 'globals_dict': {}},
@@ -169,4 +186,21 @@ class TestExecService(TestCase):
                 'globals_dict': {},
                 'emsg': 'ZeroDivisionError: division by zero',
             },
+        )
+        mock_set_custom_attribute.assert_any_call('codejail.exec.status', 'executed.error')
+
+    @patch('codejail_service.apps.api.v0.views.set_custom_attribute')
+    def test_can_pass_limit_override(self, mock_set_custom_attribute):
+        """Test that limit override is accepted."""
+        self._test_codejail_api(
+            params={
+                'code': 'out = 1 + 1',
+                'globals_dict': {},
+                'limit_overrides_context': 'xxxxxxx some junk xxxxxxxx',
+            },
+            exp_status=200,
+            exp_body={'globals_dict': {'out': 2}},
+        )
+        mock_set_custom_attribute.assert_any_call(
+            'codejail.exec.limit_override', 'xxxxxxx some junk xxxxxxxx',
         )
