@@ -224,7 +224,7 @@ more-itertools==10.6.0
     #   -r requirements/quality.txt
     #   jaraco-classes
     #   jaraco-functools
-newrelic==10.8.0
+newrelic==10.8.1
     # via
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
@@ -319,11 +319,11 @@ pytest==8.3.5
     #   -r requirements/test.txt
     #   pytest-cov
     #   pytest-django
-pytest-cov==6.0.0
+pytest-cov==6.1.1
     # via
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
-pytest-django==4.10.0
+pytest-django==4.11.1
     # via
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
@@ -412,7 +412,7 @@ tox==4.25.0
     #   -r requirements/test.txt
 twine==6.1.0
     # via -r requirements/quality.txt
-typing-extensions==4.13.0
+typing-extensions==4.13.1
     # via
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
@@ -422,7 +422,7 @@ urllib3==2.2.3
     #   -r requirements/quality.txt
     #   requests
     #   twine
-virtualenv==20.29.3
+virtualenv==20.30.0
     # via
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
