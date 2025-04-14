@@ -34,7 +34,7 @@ click==8.1.8
     #   edx-lint
 click-log==0.4.0
     # via edx-lint
-code-annotations==2.2.0
+code-annotations==2.3.0
     # via
     #   -r requirements/base.txt
     #   -r requirements/test.in
@@ -74,7 +74,7 @@ djangorestframework==3.16.0
     # via -r requirements/base.txt
 edx-codejail==3.5.2
     # via -r requirements/base.txt
-edx-django-utils==7.2.0
+edx-django-utils==7.4.0
     # via
     #   -r requirements/base.txt
     #   edx-toggles
@@ -108,7 +108,7 @@ markupsafe==3.0.2
     #   jinja2
 mccabe==0.7.0
     # via pylint
-newrelic==10.8.1
+newrelic==10.9.0
     # via
     #   -r requirements/base.txt
     #   edx-django-utils
@@ -208,7 +208,7 @@ tomlkit==0.13.2
     # via pylint
 tox==4.25.0
     # via -r requirements/test.in
-typing-extensions==4.13.1
+typing-extensions==4.13.2
     # via
     #   -r requirements/base.txt
     #   referencing
