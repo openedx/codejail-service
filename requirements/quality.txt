@@ -46,7 +46,7 @@ click-log==0.4.0
     # via
     #   -r requirements/test.txt
     #   edx-lint
-code-annotations==2.2.0
+code-annotations==2.3.0
     # via
     #   -r requirements/test.txt
     #   edx-lint
@@ -96,7 +96,7 @@ docutils==0.21.2
     # via readme-renderer
 edx-codejail==3.5.2
     # via -r requirements/test.txt
-edx-django-utils==7.2.0
+edx-django-utils==7.4.0
     # via
     #   -r requirements/test.txt
     #   edx-toggles
@@ -164,7 +164,7 @@ more-itertools==10.6.0
     # via
     #   jaraco-classes
     #   jaraco-functools
-newrelic==10.8.1
+newrelic==10.9.0
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
@@ -307,7 +307,7 @@ tox==4.25.0
     # via -r requirements/test.txt
 twine==6.1.0
     # via -r requirements/quality.in
-typing-extensions==4.13.1
+typing-extensions==4.13.2
     # via
     #   -r requirements/test.txt
     #   referencing
