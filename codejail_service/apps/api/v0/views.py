@@ -116,12 +116,18 @@ def code_exec(request):
     try:
         params = json.loads(params_json)
     except json.decoder.JSONDecodeError as e:
+        log.error(f"Payload was not valid JSON: {e}")
         set_custom_attribute('codejail.exec.status', 'invalid.payload.bad_json')
         return Response({'error': f"Unable to parse payload JSON: {e}"}, status=400)
 
     if json_error := json_error_best_match(payload_validator.iter_errors(params)):
+        error_msg = (
+            "Payload JSON did not match schema "
+            f"at path {json_error.json_path}: {json_error.message}"
+        )
+        log.error(error_msg)
         set_custom_attribute('codejail.exec.status', 'invalid.payload.schema_mismatch')
-        return Response({'error': f"Payload JSON did not match schema: {json_error.message}"}, status=400)
+        return Response({'error': error_msg}, status=400)
 
     # These first two are required params, but schema check has
     # already ensured they are present.
@@ -148,6 +154,11 @@ def code_exec(request):
     # .. custom_attribute_description: The number of files the request included in a
     #   codejail execution request. Normally there should be zero or one entries.
     set_custom_attribute('codejail.exec.files_count', len(request.FILES))
+    # .. custom_attribute_name: codejail.exec.slug
+    # .. custom_attribute_description: "Slug" ID passed in the request. This is
+    #   usually going to be a problem ID, and may help identify what XBlock was
+    #   involved.
+    set_custom_attribute('codejail.exec.slug', slug)
 
     # Convert to a list of (string, bytestring) pairs. Any duplicated file names
     # are resolved as last-wins.
@@ -165,7 +176,8 @@ def code_exec(request):
     # *arbitrary file reads* in the broader filesystem by sandboxed code
     # regardless of AppArmor settings. These reads would happen with the
     # privilege level of the webapp user, not the sandbox user.
-    if python_path and python_path != ['python_lib.zip']:
+    if unexpected := set(python_path) - {'python_lib.zip'}:
+        log.error(f"Unexpected python_path entries in request: {unexpected!r}")
         set_custom_attribute('codejail.exec.status', 'invalid.python_path')
         return Response({'error': "Only allowed entry in 'python_path' is 'python_lib.zip'"}, status=400)
 
@@ -174,8 +186,8 @@ def code_exec(request):
     # codejail, unrestricted filenames allow *arbitrary file writes* in the
     # broader filesystem regardless of AppArmor settings. These writes would
     # happen with the privilege level of the webapp user, not the sandbox user.
-    filenames = {name for (name, _bytes) in extra_files}
-    if filenames and filenames != {'python_lib.zip'}:
+    if unexpected := {name for (name, _bytes) in extra_files} - {'python_lib.zip'}:
+        log.error(f"Unexpected filenames in request: {unexpected!r}")
         set_custom_attribute('codejail.exec.status', 'invalid.files')
         return Response({'error': "Only allowed name for uploaded file is 'python_lib.zip'"}, status=400)
 

@@ -7,6 +7,13 @@ Changelog
    but in reStructuredText instead of Markdown (for ease of incorporation into
    Sphinx documentation and the PyPI description).
 
+2025-04-18
+**********
+Added
+=====
+* Add logging for several client error situations
+* Add custom attribute for slug
+
 2025-04-04
 **********
 Added
