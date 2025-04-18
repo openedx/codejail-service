@@ -42,7 +42,8 @@ class TestExecService(TestCase):
         assert resp.status_code == 400
         assert json.loads(resp.content) == {'error': "Missing 'payload' parameter in POST body"}
 
-    def test_malformed_payload(self):
+    @patch('codejail_service.apps.api.v0.views.log.error')
+    def test_malformed_payload(self, mock_log_error):
         """Handle malformed payload param gracefully."""
         client = APIClient()
         resp = client.post('/api/v0/code-exec', {'payload': "Not JSON"}, format='multipart')
@@ -50,6 +51,9 @@ class TestExecService(TestCase):
         assert json.loads(resp.content) == {
             'error': "Unable to parse payload JSON: Expecting value: line 1 column 1 (char 0)",
         }
+        mock_log_error.assert_called_once_with(
+            "Payload was not valid JSON: Expecting value: line 1 column 1 (char 0)"
+        )
 
     def _test_codejail_api(self, *, params=None, files=None, exp_status, exp_body):
         """
@@ -88,13 +92,20 @@ class TestExecService(TestCase):
 
     @patch('codejail_service.apps.api.v0.views.set_custom_attribute')
     def test_success(self, mock_set_custom_attribute):
-        """Regular successful call."""
+        """
+        Regular successful call.
+
+        Also asserting the full list of custom attrs we include in a normal call.
+        """
         self._test_codejail_api(
+            # Adding a slug for completeness in custom attributes -- not actually needed.
+            params={**self.standard_params, 'slug': 'hw5'},
             exp_status=200, exp_body={'globals_dict': {'retval': 7}},
         )
         assert mock_set_custom_attribute.call_args_list == [
             call('codejail.exec.python_path_len', 0),
             call('codejail.exec.files_count', 0),
+            call('codejail.exec.slug', 'hw5'),
             call('codejail.exec.status', 'executed.success'),
         ]
 
@@ -111,14 +122,18 @@ class TestExecService(TestCase):
         ({'code': 'retval = 3 + 4'}, 'globals_dict'),
         ({}, 'code'),
     )
-    def test_missing_params(self, params, missing):
+    @patch('codejail_service.apps.api.v0.views.log.error')
+    def test_missing_params(self, params, missing, mock_log_error):
         """Two code and globals_dict params are required."""
+        expect_error_msg = (
+            "Payload JSON did not match schema at path $: "
+            f"'{missing}' is a required property"
+        )
         self._test_codejail_api(
             params=params,
-            exp_status=400, exp_body={
-                'error': f"Payload JSON did not match schema: '{missing}' is a required property",
-            },
+            exp_status=400, exp_body={'error': expect_error_msg},
         )
+        mock_log_error.assert_called_once_with(expect_error_msg)
 
     def test_course_library(self):
         """Check that we can include a course library."""
@@ -148,33 +163,51 @@ class TestExecService(TestCase):
                 exp_status=200, exp_body={'globals_dict': {'result': 21}},
             )
 
+    @ddt.data(
+        ['something_else'],
+        ['python_lib.zip', 'something_else'],
+    )
     @patch('codejail_service.apps.api.v0.views.set_custom_attribute')
-    def test_reject_unknown_python_path(self, mock_set_custom_attribute):
+    @patch('codejail_service.apps.api.v0.views.log.error')
+    def test_reject_unknown_python_path(self, paths, mock_log_error, mock_set_custom_attribute):
         """We need to reject unknown python_path for security reasons."""
         self._test_codejail_api(
-            params={'code': "out = 1 + 1", 'globals_dict': {}, 'python_path': ['something']},
+            params={'code': "out = 1 + 1", 'globals_dict': {}, 'python_path': paths},
             exp_status=400,
             exp_body={'error': "Only allowed entry in 'python_path' is 'python_lib.zip'"},
         )
         mock_set_custom_attribute.assert_has_calls([
-            call('codejail.exec.python_path_len', 1),
+            call('codejail.exec.python_path_len', len(paths)),
             call('codejail.exec.status', 'invalid.python_path'),
         ], any_order=True)
+        mock_log_error.assert_called_once_with(
+            "Unexpected python_path entries in request: {'something_else'}"
+        )
 
+    @ddt.data(
+        ['unknown.zip'],
+        ['python_lib.zip', 'unknown.zip'],
+    )
     @patch('codejail_service.apps.api.v0.views.set_custom_attribute')
-    def test_reject_unknown_extra_files(self, mock_set_custom_attribute):
+    @patch('codejail_service.apps.api.v0.views.log.error')
+    def test_reject_unknown_extra_files(
+            self, filenames, mock_log_error, mock_set_custom_attribute,
+    ):
         """We need to reject unknown filenames for security reasons."""
         self._test_codejail_api(
             params={'code': "out = 1 + 1", 'globals_dict': {}},
             # Use a BytesIO to make requests treat this value as a file
-            files={'unknown.zip': io.BytesIO(b'TESTING')},
+            files={name: io.BytesIO(b'TESTING') for name in filenames},
             exp_status=400,
             exp_body={'error': "Only allowed name for uploaded file is 'python_lib.zip'"},
         )
         mock_set_custom_attribute.assert_has_calls([
-            call('codejail.exec.files_count', 1),
+            call('codejail.exec.files_count', len(filenames)),
             call('codejail.exec.status', 'invalid.files'),
         ], any_order=True)
+        mock_log_error.assert_called_once_with(
+            "Unexpected filenames in request: {'unknown.zip'}"
+        )
 
     @patch('codejail_service.apps.api.v0.views.set_custom_attribute')
     def test_exception(self, mock_set_custom_attribute):
