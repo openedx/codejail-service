@@ -57,7 +57,7 @@ markupsafe==3.0.2
     # via jinja2
 newrelic==10.9.0
     # via edx-django-utils
-packaging==24.2
+packaging==25.0
     # via gunicorn
 pbr==6.1.1
     # via stevedore
