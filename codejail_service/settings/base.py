@@ -38,6 +38,16 @@ MIDDLEWARE = (
     'django.middleware.common.CommonMiddleware',
 )
 
+REST_FRAMEWORK = {
+    # We need to accept and return special floats like NaN and Infinity in
+    # globals_dict, despite these not being legal JSON according to the
+    # RFC. Python's json module allows these by default, so we don't get errors
+    # at the safe_exec JSON de/serialization level, but we also need to
+    # de/serialize across the network. That's up to DRF, which uses a strict
+    # mode by default. We need to turn that off.
+    'STRICT_JSON': False,
+}
+
 ROOT_URLCONF = 'codejail_service.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.

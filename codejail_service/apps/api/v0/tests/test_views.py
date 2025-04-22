@@ -4,6 +4,7 @@ Test codejail service views.
 
 import io
 import json
+import math
 import textwrap
 from os import path
 from unittest.mock import call, patch
@@ -237,3 +238,26 @@ class TestExecService(TestCase):
         mock_set_custom_attribute.assert_any_call(
             'codejail.exec.limit_override', 'xxxxxxx some junk xxxxxxxx',
         )
+
+    def test_accept_float_specials(self):
+        """
+        We can accept and return NaN/Infinity in JSON.
+
+        This exercises NaN de/serialization at both the network and safe_exec
+        hops, although in practice this is a regression test for keeping DRF's
+        STRICT_JSON disabled for the HTTP response.
+        """
+        # We have to use APIClient directly instead of using the
+        # _test_codejail_api helper method because we want to ensure the NaN is
+        # encoded as we expect.
+        client = APIClient()
+        resp = client.post(
+            '/api/v0/code-exec',
+            {'payload': '{"code": "out_special = in_special", "globals_dict": {"in_special": NaN}}'},
+            format='multipart',
+        )
+        assert resp.status_code == 200
+        resp_json = json.loads(resp.content)
+
+        assert math.isnan(resp_json['globals_dict']['out_special'])
+        assert 'emsg' not in resp_json

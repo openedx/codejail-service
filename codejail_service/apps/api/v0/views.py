@@ -91,6 +91,12 @@ def code_exec(request):
     (an error message string) if the submitted code raised an exception.
 
     Other responses are errors, with a JSON body containing further details.
+
+    Special note: The JSON format used by this endpoint permits floating point
+    special values such as `NaN` and `Infinity`, which standards-compliant JSON
+    implementations will not accept or produce. Python's `json` module allows
+    them by default, but other implementations may need to be configured
+    specially.
     """
     if not CODEJAIL_ENABLED.is_enabled():
         # .. custom_attribute_name: codejail.exec.status

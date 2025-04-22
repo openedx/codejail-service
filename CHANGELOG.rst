@@ -9,6 +9,13 @@ Changelog
 
 2025-04-18
 **********
+Fixed
+=====
+* Allow float specials like NaN and Infinity in globals_dict. (Was causing HTTP
+  error due to JSON de/serialization.)
+
+2025-04-18
+**********
 Added
 =====
 * Add logging for several client error situations
