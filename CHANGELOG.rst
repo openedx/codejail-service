@@ -7,7 +7,13 @@ Changelog
    but in reStructuredText instead of Markdown (for ease of incorporation into
    Sphinx documentation and the PyPI description).
 
-2025-04-18
+2025-04-28
+**********
+Fixed
+=====
+* Make API tests compatible with Python 3.11 and 3.12
+
+2025-04-22
 **********
 Fixed
 =====
