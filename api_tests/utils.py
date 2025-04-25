@@ -11,7 +11,7 @@ import requests
 
 
 @functools.lru_cache
-def get_exec_url():
+def _get_exec_url():
     """
     Get the code-exec URL.
     """
@@ -33,11 +33,15 @@ def call_api(code, globals_dict, /, *, files=None, python_path=None):
 
     Returns a requests.Response object.
     """
-    url = get_exec_url()
+    url = _get_exec_url()
     payload = json.dumps({
         "code": code,
         "globals_dict": globals_dict,
         "python_path": python_path,
+        # Help operators detect that weird/broken calls they're seeing in
+        # codejail-service might actually be from the API tests, not a broken
+        # client.
+        "slug": "codejail-service-api-tests",
     })
     return requests.post(url, data={"payload": payload}, files=files, timeout=50.0)
 

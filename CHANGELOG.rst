@@ -7,6 +7,12 @@ Changelog
    but in reStructuredText instead of Markdown (for ease of incorporation into
    Sphinx documentation and the PyPI description).
 
+2025-04-25
+**********
+Added
+=====
+* Send a slug with API test calls to help distinguish them from normal traffic.
+
 2025-04-18
 **********
 Fixed
