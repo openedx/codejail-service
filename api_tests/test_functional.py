@@ -84,7 +84,7 @@ def test_support_exception_traceback_stderr():
     # relative file names in stack traces. Some time after 3.8, they start being
     # turned into absolute paths.
     emsg_comparable = re.sub(
-        r'File "(/tmp/codejail-[0-9a-z]+/)?jailed_code"',
+        r'File "(/tmp/codejail-[0-9a-zA-Z_]+/)?jailed_code"',
         r'File "<JAILED_CODE_PATH>"',
         emsg_comparable
     )
