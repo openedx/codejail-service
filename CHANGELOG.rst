@@ -9,6 +9,10 @@ Changelog
 
 2025-04-28
 **********
+Added
+=====
+* Send a slug with API test calls to help distinguish them from normal traffic.
+
 Fixed
 =====
 * Make API tests compatible with Python 3.11 and 3.12
