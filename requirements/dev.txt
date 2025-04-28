@@ -26,7 +26,7 @@ cachetools==5.5.2
     # via
     #   -r requirements/validation.txt
     #   tox
-certifi==2025.1.31
+certifi==2025.4.26
     # via
     #   -r requirements/validation.txt
     #   requests
@@ -167,7 +167,7 @@ jinja2==3.1.6
     #   diff-cover
 jsonschema==4.23.0
     # via -r requirements/validation.txt
-jsonschema-specifications==2024.10.1
+jsonschema-specifications==2025.4.1
     # via
     #   -r requirements/validation.txt
     #   jsonschema
@@ -191,12 +191,12 @@ mdurl==0.1.2
     # via
     #   -r requirements/validation.txt
     #   markdown-it-py
-more-itertools==10.6.0
+more-itertools==10.7.0
     # via
     #   -r requirements/validation.txt
     #   jaraco-classes
     #   jaraco-functools
-newrelic==10.9.0
+newrelic==10.10.0
     # via
     #   -r requirements/validation.txt
     #   edx-django-utils
