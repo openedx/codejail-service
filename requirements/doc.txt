@@ -32,7 +32,7 @@ cachetools==5.5.2
     # via
     #   -r requirements/test.txt
     #   tox
-certifi==2025.1.31
+certifi==2025.4.26
     # via requests
 cffi==1.17.1
     # via
@@ -143,7 +143,7 @@ jinja2==3.1.6
     #   sphinx
 jsonschema==4.23.0
     # via -r requirements/test.txt
-jsonschema-specifications==2024.10.1
+jsonschema-specifications==2025.4.1
     # via
     #   -r requirements/test.txt
     #   jsonschema
@@ -155,7 +155,7 @@ mccabe==0.7.0
     # via
     #   -r requirements/test.txt
     #   pylint
-newrelic==10.9.0
+newrelic==10.10.0
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
