@@ -57,8 +57,9 @@ class TestExecProcess(TestCase):
         repr("/usr/bin/ls"),
         # Evaluates to the Python executable the sandboxed code is running under
         "sys.executable",
-        # Python 3.8, on the PATH
-        repr("python3.8"),
+        # Python, on the PATH. (Use 3 rather than 3.11, etc. to make this
+        # compatible with range of versions.)
+        repr("python3"),
     )
     def test_deny_subprocess(self, bin_path_expr):
         """

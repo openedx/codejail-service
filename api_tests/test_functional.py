@@ -80,10 +80,18 @@ def test_support_exception_traceback_stderr():
     # Here, we're converting line numbers to constants in order to make
     # string comparisons work.
     emsg_comparable = re.sub(r' line [0-9]+', ' line NN', emsg)
+    # We also need to account for differences in how Python 3.8 and 3.11 print
+    # relative file names in stack traces. Some time after 3.8, they start being
+    # turned into absolute paths.
+    emsg_comparable = re.sub(
+        r'File "(/tmp/codejail-[0-9a-z]+/)?jailed_code"',
+        r'File "<JAILED_CODE_PATH>"',
+        emsg_comparable
+    )
     assert emsg_comparable == (
         "Couldn't execute jailed code: stdout: b'', "
         r"stderr: b'other output to stderr\nTraceback (most recent call last):\n"
-        r'  File "jailed_code", line NN, in <module>\n    exec(code, g_dict)\n'
+        r'  File "<JAILED_CODE_PATH>", line NN, in <module>\n    exec(code, g_dict)\n'
         r'  File "<string>", line NN, in <module>\n'
         r"ZeroDivisionError: division by zero\n' with status code: 1"
     )
