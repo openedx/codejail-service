@@ -55,7 +55,7 @@ jsonschema-specifications==2025.4.1
     # via jsonschema
 markupsafe==3.0.2
     # via jinja2
-newrelic==10.10.0
+newrelic==10.11.0
     # via edx-django-utils
 packaging==25.0
     # via gunicorn
