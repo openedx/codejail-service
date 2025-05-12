@@ -8,7 +8,7 @@ asgiref==3.8.1
     # via
     #   -r requirements/base.txt
     #   django
-astroid==3.3.9
+astroid==3.3.10
     # via
     #   pylint
     #   pylint-celery
@@ -25,7 +25,7 @@ cffi==1.17.1
     #   pynacl
 chardet==5.2.0
     # via tox
-click==8.1.8
+click==8.2.0
     # via
     #   -r requirements/base.txt
     #   click-log
@@ -108,7 +108,7 @@ markupsafe==3.0.2
     #   jinja2
 mccabe==0.7.0
     # via pylint
-newrelic==10.10.0
+newrelic==10.11.0
     # via
     #   -r requirements/base.txt
     #   edx-django-utils
@@ -123,7 +123,7 @@ pbr==6.1.1
     # via
     #   -r requirements/base.txt
     #   stevedore
-platformdirs==4.3.7
+platformdirs==4.3.8
     # via
     #   pylint
     #   tox
@@ -140,7 +140,7 @@ pycparser==2.22
     # via
     #   -r requirements/base.txt
     #   cffi
-pylint==3.3.6
+pylint==3.3.7
     # via
     #   edx-lint
     #   pylint-celery
@@ -212,7 +212,7 @@ typing-extensions==4.13.2
     # via
     #   -r requirements/base.txt
     #   referencing
-virtualenv==20.30.0
+virtualenv==20.31.2
     # via tox
 
 # The following packages are considered to be unsafe in a requirements file:

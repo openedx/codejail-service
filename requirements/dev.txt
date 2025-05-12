@@ -8,7 +8,7 @@ asgiref==3.8.1
     # via
     #   -r requirements/validation.txt
     #   django
-astroid==3.3.9
+astroid==3.3.10
     # via
     #   -r requirements/validation.txt
     #   pylint
@@ -40,11 +40,11 @@ chardet==5.2.0
     #   -r requirements/validation.txt
     #   diff-cover
     #   tox
-charset-normalizer==3.4.1
+charset-normalizer==3.4.2
     # via
     #   -r requirements/validation.txt
     #   requests
-click==8.1.8
+click==8.2.0
     # via
     #   -r requirements/pip-tools.txt
     #   -r requirements/validation.txt
@@ -70,7 +70,7 @@ coverage[toml]==7.8.0
     # via
     #   -r requirements/validation.txt
     #   pytest-cov
-cryptography==44.0.2
+cryptography==44.0.3
     # via
     #   -r requirements/validation.txt
     #   secretstorage
@@ -86,7 +86,7 @@ distlib==0.3.9
     # via
     #   -r requirements/validation.txt
     #   virtualenv
-django==4.2.20
+django==4.2.21
     # via
     #   -r requirements/validation.txt
     #   django-crum
@@ -196,7 +196,7 @@ more-itertools==10.7.0
     #   -r requirements/validation.txt
     #   jaraco-classes
     #   jaraco-functools
-newrelic==10.10.0
+newrelic==10.11.0
     # via
     #   -r requirements/validation.txt
     #   edx-django-utils
@@ -220,7 +220,7 @@ pbr==6.1.1
     #   stevedore
 pip-tools==7.4.1
     # via -r requirements/pip-tools.txt
-platformdirs==4.3.7
+platformdirs==4.3.8
     # via
     #   -r requirements/validation.txt
     #   pylint
@@ -250,7 +250,7 @@ pygments==2.19.1
     #   diff-cover
     #   readme-renderer
     #   rich
-pylint==3.3.6
+pylint==3.3.7
     # via
     #   -r requirements/validation.txt
     #   edx-lint
@@ -341,7 +341,7 @@ six==1.17.0
     #   -r requirements/validation.txt
     #   edx-codejail
     #   edx-lint
-snowballstemmer==2.2.0
+snowballstemmer==3.0.1
     # via
     #   -r requirements/validation.txt
     #   pydocstyle
@@ -375,7 +375,7 @@ urllib3==2.2.3
     #   -r requirements/validation.txt
     #   requests
     #   twine
-virtualenv==20.30.0
+virtualenv==20.31.2
     # via
     #   -r requirements/validation.txt
     #   tox
