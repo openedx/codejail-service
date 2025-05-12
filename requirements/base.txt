@@ -12,13 +12,13 @@ attrs==25.3.0
     #   referencing
 cffi==1.17.1
     # via pynacl
-click==8.1.8
+click==8.2.0
     # via
     #   code-annotations
     #   edx-django-utils
 code-annotations==2.3.0
     # via edx-toggles
-django==4.2.20
+django==4.2.21
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/base.in
@@ -55,7 +55,7 @@ jsonschema-specifications==2025.4.1
     # via jsonschema
 markupsafe==3.0.2
     # via jinja2
-newrelic==10.10.0
+newrelic==10.11.0
     # via edx-django-utils
 packaging==25.0
     # via gunicorn
