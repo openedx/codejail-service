@@ -10,8 +10,6 @@ from codejail_service.settings.utils import get_env_setting
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
-LOGGING = get_logger_config()
-
 # Keep track of the names of settings that represent dicts. Instead of overriding the values in base.py,
 # the values read from disk should UPDATE the pre-configured dicts.
 DICT_UPDATE_KEYS = ()
@@ -30,3 +28,6 @@ if 'CODEJAIL_SERVICE_CFG' in environ:
                 vars()[key].update(value)
 
         vars().update(config_from_yaml)
+
+# Below YAML loading so that LOGGING_FORMAT_STRING can be set
+LOGGING = get_logger_config(format_string=LOGGING_FORMAT_STRING)

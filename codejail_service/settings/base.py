@@ -72,5 +72,8 @@ LOCALE_PATHS = (
     root('conf', 'locale'),
 )
 
+# Allow overriding the default logging format string.
+LOGGING_FORMAT_STRING = None
+
 # Set up logging for development use (logging to stdout)
-LOGGING = get_logger_config(debug=DEBUG)
+LOGGING = get_logger_config(debug=DEBUG, format_string=LOGGING_FORMAT_STRING)
