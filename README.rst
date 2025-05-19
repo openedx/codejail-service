@@ -1,7 +1,7 @@
 codejail_service
 ################
 
-|ci-badge| |codecov-badge| |doc-badge| |pyversions-badge|
+|ci-badge| |codecov-badge| |doc-badge|
 |license-badge| |status-badge|
 
 Purpose
@@ -11,14 +11,6 @@ Run codejail (sandboxed Python execution) as a service. This implements the cust
 
 Warnings
 ********
-
-Developers
-==========
-
-This service is configured with an in-memory database simply to make Django happy. The service itself **effectively does not have a database**, and should not rely on any database-dependent features such as waffle-based toggles.
-
-Operators
-=========
 
 **It is critical to configure this service securely**, as a misconfigured codejail-service will almost certainly allow an attacker to compromise not just this service, but possibly the rest of your infrastructure. See configuration and deployment docs for details.
 
@@ -37,7 +29,9 @@ Getting Help
 Documentation
 =============
 
-TODO (`<https://github.com/openedx/codejail-service/issues/3>`__)
+See docs directory.
+
+TODO: `Set up ReadTheDocs site <https://github.com/openedx/codejail-service/issues/3>`__.
 
 More Help
 =========
@@ -102,9 +96,9 @@ Reporting Security Issues
 
 Please do not report security issues in public. Please email security@openedx.org.
 
-.. |ci-badge| image:: https://github.com/openedx/codejail-service/workflows/Python%20CI/badge.svg?branch=main
+.. |ci-badge| image:: https://github.com/openedx/codejail-service/workflows/Python%20CI/badge.svg
     :target: https://github.com/openedx/codejail-service/actions
-    :alt: CI
+    :alt: Python CI
 
 .. |codecov-badge| image:: https://codecov.io/github/openedx/codejail-service/coverage.svg?branch=main
     :target: https://codecov.io/github/openedx/codejail-service?branch=main
@@ -112,14 +106,11 @@ Please do not report security issues in public. Please email security@openedx.or
 
 .. |doc-badge| image:: https://readthedocs.org/projects/codejail-service/badge/?version=latest
     :target: https://docs.openedx.org/projects/codejail-service
-    :alt: Documentation
-
-.. |pyversions-badge| image:: https://img.shields.io/pypi/pyversions/codejail-service.svg
-    :target: https://pypi.python.org/pypi/codejail-service/
-    :alt: Supported Python versions
+    :alt: Docs
 
 .. |license-badge| image:: https://img.shields.io/github/license/openedx/codejail-service.svg
     :target: https://github.com/openedx/codejail-service/blob/main/LICENSE.txt
     :alt: License
 
-.. |status-badge| image:: https://img.shields.io/badge/Status-Experimental-yellow
+.. |status-badge| image:: https://img.shields.io/badge/Status-Maintained-brightgreen
+    :alt: Status: Maintained
