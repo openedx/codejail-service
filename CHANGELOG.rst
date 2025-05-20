@@ -7,6 +7,12 @@ Changelog
    but in reStructuredText instead of Markdown (for ease of incorporation into
    Sphinx documentation and the PyPI description).
 
+2025-05-20
+**********
+Added
+=====
+* New Django setting ``LOGGING_FORMAT_STRING`` allows overriding the standard logger's format string.
+
 2025-04-28
 **********
 Added
