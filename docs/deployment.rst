@@ -98,3 +98,15 @@ API tests
 After the first setup, and after any significant change to security settings, run the tests in ``./api_tests/`` (see README in that directory). This will probe the service for a variety of possible vulnerabilities.
 
 These tests can also be incorporated into your deployment pipeline.
+
+Monitoring
+**********
+
+codejail-service provides telemetry in the form of ``set_custom_attribute`` calls. If telemetry is configured (see `edx-django-utils monitoring docs <https://github.com/openedx/edx-django-utils/blob/master/edx_django_utils/monitoring/README.rst>`__), these can be used to monitor for unexpected API call failures or an unexpectedly high rate of errors returned from codejail executions.
+
+It is also recommended to ingest AppArmor logs from the host, such as the output of ``SYSTEMD_COLORS=false journalctl -k --grep='apparmor.*<PROFILE_NAME>' -f`` (where ``<PROFILE_NAME>`` is the name of the AppArmor profile in effect). This will help you debug failures due to overly restrictive policy.
+
+Migration from local codejail
+*****************************
+
+Starting in Teak, there is code in edx-platform for migrating codejail execution from local to a remote codejail-service with a darklaunch mechanism. See the `Teak release notes <https://openedx.atlassian.net/wiki/spaces/COMM/pages/4570710024/Next+Release+Teak+-+Operator+Dev+Notes>`__ for details.

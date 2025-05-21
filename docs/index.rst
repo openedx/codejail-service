@@ -14,11 +14,11 @@ Contents:
    :maxdepth: 2
 
    readme
-   testing
    deployment
-   debugging
-   changelog
+   developing
+   testing
    decisions
+   changelog
 
 
 Indices and tables
