@@ -25,14 +25,14 @@ Movement towards remote codejail
 
 In 2021 eduNEXT had previously implemented a Flask-based remote codejail service at `eduNEXT/codejailservice`_ and a ``remote_exec.py`` interface in edx-platform to call it. This enabled deploying codejail on Tutor.
 
-In 2025, 2U made a push to move its own deployment of edx-platform from the legacy Ansible and EC2 based build system to a Docker and Kubernetes system. In the process, 2U wanted to move to a remote codejail for both security and ease of deployment reasons. Engineers weighed the option of using eduNEXT's codejailservice against creating a new service, and opted for the latter.
+In 2025, 2U made a push to move its own deployment of edx-platform from the legacy Ansible and EC2 based build system to a Docker and Kubernetes system. In the process, 2U wanted to move to a remote codejail for both security and ease of deployment reasons.
 
 Decision
 ********
 
 We will create a repository at ``openedx/codejail-service``, implementing the ``xmodule.capa.safe_exec.remote_exec.send_safe_exec_request_v0`` remote exec API (same as eduNEXT/codejailservice). This is intended as the standard Open edX remote codejail option going forward.
 
-The new service will be implemented as a Django service, allowing for the reuse of existing monitoring and configuration code and patterns that are already standard across the Open edX ecosystem. The total amount of code to write is small, since this is largely a wrapper around the codejail library itself, so a rewrite is acceptable instead of forking or updating the eduNEXT code.
+The new service will be implemented as a Django service (rather than using the current Flask-based service), allowing for the reuse of existing monitoring and configuration code and patterns that are already standard across the Open edX ecosystem. The total amount of code to write is small, since this is largely a wrapper around the codejail library itself, so a rewrite is acceptable instead of forking or updating the eduNEXT code.
 
 The new code will come with an API test suite for evaluating security and functionality of a running instance.
 

@@ -13,7 +13,7 @@ Context
 
 An early decision we had to make in the design of a remote codejail service was whether to include a database. A database would provide several possible benefits, such as enabling an admin dashboard for configuration (e.g. Waffle flags) or audit logging of submitted code. Django and its ecosystem also expect there to be a database.
 
- On the other hand, supporting a database would complicate isolation. The value of configuration flags would also be of limited use, as they could not include anything related to security; a partial confinement failure could lead to malicious code changing the application's settings, escalating its own privileges.
+On the other hand, supporting a database would complicate isolation. The value of configuration flags would also be of limited use, as they could not include anything related to security; a partial confinement failure could lead to malicious code changing the application's settings, escalating its own privileges.
 
 Decision
 ********

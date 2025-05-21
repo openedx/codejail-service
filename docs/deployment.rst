@@ -109,4 +109,4 @@ It is also recommended to ingest AppArmor logs from the host, such as the output
 Migration from local codejail
 *****************************
 
-Starting in Teak, there is code in edx-platform for migrating codejail execution to a remote codejail-service with a darklaunch mechanism. See the `Teak release notes <https://openedx.atlassian.net/wiki/spaces/COMM/pages/4570710024/Next+Release+Teak+-+Operator+Dev+Notes>`__ for details.
+Starting in Teak, there is code in edx-platform for migrating codejail execution from local to a remote codejail-service with a darklaunch mechanism. See the `Teak release notes <https://openedx.atlassian.net/wiki/spaces/COMM/pages/4570710024/Next+Release+Teak+-+Operator+Dev+Notes>`__ for details.
