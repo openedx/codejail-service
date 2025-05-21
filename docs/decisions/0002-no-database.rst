@@ -27,4 +27,6 @@ Django will be configured to use an in-memory SQLite DB. There will be no persis
 
 It will be possible to lock down outbound networking entirely on the service, and the service will not be required to hold any connection-related secrets.
 
+As a downside, this means there will be no admin dashboard, including no possibility of Waffle flags.
+
 Any audit logging will be performed on the edxapp site. That would be a better option for logging anyhow, as edxapp has more context on the submitted student code, and what codejail-service receives has already been wrapped in a standard template along with compatibility shims and other support code (more than we want to include in the audit log).
