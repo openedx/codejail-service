@@ -12,7 +12,7 @@ attrs==25.3.0
     #   referencing
 cffi==1.17.1
     # via pynacl
-click==8.2.0
+click==8.2.1
     # via
     #   code-annotations
     #   edx-django-utils
@@ -39,7 +39,7 @@ djangorestframework==3.16.0
     # via -r requirements/base.in
 edx-codejail==3.5.2
     # via -r requirements/base.in
-edx-django-utils==7.4.0
+edx-django-utils==8.0.0
     # via
     #   -r requirements/base.in
     #   edx-toggles
@@ -55,8 +55,6 @@ jsonschema-specifications==2025.4.1
     # via jsonschema
 markupsafe==3.0.2
     # via jinja2
-newrelic==10.12.0
-    # via edx-django-utils
 packaging==25.0
     # via gunicorn
 pbr==6.1.1
@@ -75,7 +73,7 @@ referencing==0.36.2
     # via
     #   jsonschema
     #   jsonschema-specifications
-rpds-py==0.25.0
+rpds-py==0.25.1
     # via
     #   jsonschema
     #   referencing

@@ -28,7 +28,7 @@ babel==2.17.0
     #   sphinx
 beautifulsoup4==4.13.4
     # via pydata-sphinx-theme
-cachetools==5.5.2
+cachetools==6.0.0
     # via
     #   -r requirements/test.txt
     #   tox
@@ -44,7 +44,7 @@ chardet==5.2.0
     #   tox
 charset-normalizer==3.4.2
     # via requests
-click==8.2.0
+click==8.2.1
     # via
     #   -r requirements/test.txt
     #   click-log
@@ -64,7 +64,7 @@ colorama==0.4.6
     # via
     #   -r requirements/test.txt
     #   tox
-coverage[toml]==7.8.0
+coverage[toml]==7.8.2
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -109,7 +109,7 @@ docutils==0.21.2
     #   sphinx
 edx-codejail==3.5.2
     # via -r requirements/test.txt
-edx-django-utils==7.4.0
+edx-django-utils==8.0.0
     # via
     #   -r requirements/test.txt
     #   edx-toggles
@@ -155,10 +155,6 @@ mccabe==0.7.0
     # via
     #   -r requirements/test.txt
     #   pylint
-newrelic==10.12.0
-    # via
-    #   -r requirements/test.txt
-    #   edx-django-utils
 packaging==25.0
     # via
     #   -r requirements/test.txt
@@ -255,7 +251,7 @@ restructuredtext-lint==1.4.0
     # via doc8
 roman-numerals-py==3.1.0
     # via sphinx
-rpds-py==0.25.0
+rpds-py==0.25.1
     # via
     #   -r requirements/test.txt
     #   jsonschema
