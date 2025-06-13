@@ -5,11 +5,33 @@ Tests for startup safety and function check.
 from unittest.mock import Mock, call, patch
 from urllib.error import URLError
 
+import codejail.safe_exec
 import ddt
+import pytest
 from django.test import TestCase
 
 from codejail_service import startup_check
-from codejail_service.startup_check import is_exec_safe, run_startup_safety_check
+from codejail_service.startup_check import _check_basic_function, is_exec_safe, run_startup_safety_check
+
+
+class TestUnconfiguredCodejail(TestCase):
+
+    @patch('codejail_service.codejail.log.error')
+    def test_unconfigured(self, mock_log_error):
+        """
+        Check that an unconfigured codejail refuses to run code.
+
+        In other tests we set `ALWAYS_BE_UNSAFE = True` so that we can test the
+        integration with the codejail library, but here we leave that off to ensure
+        that we're using a version of codejail that behaves (more) safely by
+        default.
+        """
+        assert _check_basic_function() == "Unexpected error: Couldn't execute sandboxed code: See logs."
+        mock_log_error.assert_called_once_with(
+            "Unexpected error type from safe_exec: "
+            "RuntimeError('safe_exec has not been configured for Python')",
+            exc_info=True
+        )
 
 
 class TestStateCheck(TestCase):
@@ -60,6 +82,16 @@ def responses(math=DEFAULT, disk=DEFAULT, child=DEFAULT, network=DEFAULT):
 
 @ddt.ddt
 class TestInit(TestCase):
+
+    def setUp(self):
+        super().setUp()
+        # Tell codejail to just run any code in-process rather than trying to
+        # sandbox it (which it can't, in a generic developer environment).
+        codejail.safe_exec.ALWAYS_BE_UNSAFE = True
+
+    def tearDown(self):
+        super().tearDown()
+        codejail.safe_exec.ALWAYS_BE_UNSAFE = False
 
     @patch('codejail_service.startup_check.STARTUP_SAFETY_CHECK_OK', None)
     def test_unsafe_tests_default(self):

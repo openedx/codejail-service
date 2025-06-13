@@ -72,7 +72,7 @@ django-waffle==4.2.0
     #   edx-toggles
 djangorestframework==3.16.0
     # via -r requirements/base.txt
-edx-codejail==3.5.2
+edx-codejail==4.0.0
     # via -r requirements/base.txt
 edx-django-utils==8.0.0
     # via
