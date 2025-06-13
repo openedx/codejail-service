@@ -5,6 +5,7 @@ Django                   # Web application framework
 gunicorn                 # HTTP server framework
 edx-django-utils         # Monitoring utilities, among other things
 edx-toggles              # Feature switch tools
-edx-codejail             # Actual codejail library
+# Codejail 3 and below will automatically run in unsafe mode if unconfigured.
+edx-codejail>=4.0.0      # Actual codejail library
 djangorestframework      # Request parsing and response formatting
 jsonschema               # Parse and validate JSON

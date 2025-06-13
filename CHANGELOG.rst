@@ -7,6 +7,12 @@ Changelog
    but in reStructuredText instead of Markdown (for ease of incorporation into
    Sphinx documentation and the PyPI description).
 
+2025-06-16
+**********
+Changed
+=======
+* Upgrade to codejail 4.0.0, which no longer defaults to running in unsafe mode. This should make it a little harder for codejail-service to be misconfigured by accident.
+
 2025-05-20
 **********
 Added
