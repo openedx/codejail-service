@@ -121,7 +121,7 @@ docutils==0.21.2
     # via
     #   -r requirements/quality.txt
     #   readme-renderer
-edx-codejail==3.5.2
+edx-codejail==4.0.0
     # via
     #   -r requirements/quality.txt
     #   -r requirements/test.txt

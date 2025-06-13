@@ -9,6 +9,7 @@ import textwrap
 from os import path
 from unittest.mock import call, patch
 
+import codejail.safe_exec
 import ddt
 from django.test import TestCase, override_settings
 from rest_framework.test import APIClient
@@ -31,10 +32,15 @@ class TestExecService(TestCase):
         #
         # This approach means we can't parallelize the tests, but it's concise.
         startup_check.STARTUP_SAFETY_CHECK_OK = True
+        # Tell codejail to just run any code in-process rather than trying to
+        # sandbox it (which it can't, in a generic developer environment).
+        codejail.safe_exec.ALWAYS_BE_UNSAFE = True
         self.standard_params = {'code': 'retval = 3 + 4', 'globals_dict': {}}
 
     def tearDown(self):
+        super().tearDown()
         startup_check.STARTUP_SAFETY_CHECK_OK = None
+        codejail.safe_exec.ALWAYS_BE_UNSAFE = False
 
     def test_missing_payload(self):
         """Handle missing payload param gracefully."""

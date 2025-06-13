@@ -6,6 +6,8 @@ import logging
 from copy import deepcopy
 from json.decoder import JSONDecodeError
 
+from codejail.safe_exec import SafeExecException
+from codejail.safe_exec import safe_exec as real_safe_exec
 from edx_django_utils.monitoring import record_exception
 
 log = logging.getLogger(__name__)
@@ -27,17 +29,6 @@ def safe_exec(code, input_globals, **kwargs):
     an error is raised, without requiring us to mutate the input. (And this
     approach is much better for unit testing than the mutation option is.)
     """
-    # This needs to be a lazy import because as soon as codejail's
-    # safe_exec module loads, it immediately makes a decision about
-    # whether to run in always-unsafe mode.
-    #
-    # See https://github.com/openedx/codejail/issues/16 for maybe
-    # fixing this.
-
-    # pylint: disable=import-outside-toplevel
-    from codejail.safe_exec import SafeExecException
-    from codejail.safe_exec import safe_exec as real_safe_exec
-
     # Prevent mutation of input
     output_globals = deepcopy(input_globals)
     try:
