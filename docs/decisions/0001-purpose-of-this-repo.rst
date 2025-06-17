@@ -27,6 +27,11 @@ In 2021 eduNEXT had previously implemented a Flask-based remote codejail service
 
 In 2025, 2U made a push to move its own deployment of edx-platform from the legacy Ansible and EC2 based build system to a Docker and Kubernetes system. In the process, 2U wanted to move to a remote codejail for both security and ease of deployment reasons.
 
+Updates
+=======
+
+- 2025-06-16: As of codejail 4.0.0, it is no longer true that the library defaults to running without any attempt at confinement. (However, it still has no way of protecting against missing or misconfigured AppArmor.)
+
 Decision
 ********
 
