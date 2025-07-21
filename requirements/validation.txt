@@ -4,12 +4,12 @@
 #
 #    make upgrade
 #
-asgiref==3.9.0
+asgiref==3.9.1
     # via
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
     #   django
-astroid==3.3.10
+astroid==3.3.11
     # via
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
@@ -26,7 +26,7 @@ cachetools==6.1.0
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
     #   tox
-certifi==2025.6.15
+certifi==2025.7.14
     # via
     #   -r requirements/quality.txt
     #   requests
@@ -87,7 +87,7 @@ dill==0.4.0
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
     #   pylint
-distlib==0.3.9
+distlib==0.4.0
     # via
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
@@ -188,7 +188,7 @@ jinja2==3.1.6
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
     #   code-annotations
-jsonschema==4.24.0
+jsonschema==4.25.0
     # via
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
@@ -224,7 +224,7 @@ more-itertools==10.7.0
     #   -r requirements/quality.txt
     #   jaraco-classes
     #   jaraco-functools
-nh3==0.2.21
+nh3==0.3.0
     # via
     #   -r requirements/quality.txt
     #   readme-renderer
@@ -404,7 +404,7 @@ tomlkit==0.13.3
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
     #   pylint
-tox==4.27.0
+tox==4.28.0
     # via
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
