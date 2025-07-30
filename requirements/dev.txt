@@ -106,7 +106,7 @@ django-waffle==5.0.0
     #   edx-toggles
 djangorestframework==3.16.0
     # via -r requirements/validation.txt
-docutils==0.21.2
+docutils==0.22
     # via
     #   -r requirements/validation.txt
     #   readme-renderer
@@ -118,7 +118,7 @@ edx-django-utils==8.0.0
     #   edx-toggles
 edx-lint==5.6.0
     # via -r requirements/validation.txt
-edx-toggles==5.3.0
+edx-toggles==5.4.1
     # via -r requirements/validation.txt
 filelock==3.18.0
     # via
@@ -368,7 +368,7 @@ typing-extensions==4.14.1
     # via
     #   -r requirements/validation.txt
     #   referencing
-urllib3==2.2.3
+urllib3==2.5.0
     # via
     #   -r requirements/validation.txt
     #   requests

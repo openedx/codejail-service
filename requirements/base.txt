@@ -43,7 +43,7 @@ edx-django-utils==8.0.0
     # via
     #   -r requirements/base.in
     #   edx-toggles
-edx-toggles==5.3.0
+edx-toggles==5.4.1
     # via -r requirements/base.in
 gunicorn==23.0.0
     # via -r requirements/base.in
