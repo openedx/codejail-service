@@ -18,7 +18,7 @@ attrs==25.3.0
     #   -r requirements/validation.txt
     #   jsonschema
     #   referencing
-build==1.2.2.post1
+build==1.3.0
     # via
     #   -r requirements/pip-tools.txt
     #   pip-tools
@@ -26,7 +26,7 @@ cachetools==6.1.0
     # via
     #   -r requirements/validation.txt
     #   tox
-certifi==2025.7.14
+certifi==2025.8.3
     # via
     #   -r requirements/validation.txt
     #   requests
@@ -106,7 +106,7 @@ django-waffle==5.0.0
     #   edx-toggles
 djangorestframework==3.16.0
     # via -r requirements/validation.txt
-docutils==0.21.2
+docutils==0.22
     # via
     #   -r requirements/validation.txt
     #   readme-renderer
@@ -118,7 +118,7 @@ edx-django-utils==8.0.0
     #   edx-toggles
 edx-lint==5.6.0
     # via -r requirements/validation.txt
-edx-toggles==5.3.0
+edx-toggles==5.4.1
     # via -r requirements/validation.txt
 filelock==3.18.0
     # via
@@ -214,7 +214,7 @@ pbr==6.1.1
     # via
     #   -r requirements/validation.txt
     #   stevedore
-pip-tools==7.4.1
+pip-tools==7.5.0
     # via -r requirements/pip-tools.txt
 platformdirs==4.3.8
     # via
@@ -360,7 +360,7 @@ tomlkit==0.13.3
     # via
     #   -r requirements/validation.txt
     #   pylint
-tox==4.28.3
+tox==4.28.4
     # via -r requirements/validation.txt
 twine==6.1.0
     # via -r requirements/validation.txt
@@ -368,12 +368,12 @@ typing-extensions==4.14.1
     # via
     #   -r requirements/validation.txt
     #   referencing
-urllib3==2.2.3
+urllib3==2.5.0
     # via
     #   -r requirements/validation.txt
     #   requests
     #   twine
-virtualenv==20.32.0
+virtualenv==20.33.0
     # via
     #   -r requirements/validation.txt
     #   tox
