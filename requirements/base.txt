@@ -20,7 +20,7 @@ code-annotations==2.3.0
     # via edx-toggles
 django==4.2.23
     # via
-    #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
+    #   -c https:/raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/base.in
     #   django-crum
     #   django-waffle
@@ -43,7 +43,7 @@ edx-django-utils==8.0.0
     # via
     #   -r requirements/base.in
     #   edx-toggles
-edx-toggles==5.3.0
+edx-toggles==5.4.1
     # via -r requirements/base.in
 gunicorn==23.0.0
     # via -r requirements/base.in
