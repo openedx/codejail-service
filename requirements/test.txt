@@ -42,7 +42,7 @@ code-annotations==2.3.0
     #   edx-toggles
 colorama==0.4.6
     # via tox
-coverage[toml]==7.10.1
+coverage[toml]==7.10.2
     # via
     #   -r requirements/test.in
     #   pytest-cov
@@ -70,7 +70,7 @@ django-waffle==5.0.0
     #   -r requirements/base.txt
     #   edx-django-utils
     #   edx-toggles
-djangorestframework==3.16.0
+djangorestframework==3.16.1
     # via -r requirements/base.txt
 edx-codejail==4.0.0
     # via -r requirements/base.txt
@@ -180,7 +180,7 @@ referencing==0.36.2
     #   -r requirements/base.txt
     #   jsonschema
     #   jsonschema-specifications
-rpds-py==0.26.0
+rpds-py==0.27.0
     # via
     #   -r requirements/base.txt
     #   jsonschema
@@ -211,7 +211,7 @@ typing-extensions==4.14.1
     # via
     #   -r requirements/base.txt
     #   referencing
-virtualenv==20.33.0
+virtualenv==20.33.1
     # via tox
 
 # The following packages are considered to be unsafe in a requirements file:

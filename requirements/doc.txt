@@ -64,7 +64,7 @@ colorama==0.4.6
     # via
     #   -r requirements/test.txt
     #   tox
-coverage[toml]==7.10.1
+coverage[toml]==7.10.2
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -97,7 +97,7 @@ django-waffle==5.0.0
     #   -r requirements/test.txt
     #   edx-django-utils
     #   edx-toggles
-djangorestframework==3.16.0
+djangorestframework==3.16.1
     # via -r requirements/test.txt
 doc8==2.0.0
     # via -r requirements/doc.in
@@ -254,7 +254,7 @@ restructuredtext-lint==1.4.0
     # via doc8
 roman-numerals-py==3.1.0
     # via sphinx
-rpds-py==0.26.0
+rpds-py==0.27.0
     # via
     #   -r requirements/test.txt
     #   jsonschema
@@ -315,7 +315,7 @@ typing-extensions==4.14.1
     #   referencing
 urllib3==2.5.0
     # via requests
-virtualenv==20.33.0
+virtualenv==20.33.1
     # via
     #   -r requirements/test.txt
     #   tox
