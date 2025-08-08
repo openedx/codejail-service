@@ -66,11 +66,11 @@ colorama==0.4.6
     # via
     #   -r requirements/validation.txt
     #   tox
-coverage[toml]==7.10.1
+coverage[toml]==7.10.2
     # via
     #   -r requirements/validation.txt
     #   pytest-cov
-cryptography==45.0.5
+cryptography==45.0.6
     # via
     #   -r requirements/validation.txt
     #   secretstorage
@@ -104,7 +104,7 @@ django-waffle==5.0.0
     #   -r requirements/validation.txt
     #   edx-django-utils
     #   edx-toggles
-djangorestframework==3.16.0
+djangorestframework==3.16.1
     # via -r requirements/validation.txt
 docutils==0.22
     # via
@@ -325,7 +325,7 @@ rich==14.1.0
     # via
     #   -r requirements/validation.txt
     #   twine
-rpds-py==0.26.0
+rpds-py==0.27.0
     # via
     #   -r requirements/validation.txt
     #   jsonschema
@@ -373,7 +373,7 @@ urllib3==2.5.0
     #   -r requirements/validation.txt
     #   requests
     #   twine
-virtualenv==20.33.0
+virtualenv==20.33.1
     # via
     #   -r requirements/validation.txt
     #   tox
