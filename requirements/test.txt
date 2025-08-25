@@ -42,7 +42,7 @@ code-annotations==2.3.0
     #   edx-toggles
 colorama==0.4.6
     # via tox
-coverage[toml]==7.10.2
+coverage[toml]==7.10.5
     # via
     #   -r requirements/test.in
     #   pytest-cov
@@ -82,7 +82,7 @@ edx-lint==5.6.0
     # via -r requirements/test.in
 edx-toggles==5.4.1
     # via -r requirements/base.txt
-filelock==3.18.0
+filelock==3.19.1
     # via
     #   tox
     #   virtualenv
@@ -96,7 +96,7 @@ jinja2==3.1.6
     # via
     #   -r requirements/base.txt
     #   code-annotations
-jsonschema==4.25.0
+jsonschema==4.25.1
     # via -r requirements/base.txt
 jsonschema-specifications==2025.4.1
     # via
@@ -115,7 +115,7 @@ packaging==25.0
     #   pyproject-api
     #   pytest
     #   tox
-pbr==6.1.1
+pbr==7.0.1
     # via
     #   -r requirements/base.txt
     #   stevedore
@@ -139,7 +139,7 @@ pycparser==2.22
     #   cffi
 pygments==2.19.2
     # via pytest
-pylint==3.3.7
+pylint==3.3.8
     # via
     #   edx-lint
     #   pylint-celery
@@ -211,7 +211,7 @@ typing-extensions==4.14.1
     # via
     #   -r requirements/base.txt
     #   referencing
-virtualenv==20.33.1
+virtualenv==20.34.0
     # via tox
 
 # The following packages are considered to be unsafe in a requirements file:

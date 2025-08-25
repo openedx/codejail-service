@@ -26,7 +26,7 @@ babel==2.17.0
     # via
     #   pydata-sphinx-theme
     #   sphinx
-beautifulsoup4==4.13.4
+beautifulsoup4==4.13.5
     # via pydata-sphinx-theme
 cachetools==6.1.0
     # via
@@ -42,7 +42,7 @@ chardet==5.2.0
     # via
     #   -r requirements/test.txt
     #   tox
-charset-normalizer==3.4.2
+charset-normalizer==3.4.3
     # via requests
 click==8.2.1
     # via
@@ -64,7 +64,7 @@ colorama==0.4.6
     # via
     #   -r requirements/test.txt
     #   tox
-coverage[toml]==7.10.2
+coverage[toml]==7.10.5
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -117,7 +117,7 @@ edx-lint==5.6.0
     # via -r requirements/test.txt
 edx-toggles==5.4.1
     # via -r requirements/test.txt
-filelock==3.18.0
+filelock==3.19.1
     # via
     #   -r requirements/test.txt
     #   tox
@@ -141,7 +141,7 @@ jinja2==3.1.6
     #   -r requirements/test.txt
     #   code-annotations
     #   sphinx
-jsonschema==4.25.0
+jsonschema==4.25.1
     # via -r requirements/test.txt
 jsonschema-specifications==2025.4.1
     # via
@@ -164,7 +164,7 @@ packaging==25.0
     #   pytest
     #   sphinx
     #   tox
-pbr==6.1.1
+pbr==7.0.1
     # via
     #   -r requirements/test.txt
     #   stevedore
@@ -198,7 +198,7 @@ pygments==2.19.2
     #   pydata-sphinx-theme
     #   pytest
     #   sphinx
-pylint==3.3.7
+pylint==3.3.8
     # via
     #   -r requirements/test.txt
     #   edx-lint
@@ -248,7 +248,7 @@ referencing==0.36.2
     #   -r requirements/test.txt
     #   jsonschema
     #   jsonschema-specifications
-requests==2.32.4
+requests==2.32.5
     # via sphinx
 restructuredtext-lint==1.4.0
     # via doc8
@@ -315,7 +315,7 @@ typing-extensions==4.14.1
     #   referencing
 urllib3==2.5.0
     # via requests
-virtualenv==20.33.1
+virtualenv==20.34.0
     # via
     #   -r requirements/test.txt
     #   tox

@@ -49,7 +49,7 @@ gunicorn==23.0.0
     # via -r requirements/base.in
 jinja2==3.1.6
     # via code-annotations
-jsonschema==4.25.0
+jsonschema==4.25.1
     # via -r requirements/base.in
 jsonschema-specifications==2025.4.1
     # via jsonschema
@@ -57,7 +57,7 @@ markupsafe==3.0.2
     # via jinja2
 packaging==25.0
     # via gunicorn
-pbr==6.1.1
+pbr==7.0.1
     # via stevedore
 psutil==7.0.0
     # via edx-django-utils
