@@ -26,9 +26,9 @@ babel==2.17.0
     # via
     #   pydata-sphinx-theme
     #   sphinx
-beautifulsoup4==4.13.4
+beautifulsoup4==4.13.5
     # via pydata-sphinx-theme
-cachetools==6.1.0
+cachetools==6.2.0
     # via
     #   -r requirements/test.txt
     #   tox
@@ -42,7 +42,7 @@ chardet==5.2.0
     # via
     #   -r requirements/test.txt
     #   tox
-charset-normalizer==3.4.2
+charset-normalizer==3.4.3
     # via requests
 click==8.2.1
     # via
@@ -64,7 +64,7 @@ colorama==0.4.6
     # via
     #   -r requirements/test.txt
     #   tox
-coverage[toml]==7.10.2
+coverage[toml]==7.10.6
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -78,7 +78,7 @@ distlib==0.4.0
     # via
     #   -r requirements/test.txt
     #   virtualenv
-django==4.2.23
+django==4.2.24
     # via
     #   -c https:/raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/test.txt
@@ -117,7 +117,7 @@ edx-lint==5.6.0
     # via -r requirements/test.txt
 edx-toggles==5.4.1
     # via -r requirements/test.txt
-filelock==3.18.0
+filelock==3.19.1
     # via
     #   -r requirements/test.txt
     #   tox
@@ -141,7 +141,7 @@ jinja2==3.1.6
     #   -r requirements/test.txt
     #   code-annotations
     #   sphinx
-jsonschema==4.25.0
+jsonschema==4.25.1
     # via -r requirements/test.txt
 jsonschema-specifications==2025.4.1
     # via
@@ -164,11 +164,7 @@ packaging==25.0
     #   pytest
     #   sphinx
     #   tox
-pbr==6.1.1
-    # via
-    #   -r requirements/test.txt
-    #   stevedore
-platformdirs==4.3.8
+platformdirs==4.4.0
     # via
     #   -r requirements/test.txt
     #   pylint
@@ -198,7 +194,7 @@ pygments==2.19.2
     #   pydata-sphinx-theme
     #   pytest
     #   sphinx
-pylint==3.3.7
+pylint==3.3.8
     # via
     #   -r requirements/test.txt
     #   edx-lint
@@ -248,13 +244,13 @@ referencing==0.36.2
     #   -r requirements/test.txt
     #   jsonschema
     #   jsonschema-specifications
-requests==2.32.4
+requests==2.32.5
     # via sphinx
 restructuredtext-lint==1.4.0
     # via doc8
 roman-numerals-py==3.1.0
     # via sphinx
-rpds-py==0.27.0
+rpds-py==0.27.1
     # via
     #   -r requirements/test.txt
     #   jsonschema
@@ -266,7 +262,7 @@ six==1.17.0
     #   edx-lint
 snowballstemmer==3.0.1
     # via sphinx
-soupsieve==2.7
+soupsieve==2.8
     # via beautifulsoup4
 sphinx==8.2.3
     # via
@@ -291,7 +287,7 @@ sqlparse==0.5.3
     # via
     #   -r requirements/test.txt
     #   django
-stevedore==5.4.1
+stevedore==5.5.0
     # via
     #   -r requirements/test.txt
     #   code-annotations
@@ -305,9 +301,9 @@ tomlkit==0.13.3
     # via
     #   -r requirements/test.txt
     #   pylint
-tox==4.28.4
+tox==4.30.1
     # via -r requirements/test.txt
-typing-extensions==4.14.1
+typing-extensions==4.15.0
     # via
     #   -r requirements/test.txt
     #   beautifulsoup4
@@ -315,10 +311,7 @@ typing-extensions==4.14.1
     #   referencing
 urllib3==2.5.0
     # via requests
-virtualenv==20.33.1
+virtualenv==20.34.0
     # via
     #   -r requirements/test.txt
     #   tox
-
-# The following packages are considered to be unsafe in a requirements file:
-# setuptools
