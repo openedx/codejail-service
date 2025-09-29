@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-asgiref==3.9.1
+asgiref==3.9.2
     # via
     #   -r requirements/test.txt
     #   django
@@ -150,7 +150,7 @@ keyring==25.6.0
     # via twine
 markdown-it-py==4.0.0
     # via rich
-markupsafe==3.0.2
+markupsafe==3.0.3
     # via
     #   -r requirements/test.txt
     #   jinja2
@@ -245,7 +245,7 @@ python-slugify==8.0.4
     # via
     #   -r requirements/test.txt
     #   code-annotations
-pyyaml==6.0.2
+pyyaml==6.0.3
     # via
     #   -r requirements/test.txt
     #   code-annotations

@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-asgiref==3.9.1
+asgiref==3.9.2
     # via
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
@@ -205,7 +205,7 @@ markdown-it-py==4.0.0
     # via
     #   -r requirements/quality.txt
     #   rich
-markupsafe==3.0.2
+markupsafe==3.0.3
     # via
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
@@ -325,7 +325,7 @@ python-slugify==8.0.4
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
     #   code-annotations
-pyyaml==6.0.2
+pyyaml==6.0.3
     # via
     #   -r requirements/quality.txt
     #   -r requirements/test.txt
