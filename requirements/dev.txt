@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-asgiref==3.9.1
+asgiref==3.10.0
     # via
     #   -r requirements/validation.txt
     #   django
@@ -26,7 +26,7 @@ cachetools==6.2.0
     # via
     #   -r requirements/validation.txt
     #   tox
-certifi==2025.8.3
+certifi==2025.10.5
     # via
     #   -r requirements/validation.txt
     #   requests
@@ -70,13 +70,13 @@ coverage[toml]==7.10.7
     # via
     #   -r requirements/validation.txt
     #   pytest-cov
-cryptography==46.0.1
+cryptography==46.0.2
     # via
     #   -r requirements/validation.txt
     #   secretstorage
 ddt==1.7.2
     # via -r requirements/validation.txt
-diff-cover==9.6.0
+diff-cover==9.7.1
     # via -r requirements/dev.in
 dill==0.4.0
     # via
@@ -86,7 +86,7 @@ distlib==0.4.0
     # via
     #   -r requirements/validation.txt
     #   virtualenv
-django==4.2.24
+django==4.2.25
     # via
     #   -r requirements/validation.txt
     #   django-crum
@@ -112,7 +112,7 @@ docutils==0.22.2
     #   readme-renderer
 edx-codejail==4.0.0
     # via -r requirements/validation.txt
-edx-django-utils==8.0.0
+edx-django-utils==8.0.1
     # via
     #   -r requirements/validation.txt
     #   edx-toggles
@@ -139,7 +139,7 @@ iniconfig==2.1.0
     # via
     #   -r requirements/validation.txt
     #   pytest
-isort==6.0.1
+isort==6.1.0
     # via
     #   -r requirements/validation.txt
     #   pylint
@@ -179,7 +179,7 @@ markdown-it-py==4.0.0
     # via
     #   -r requirements/validation.txt
     #   rich
-markupsafe==3.0.2
+markupsafe==3.0.3
     # via
     #   -r requirements/validation.txt
     #   jinja2
@@ -210,7 +210,7 @@ packaging==25.0
     #   pytest
     #   tox
     #   twine
-pip-tools==7.5.0
+pip-tools==7.5.1
     # via -r requirements/pip-tools.txt
 platformdirs==4.4.0
     # via
@@ -244,7 +244,7 @@ pygments==2.19.2
     #   pytest
     #   readme-renderer
     #   rich
-pylint==3.3.8
+pylint==3.3.9
     # via
     #   -r requirements/validation.txt
     #   edx-lint
@@ -290,7 +290,7 @@ python-slugify==8.0.4
     # via
     #   -r requirements/validation.txt
     #   code-annotations
-pyyaml==6.0.2
+pyyaml==6.0.3
     # via
     #   -r requirements/validation.txt
     #   code-annotations
@@ -356,7 +356,7 @@ tomlkit==0.13.3
     # via
     #   -r requirements/validation.txt
     #   pylint
-tox==4.30.2
+tox==4.30.3
     # via -r requirements/validation.txt
 twine==6.2.0
     # via -r requirements/validation.txt
