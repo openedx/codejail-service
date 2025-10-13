@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-asgiref==3.9.1
+asgiref==3.10.0
     # via
     #   -r requirements/test.txt
     #   django
@@ -13,16 +13,16 @@ astroid==3.3.11
     #   -r requirements/test.txt
     #   pylint
     #   pylint-celery
-attrs==25.3.0
+attrs==25.4.0
     # via
     #   -r requirements/test.txt
     #   jsonschema
     #   referencing
-cachetools==6.2.0
+cachetools==6.2.1
     # via
     #   -r requirements/test.txt
     #   tox
-certifi==2025.8.3
+certifi==2025.10.5
     # via requests
 cffi==2.0.0
     # via
@@ -59,7 +59,7 @@ coverage[toml]==7.10.7
     # via
     #   -r requirements/test.txt
     #   pytest-cov
-cryptography==46.0.1
+cryptography==46.0.2
     # via secretstorage
 ddt==1.7.2
     # via -r requirements/test.txt
@@ -71,9 +71,9 @@ distlib==0.4.0
     # via
     #   -r requirements/test.txt
     #   virtualenv
-django==4.2.24
+django==4.2.25
     # via
-    #   -c https:/raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
+    #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/test.txt
     #   django-crum
     #   django-waffle
@@ -96,7 +96,7 @@ docutils==0.22.2
     # via readme-renderer
 edx-codejail==4.0.0
     # via -r requirements/test.txt
-edx-django-utils==8.0.0
+edx-django-utils==8.0.1
     # via
     #   -r requirements/test.txt
     #   edx-toggles
@@ -106,7 +106,7 @@ edx-lint==5.6.0
     #   -r requirements/test.txt
 edx-toggles==5.4.1
     # via -r requirements/test.txt
-filelock==3.19.1
+filelock==3.20.0
     # via
     #   -r requirements/test.txt
     #   tox
@@ -115,13 +115,13 @@ gunicorn==23.0.0
     # via -r requirements/test.txt
 id==1.5.0
     # via twine
-idna==3.10
+idna==3.11
     # via requests
 iniconfig==2.1.0
     # via
     #   -r requirements/test.txt
     #   pytest
-isort==6.0.1
+isort==6.1.0
     # via
     #   -r requirements/quality.in
     #   -r requirements/test.txt
@@ -150,7 +150,7 @@ keyring==25.6.0
     # via twine
 markdown-it-py==4.0.0
     # via rich
-markupsafe==3.0.2
+markupsafe==3.0.3
     # via
     #   -r requirements/test.txt
     #   jinja2
@@ -164,7 +164,7 @@ more-itertools==10.8.0
     # via
     #   jaraco-classes
     #   jaraco-functools
-nh3==0.3.0
+nh3==0.3.1
     # via readme-renderer
 packaging==25.0
     # via
@@ -174,7 +174,7 @@ packaging==25.0
     #   pytest
     #   tox
     #   twine
-platformdirs==4.4.0
+platformdirs==4.5.0
     # via
     #   -r requirements/test.txt
     #   pylint
@@ -204,7 +204,7 @@ pygments==2.19.2
     #   pytest
     #   readme-renderer
     #   rich
-pylint==3.3.8
+pylint==3.3.9
     # via
     #   -r requirements/test.txt
     #   edx-lint
@@ -228,7 +228,7 @@ pynacl==1.6.0
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
-pyproject-api==1.9.1
+pyproject-api==1.10.0
     # via
     #   -r requirements/test.txt
     #   tox
@@ -245,7 +245,7 @@ python-slugify==8.0.4
     # via
     #   -r requirements/test.txt
     #   code-annotations
-pyyaml==6.0.2
+pyyaml==6.0.3
     # via
     #   -r requirements/test.txt
     #   code-annotations
@@ -265,7 +265,7 @@ requests-toolbelt==1.0.0
     # via twine
 rfc3986==2.0.0
     # via twine
-rich==14.1.0
+rich==14.2.0
     # via twine
 rpds-py==0.27.1
     # via
@@ -298,7 +298,7 @@ tomlkit==0.13.3
     # via
     #   -r requirements/test.txt
     #   pylint
-tox==4.30.2
+tox==4.31.0
     # via -r requirements/test.txt
 twine==6.2.0
     # via -r requirements/quality.in
@@ -310,7 +310,7 @@ urllib3==2.5.0
     # via
     #   requests
     #   twine
-virtualenv==20.34.0
+virtualenv==20.35.3
     # via
     #   -r requirements/test.txt
     #   tox
