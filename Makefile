@@ -91,6 +91,8 @@ compile-requirements: ## Re-compile *.in requirements to *.txt
 	$(PIP_COMPILE) -o requirements/validation.txt requirements/validation.in
 	$(PIP_COMPILE) -o requirements/ci.txt requirements/ci.in
 	$(PIP_COMPILE) -o requirements/dev.txt requirements/dev.in
+	# Sandbox
+	$(PIP_COMPILE) -o requirements/sandbox/base.txt requirements/sandbox/base.in
 	# Let tox control the Django version for tests
 	grep -e "^django==" requirements/base.txt > requirements/django.txt
 	sed '/^[dD]jango==/d' requirements/test.txt > requirements/test.tmp
