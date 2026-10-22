@@ -22,7 +22,7 @@ cachetools==6.2.0
     # via
     #   -r requirements/test.txt
     #   tox
-certifi==2025.8.3
+certifi==2026.10.19
     # via requests
 cffi==2.0.0
     # via
@@ -73,7 +73,7 @@ distlib==0.4.0
     #   virtualenv
 django==4.2.24
     # via
-    #   -c https:/raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
+    #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/test.txt
     #   django-crum
     #   django-waffle
