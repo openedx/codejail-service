@@ -210,7 +210,7 @@ packaging==25.0
     #   pytest
     #   tox
     #   twine
-pip-tools==7.5.0
+pip-tools==7.6.2
     # via -r requirements/pip-tools.txt
 platformdirs==4.4.0
     # via
