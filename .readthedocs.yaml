@@ -16,12 +16,10 @@ build:
   tools:
     python: "3.12"
 
+# Install doc dependencies from uv.lock using the doc dependency group
 python:
   install:
-    - requirements: requirements/doc.txt
-
-    # This will pip install this repo into the python environment
-    # if you are using this in a repo that is not pip installable
-    # then you should remove the following two lines.
-    - method: pip
-      path: .
+    - method: uv
+      command: sync
+      groups:
+        - doc
