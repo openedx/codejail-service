@@ -1,0 +1,46 @@
+[project]
+name = "codejail-service-sandbox"
+version = "0.1"
+requires-python = ">=3.12"
+dependencies = [
+    "chem", # A helper library for chemistry calculations
+    "cryptography", # Implementations of assorted cryptography algorithms
+    "lxml[html_clean]", # XML parser
+    "matplotlib", # 2D plotting library
+    "networkx", # Utilities for creating, manipulating, and studying network graphs
+    "nltk", # Natural language processing; used by the chem package
+    "openedx-calc",
+    "pyparsing", # Python Parsing module
+    "random2", # Implementation of random module that works identically under Python 2 and 3
+    "scipy", # Math, science, and engineering library
+    "sympy", # Symbolic math library
+    "codejail-includes", # Checkers, verifiers, etc. available for course authors to use
+]
+
+[tool.uv]
+# This isn't installed as a package itself -- it's just a locked dependency
+# set that gets resolved into codejail's isolated sandbox venv.
+package = false
+
+#  DO NOT EDIT constraint-dependencies DIRECTLY.
+#  This list is managed by `edx_lint write_uv_constraints`
+#  and will be overwritten the next time `make upgrade` is run.
+#  - GLOBAL constraints: edit edx_lint/files/common_constraints.txt
+#  - REPO-SPECIFIC constraints: edit [tool.edx_lint].uv_constraints in this file
+constraint-dependencies = [
+    "Django<6.0",
+    "elasticsearch<7.14.0",
+    "social-auth-app-django<6.0.0",
+    "social-auth-core<5.0.0",
+    "pip<26.2.1",
+    "numpy<2.0.0",
+    "lxml==5.3.2",
+    "setuptools<82",
+]
+[tool.edx_lint]
+# Kept in sync with openedx-platform's requirements/edx-sandbox/pyproject.toml.
+uv_constraints = [
+    "numpy<2.0.0",
+    "lxml==5.3.2",
+    "setuptools<82",
+]
