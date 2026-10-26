@@ -34,7 +34,7 @@ dev_requirements: ## sync to requirements for local development
 	uv sync --group dev
 
 prod_requirements: ## sync virtualenv to requirements needed for production
-	uv sync --no-default-groups
+	uv sync --locked --no-dev
 
 validation_requirements: ## sync to requirements for testing & code quality checking
 	uv sync --group validation
@@ -80,6 +80,8 @@ html_coverage: ## generate and view HTML coverage report
 upgrade: ## update python dependencies
 	uv run --with edx-lint edx_lint write_uv_constraints pyproject.toml
 	uv lock --upgrade
+	uv run --with edx-lint edx_lint write_uv_constraints requirements/sandbox/pyproject.toml
+	uv lock --upgrade --directory requirements/sandbox
 
 selfcheck: ## check that the Makefile is well-formed
 	@echo "The Makefile is well-formed."
