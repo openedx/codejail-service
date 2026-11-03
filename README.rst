@@ -16,6 +16,15 @@ Warnings
 
 This is intended to be run as a fully internal service with no database or admin frontend, with the LMS and CMS making calls to it unauthenticated. It should not be callable directly from the internet.
 
+Deployment
+**********
+
+See ``docs/deployment.rst`` for configuration and deployment instructions.
+
+The service's Docker images are built outside this repository, by `2U's Dockerfile <https://github.com/edx/public-dockerfiles/blob/main/dockerfiles/codejail-service.Dockerfile>`__ and the `eduNEXT Tutor plugin's Dockerfile <https://github.com/eduNEXT/tutor-contrib-codejail/blob/main/tutorcodejail/templates/codejail/build/codejail/Dockerfile>`__. Changes to how this repository's dependencies are installed (including the sandbox requirements in ``requirements/sandbox/``) need a coordinated update to those Dockerfiles.
+
+Dependencies are now managed with uv (``pyproject.toml`` and ``uv.lock``) instead of ``requirements/*.txt`` files. Deployments must move to ``uv sync --locked --no-dev`` before the next named release.
+
 Getting Started with Development
 ********************************
 

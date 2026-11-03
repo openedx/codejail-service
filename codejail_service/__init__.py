@@ -1,4 +1,6 @@
 """
 codejail-service module.
 """
-__version__ = '0.0.0'  # unused, though docs builder wants it
+from importlib.metadata import version
+
+__version__ = version("codejail-service")

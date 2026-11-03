@@ -28,7 +28,14 @@ Host
 
 The host or Docker image must be set up with a sandbox user, sandbox virtualenv, and sudoers file according to the documentation of the `codejail library <https://github.com/openedx/codejail>`__. This forms the foundation of the sandboxing, but does not provide much security by itself.
 
-See `2U's Dockerfile <https://github.com/edx/public-dockerfiles/blob/main/dockerfiles/codejail-service.Dockerfile>`__ for an example of how you could set up your host or container. (As of March 2025, there is `not yet a Tutor plugin <https://github.com/openedx/codejail-service/issues/26>`__.)
+See `2U's Dockerfile <https://github.com/edx/public-dockerfiles/blob/main/dockerfiles/codejail-service.Dockerfile>`__ or the `eduNEXT Tutor plugin's Dockerfile <https://github.com/eduNEXT/tutor-contrib-codejail/blob/main/tutorcodejail/templates/codejail/build/codejail/Dockerfile>`__ for examples of how you could set up your host or container.
+
+The sandbox virtualenv's pinned requirements live in ``requirements/sandbox/`` as a standalone uv project; see the README in that directory for how to sync them.
+
+Migrating to uv
+===============
+
+This repository now manages its dependencies with uv (``pyproject.toml`` and ``uv.lock``) and no longer ships ``requirements/*.txt`` files. Deployments must move to ``uv sync --locked --no-dev`` before the next named release. Both Dockerfiles linked above still install from the old ``requirements/`` files and need this change.
 
 App user UID
 ============
@@ -76,10 +83,10 @@ Now you can set your ``CODE_JAIL`` Django setting, which tells the codejail libr
 Starting the service
 ********************
 
-To run the service, activate a virtualenv, run ``make prod_requirements``, and start the service with ``gunicorn`` using a command like this::
+To run the service, run ``uv sync --locked --no-dev`` (or ``make prod_requirements``) from the checkout. This installs the service and its runtime dependencies into ``.venv`` in the checkout, ignoring any activated virtualenv. Then start the service with ``gunicorn`` from that virtualenv using a command like this::
 
   export DJANGO_SETTINGS_MODULE=codejail_service.settings.production
-  gunicorn -c codejail_service/docker_gunicorn_configuration.py \
+  .venv/bin/gunicorn -c codejail_service/docker_gunicorn_configuration.py \
     --bind '0.0.0.0:8080' --workers=10 --max-requests=1000 --name codejail \
     codejail_service.wsgi:application
 
